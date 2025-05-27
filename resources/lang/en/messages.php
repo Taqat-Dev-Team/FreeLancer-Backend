@@ -1,0 +1,124 @@
+<?php
+
+return [
+    'name' => 'Name is required',
+    'email' => 'Email is required',
+    'email-email' => 'Invalid email format',
+    'about' => 'About Us is required',
+    'error' => 'An error occurred',
+
+
+    'updated' => 'Updated',
+    'success-update' => 'Updated successfully',
+    'success-created' => 'Added successfully',
+    'sure?' => 'Are you sure?',
+    'change_status_confirm' => 'Are you sure you want to change the status?',
+    'yes_change_it' => 'Yes, change it!',
+    'wont' => 'You wont be able to restore this',
+    'delete' => 'Delete',
+    'upload-contract' => 'Upload Contract',
+
+    'deleted' => 'Deleted',
+    'cancel' => 'Close',
+    'ordered-before' => 'The request has already been sent.',
+    'delete-success' => 'Deleted successfully',
+    'close' => 'Close',
+    'not-delete' => 'Not deleted',
+    'not-delete-error' => 'An error occurred',
+    'not-found' => 'Not found',
+    '401' => 'You dont have access to this section.',
+    'file-not' => 'Files not found',
+
+    'Invalid credentials' => 'Invalid credentials',
+    'welcome' => 'Welcome',
+    'yes' => 'Yes',
+    'change' => 'Change',
+    'confirm-update' => 'Confirm Update',
+    'change-success' => 'Changed successfully',
+    'change-status' => 'You are about to change the status',
+
+    'note-required' => 'Note required',
+
+    'submit' => 'Submit',
+    'enter-note' => 'Enter note',
+    'enter-note-placeholder' => 'Enter close note',
+
+    'not-updated' => 'Not updated',
+    'not-update-error' => 'Error in Update Status',
+    'upload-attachment' => 'Payment received',
+    'required-files' => 'Attachments Required',
+
+    'attachment-required' => 'Attachment Required',
+    'select-housekeeper' => 'Select Housekeeper',
+    'enter-price' => 'Violation Price',
+    'enter-price-placeholder' => 'Enter Violation price',
+    'success-notify' => 'Notify successfully',
+    'loading' => 'Loading',
+    'processing-request' => 'Change processing',
+
+
+    'company_invalid' => 'Invalid credentials for a company account.',
+    'admin_invalid' => 'Invalid credentials for an admin account.',
+
+    'required-contract' => 'Contract Required',
+    'required-payment' => 'Payment received Required ',
+    'blocked' => 'Your account has been blocked',
+    'status-change-success' => 'Status changed successfully',
+    'status-change-error' => 'Error in changing status',
+    'status-change' => 'Change status',
+    'status' => 'Status',
+    'ok' => 'ok',
+
+
+    'sms-sent-success' => 'SMS Sent Successfully',
+    'fail-sms' => 'Failed to send SMS',
+    'invalid-url' => 'invalid url',
+    'enter-payment' => 'Enter Payment Value',
+    'Payment value cannot exceed the order value' => 'Payment value cannot exceed the order value',
+    'invalid-payment' => 'Invalid payment Value',
+    'order failed' => 'Order Failed',
+    'invalid type' => 'Invalid order type',
+    'Order not found' => 'Order not found',
+    'payed' => 'This order has already been paid and cannot be paid again',
+    'pay>value' => 'Payment value cannot exceed the order value',
+    'pay-success' => 'Payment Successfully',
+    'error_occurred' => 'Error',
+    'mismatch' => 'Mismatch between metadata and request data',
+    'Assurance not found' => 'Assurance not found',
+    'pending-order' => 'You already have an active or pending order for this type.',
+    'housekeeper not found' => 'Housekeeper not found',
+    'pay_success' => 'Payment successfully',
+
+
+    'register_success' => 'User registered successfully.',
+    'login_success' => 'Login successful.',
+    'logout_success' => 'Logout successful.',
+    'profile_success' => 'User profile retrieved successfully.',
+    'invalid_credentials' => 'Invalid credentials.',
+    'not_authenticated' => 'User not authenticated.',
+    'language_updated' => 'Language updated successfully.',
+    'success' => 'Operation completed successfully.',
+
+    'validation_failed' => 'Validation failed.',
+    'resource_not_found' => 'Resource not found.',
+    'unauthenticated' => 'Unauthenticated.',
+    'not_found' => 'Not Found.',
+    'method_not_allowed' => 'Method not allowed.',
+    'internal_server_error' => 'Internal Server Error.',
+
+    'http_errors' => [
+        400 => 'Bad Request',
+        401 => 'Unauthorized',
+        403 => 'Access Denied',
+        404 => 'Not Found',
+        422 => 'Unprocessable Entity',
+        429 => 'Too Many Requests',
+        500 => 'Internal Server Error',
+        502 => 'Bad Gateway',
+        503 => 'Service Unavailable',
+    ],
+
+
+];
+
+
