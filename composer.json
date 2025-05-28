@@ -12,13 +12,15 @@
         "php": "^8.2",
         "laravel/framework": "^12.0",
         "laravel/sanctum": "^4.0",
+        "laravel/socialite": "^5.21",
         "laravel/tinker": "^2.10.1",
         "mcamara/laravel-localization": "^2.3",
         "rappasoft/laravel-authentication-log": "^5.0",
         "santigarcor/laratrust": "^8.4",
         "spatie/laravel-activitylog": "^4.10",
         "spatie/laravel-medialibrary": "^11.13",
-        "spatie/laravel-translatable": "^6.11"
+        "spatie/laravel-translatable": "^6.11",
+        "yajra/laravel-datatables": "^12"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.15",

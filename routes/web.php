@@ -21,7 +21,7 @@ Route::get('/link', function () {
 
 Route::get('/', function () {
     return redirect()->route('admin.login');
-});
+})->name('home');
 
 require  __DIR__.'/Admin/admin.php';
 
