@@ -20,7 +20,7 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name', 'email', 'password', 'status', 'country_id', 'photo', 'bio', 'email_verified_at','mobile','lang'
+        'name', 'email', 'password', 'status', 'country_id', 'photo', 'bio', 'email_verified_at', 'mobile', 'lang'
     ];
 
     protected $dates = [
@@ -68,6 +68,10 @@ class User extends Authenticatable
     }
 
 
+    public function otpCodes()
+    {
+        return $this->hasMany(OtpCode::class);
+    }
 
     public function notifications()
     {
