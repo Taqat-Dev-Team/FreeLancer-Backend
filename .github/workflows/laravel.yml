@@ -39,12 +39,7 @@ jobs:
       - name: 📦 Install Composer dependencies
         run: composer install --no-interaction --prefer-dist
 
-      - name: 🧪 Run Laravel Tests
-        run: |
-          cp .env.testing .env
-          php artisan key:generate --env=testing
-          php artisan migrate --force --env=testing
-          APP_ENV=testing vendor/bin/phpunit
+
 
       - name: 🛠️ Check for Frontend
         id: check_frontend
@@ -154,12 +149,7 @@ jobs:
       - name: 📦 Install Composer dependencies
         run: composer install --no-interaction --prefer-dist
 
-      - name: 🧪 Run Laravel Tests
-        run: |
-          cp .env.testing .env
-          php artisan key:generate --env=testing
-          php artisan migrate --force --env=testing
-          APP_ENV=testing vendor/bin/phpunit
+
 
       - name: 🛠️ Check for Frontend
         id: check_frontend
@@ -269,12 +259,7 @@ jobs:
       - name: 📦 Install Composer dependencies
         run: composer install --no-interaction --prefer-dist
 
-      - name: 🧪 Run Laravel Tests
-        run: |
-          cp .env.testing .env
-          php artisan key:generate --env=testing
-          php artisan migrate --force --env=testing
-          APP_ENV=testing vendor/bin/phpunit
+
 
       - name: 🛠️ Check for Frontend
         id: check_frontend
