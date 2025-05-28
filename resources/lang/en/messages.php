@@ -90,7 +90,6 @@ return [
     'pay_success' => 'Payment successfully',
 
 
-    'register_success' => 'User registered successfully.',
     'login_success' => 'Login successful.',
     'logout_success' => 'Logout successful.',
     'profile_success' => 'User profile retrieved successfully.',
@@ -106,6 +105,24 @@ return [
     'method_not_allowed' => 'Method not allowed.',
     'internal_server_error' => 'Internal Server Error.',
 
+    'register_success' => 'User registered successfully. Please verify your email.',
+    'email_not_verified_send_otp' => 'Your email is not verified. An OTP has been sent to your email. Please verify.',
+    'otp_sent_successfully' => 'OTP sent to your email successfully.',
+    'email_verified_successfully' => 'Email verified successfully.',
+    'invalid_or_expired_otp' => 'Invalid or expired OTP.',
+    'user_not_found' => 'User not found.',
+    'email_not_verified' => 'Your email is not verified. Please verify your email to access this resource.',
+
+    'email_already_verified' => 'Your email is already verified.',
+    'otp_already_sent' => 'An OTP has already been sent to your email and is still valid. Please check your inbox or wait for it to expire.',
+
+    'registration_failed_email_issue' => 'Registration failed due to an issue sending the verification email. Please try again later.',
+    'failed_to_send_otp_email' => 'Failed to send OTP email. Please try again.',
+    'email_not_verified_otp_send_failed' => 'Your email is not verified, and we failed to send a new OTP. Please contact support.',
+
+    'otp_subject' => 'Your Taqat Verification Code',
+
+    'registration_success_verify_email'=> 'Registration successful. Please verify your email to complete the process.',
     'http_errors' => [
         400 => 'Bad Request',
         401 => 'Unauthorized',

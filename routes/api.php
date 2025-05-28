@@ -13,13 +13,12 @@ Route::get('/user', function (Request $request) {
 Route::controller(AuthController::class)->group(function () {
     Route::post('/register', 'register');
     Route::post('/login', 'login');
+    Route::post('/verify-otp', 'verifyOtp');
+    Route::post('/resend-otp', 'resendOtp');
 
-    Route::middleware('auth:sanctum')->group(function () {
-
+    Route::middleware(['auth:sanctum', 'verified.email'])->group(function () {
         Route::get('/profile', 'profile');
         Route::post('/lang', 'lang');
         Route::post('/logout', 'logout');
-
     });
 });
-
