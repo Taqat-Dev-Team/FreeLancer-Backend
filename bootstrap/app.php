@@ -35,7 +35,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->render(function (ValidationException $e, Request $request) {
             if ($request->expectsJson() || $request->is('api/*')) {
                 return response()->json([
-                    'success' => false,
+                    'status' => false,
                     'code' => 422,
                     'message' => __('messages.validation_failed'),
                     'errors' => $e->errors(),
@@ -47,7 +47,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->render(function (ModelNotFoundException $e, Request $request) {
             if ($request->expectsJson() || $request->is('api/*')) {
                 return response()->json([
-                    'success' => false,
+                    'status' => false,
                     'code' => 404,
                     'message' => __('messages.resource_not_found'),
                 ], 404);
@@ -58,7 +58,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->render(function (AuthenticationException $e, Request $request) {
             if ($request->expectsJson() || $request->is('api/*')) {
                 return response()->json([
-                    'success' => false,
+                    'status' => false,
                     'code' => 401,
                     'message' => __('messages.unauthenticated'),
                 ], 401);
@@ -69,7 +69,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->render(function (NotFoundHttpException $e, Request $request) {
             if ($request->expectsJson() || $request->is('api/*')) {
                 return response()->json([
-                    'success' => false,
+                    'status' => false,
                     'code' => 404,
                     'message' => __('messages.not_found'),
                 ], 404);
@@ -80,7 +80,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->render(function (MethodNotAllowedHttpException $e, Request $request) {
             if ($request->expectsJson() || $request->is('api/*')) {
                 return response()->json([
-                    'success' => false,
+                    'status' => false,
                     'code' => 405,
                     'message' => __('messages.method_not_allowed'),
                 ], 405);
@@ -94,7 +94,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 $message = __('messages.http_errors.' . $statusCode, [], $statusCode);
 
                 return response()->json([
-                    'success' => false,
+                    'status' => false,
                     'code' => $statusCode,
                     'message' => $message,
                 ], $statusCode);
@@ -115,14 +115,14 @@ return Application::configure(basePath: dirname(__DIR__))
 
                 if (app()->environment('production')) {
                     return response()->json([
-                        'success' => false,
+                        'status' => false,
                         'code' => 500,
                         'message' => __('messages.internal_server_error'),
                     ], 500);
                 }
 
                 return response()->json([
-                    'success' => false,
+                    'status' => false,
                     'code' => 500,
                     'message' => $e->getMessage(),
                     'file' => $e->getFile(),
