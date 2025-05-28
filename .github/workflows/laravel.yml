@@ -129,7 +129,6 @@ jobs:
           echo "✅ Dev Deployment complete at $(date)"
           echo "Triggered by: $GITHUB_SHA"
 
-  ---
 
   # Staging Deployment (staging branch)
   staging-deploy:
@@ -245,7 +244,6 @@ jobs:
           echo "✅ Staging Deployment complete at $(date)"
           echo "Triggered by: $GITHUB_SHA"
 
-  ---
 
   # Production Deployment (master branch)
   production-deploy:
