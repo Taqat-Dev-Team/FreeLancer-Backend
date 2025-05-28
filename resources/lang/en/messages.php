@@ -123,6 +123,17 @@ return [
     'otp_subject' => 'Your Taqat Verification Code',
 
     'registration_success_verify_email'=> 'Registration successful. Please verify your email to complete the process.',
+
+    'social_login_success' => 'Logged in successfully via Google.',
+    'social_login_failed' => 'Google login failed. Please try again or contact support.',
+
+    'password_reset_subject' => 'Your Password Reset Link',
+    'password_reset_link_sent' => 'We have emailed your password reset link!',
+    'password_reset_link_failed' => 'Unable to send password reset link. Please try again.',
+    'password_reset_success' => 'Your password has been reset successfully!',
+    'password_reset_failed' => 'Password reset failed. This password reset token is invalid or has expired.',
+    'email_not_registered' => 'The provided email is not registered.',
+
     'http_errors' => [
         400 => 'Bad Request',
         401 => 'Unauthorized',
