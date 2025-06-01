@@ -28,9 +28,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 
         Route::name('management.')->group(function () {
-            Route::resource('categories', CategoryController::class)->except('show');
-            Route::get('/categories/data', [CategoryController::class, 'getData'])->name('categories.data');
-            Route::get('/categories/show/{id}', [CategoryController::class, 'show'])->name('categories.show');
+            Route::controller(CategoryController::class)->group(function () {
+                Route::get('categories', 'index')->name('categories.index');
+                Route::get('categories/data', 'getData')->name('categories.data');
+                Route::post('categories', 'store')->name('categories.store');
+                Route::get('categories/{id}/show', 'show')->name('categories.show');
+                Route::put('categories/{id}', 'update')->name('categories.update');
+                Route::delete('categories/{id}', 'destroy')->name('categories.destroy');
+            });
+
 
             Route::resource('subcategories', SubCategoryController::class);
         });

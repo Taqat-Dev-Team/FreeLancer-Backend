@@ -9,7 +9,7 @@ class Category extends Model
 {
     use HasTranslations;
 
-    public $translatable = ['name'];
+    public $translatable = ['name','slug'];
     protected $fillable = ['name', 'icon'];
 
     public function subCategories()
