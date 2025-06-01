@@ -199,6 +199,7 @@
                                     d.search = $('#categorySearchInput').val();
                                 }
                             },
+
                             columns: [
                                 {
                                     data: 'id',
@@ -288,7 +289,6 @@
                 @include('admin.management.categories.edit')
             @endpush
 
-            <!-- Edit Modal -->
 
 @stop
 

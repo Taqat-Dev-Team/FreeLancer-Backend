@@ -30,6 +30,14 @@ return [
 
     'disks' => [
 
+        'categories' => [
+            'driver' => 'local',
+            'root' => public_path('uploads/categories'),
+            'url' => env('APP_URL') . '/uploads/categories',
+            'visibility' => 'public',
+        ],
+
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),

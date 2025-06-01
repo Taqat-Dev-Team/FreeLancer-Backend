@@ -37,10 +37,17 @@
                     </div>
                 </div>
 
-                <div class="modal-footer">
+                <div class=" modal-footer">
+                    <button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
+                        <span class="indicator-label">Save changes</span>
+                        <span class="indicator-progress">Please wait...
+                                  <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                    </button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+
                 </div>
+
+
             </div>
         </form>
     </div>
@@ -51,31 +58,36 @@
         // Clear form and validation errors when the modal is hidden
         $('#addCategoryModal').on('hidden.bs.modal', function () {
             $('#addCategoryForm')[0].reset(); // Reset form fields
-            $('#icon-preview').attr('src', "{{ url('logos/favicon.png') }}"); // Reset image preview to default
+            $('#icon-preview').attr('src', "{{ url('logos/favicon.png') }}"); // Reset image preview
             $('.is-invalid').removeClass('is-invalid'); // Remove invalid classes from inputs
             $('.invalid-feedback').remove(); // Remove error messages
         });
 
         // Image preview functionality for the icon
-        $('#addCategoryForm input[name="icon"]').on('change', function() {
+        $('#addCategoryForm input[name="icon"]').on('change', function () {
             const file = this.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = function(e) {
+                reader.onload = function (e) {
                     $('#icon-preview').attr('src', e.target.result);
                 };
                 reader.readAsDataURL(file);
             } else {
-                $('#icon-preview').attr('src', "{{ url('logos/favicon.png') }}"); // Revert to default if no file selected
+                $('#icon-preview').attr('src', "{{ url('logos/favicon.png') }}");
             }
         });
 
+        // Handle form submission
         $('#addCategoryForm').on('submit', function (e) {
             e.preventDefault(); // Prevent default form submission
 
             let formData = new FormData(this);
             const submitButton = $(this).find('button[type="submit"]');
-            submitButton.attr('disabled', true).text('Saving...'); // Disable button and change text
+
+            // Disable the button and show the spinner
+            submitButton.attr('disabled', true);
+            submitButton.find('.indicator-label').hide();
+            submitButton.find('.indicator-progress').show();
 
             // Clear previous validation errors
             $('.is-invalid').removeClass('is-invalid');
@@ -85,24 +97,21 @@
                 url: "{{ route('admin.management.categories.store') }}",
                 type: 'POST',
                 data: formData,
-                contentType: false, // Essential for FormData
-                processData: false, // Essential for FormData
+                contentType: false,
+                processData: false,
                 success: function (response) {
                     $('#addCategoryModal').modal('hide');
-                    toastr.success(response.message || 'Category added successfully!'); // Use server message or default
-                    $('#categories_table').DataTable().ajax.reload(); // Reload your data table
-                    $('#addCategoryForm')[0].reset(); // Reset form after successful submission
-                    $('#icon-preview').attr('src', "{{ url('logos/favicon.png') }}"); // Reset image preview
+                    toastr.success(response.message || 'Category added successfully!');
+                    $('#categories_table').DataTable().ajax.reload();
+                    $('#addCategoryForm')[0].reset();
+                    $('#icon-preview').attr('src', "{{ url('logos/favicon.png') }}");
                 },
                 error: function (xhr) {
-                    if (xhr.status === 422) { // Laravel validation errors
+                    if (xhr.status === 422) {
                         let errors = xhr.responseJSON.errors;
                         $.each(errors, function (key, value) {
-                            // Find the input field by name (since your HTML has empty IDs initially)
                             let inputField = $('#addCategoryForm').find(`[name="${key}"]`);
-                            inputField.addClass('is-invalid'); // Add Bootstrap's invalid class
-
-                            // Add error message below the input
+                            inputField.addClass('is-invalid');
                             let errorMessage = `<div class="invalid-feedback d-block">${value[0]}</div>`;
                             inputField.after(errorMessage);
                         });
@@ -111,8 +120,11 @@
                         toastr.error('An unexpected error occurred. Please try again.');
                     }
                 },
-                complete: function() {
-                    submitButton.attr('disabled', false).text('Save changes'); // Re-enable button and reset text
+                complete: function () {
+                    // Re-enable the button and hide the spinner
+                    submitButton.attr('disabled', false);
+                    submitButton.find('.indicator-label').show();
+                    submitButton.find('.indicator-progress').hide();
                 }
             });
         });

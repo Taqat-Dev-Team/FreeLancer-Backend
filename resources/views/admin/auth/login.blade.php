@@ -5,7 +5,7 @@
     <title>Login</title>
     <meta charset="utf-8"/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" href="{{ asset('assets/media/logos/favicon.ico') }}"/>
+    <link rel="shortcut icon" href="{{url('logos/favicon.png') }}"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700"/>
     <link href="{{ url('admin/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ url('admin/css/style.bundle.css') }}" rel="stylesheet" type="text/css"/>

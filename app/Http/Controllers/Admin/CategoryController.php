@@ -3,51 +3,36 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\StoreCategoryRequest;
+use App\Http\Requests\Admin\UpdateCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Illuminate\Validation\ValidationException;
 use Yajra\DataTables\DataTables;
-
+use Illuminate\Support\Facades\Log;
 
 class CategoryController extends Controller
 {
-
     public function index()
     {
         return view('admin.management.categories.index');
     }
 
-
     public function getData(Request $request)
     {
-        $categories = Category::withCount('subCategories');
+        $categories = Category::withCount('subCategories')->orderBy('created_at', 'desc');
 
         if ($request->has('search')) {
-            $search = strtolower($request->search); // Convert search term to lowercase
+            $search = strtolower($request->search);
             $categories = $categories->where(function ($query) use ($search) {
                 $query->whereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.en'))) LIKE ?", ["%{$search}%"])
                     ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.ar'))) LIKE ?", ["%{$search}%"]);
             });
         }
 
-
         return DataTables::of($categories)
-            ->addColumn('icon', function ($row) {
-                return '<div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
-                        <a href="#">
-                            <div class="symbol-label">
-                                <img src="' . url($row->getImage()) . '" alt="Icon" class="w-100">
-                            </div>
-                        </a>
-                    </div>';
-            })
-            ->editColumn('sub_categories_count', function ($row) {
-                return '<div class="badge badge-light-info fw-bold rounded text-center">' . $row->sub_categories_count . '</div>';
-            })
+            ->addColumn('icon', fn($row) => '<img src="' . $row->getImageUrl() . '" class="w-50px h-50px rounded-circle">')
+            ->editColumn('sub_categories_count', fn($row) => '<span class="badge badge-info">' . $row->sub_categories_count . '</span>')
             ->addColumn('actions', function ($row) {
                 return '<div class="dropdown">
                         <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
@@ -67,194 +52,82 @@ class CategoryController extends Controller
             ->make(true);
     }
 
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
         try {
-            // Validate the request data
-            $validator = Validator::make($request->all(), [
-                'name_ar' => [
-                    'required', 'string', 'max:255',
-                    function ($attribute, $value, $fail) {
-                        if (\App\Models\Category::where('name->ar', $value)->exists()) {
-                            $fail('This Arabic name already exists.');
-                        }
-                    },
-                ],
-                'name_en' => [
-                    'required', 'string', 'max:255',
-                    function ($attribute, $value, $fail) {
-                        if (\App\Models\Category::where('name->en', $value)->exists()) {
-                            $fail('This English name already exists.');
-                        }
-                    },
-                ],
-                'icon' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
-            ], [
-                'name_ar.required' => 'The Arabic name is required.',
-                'name_ar.string' => 'The Arabic name must be a string.',
-                'name_ar.max' => 'The Arabic name may not be greater than 255 characters.',
-
-                'name_en.required' => 'The English name is required.',
-                'name_en.string' => 'The English name must be a string.',
-                'name_en.max' => 'The English name may not be greater than 255 characters.',
-
-                'icon.required' => 'The icon is required.',
-                'icon.image' => 'The file must be an image.',
-                'icon.mimes' => 'Supported icon formats are: jpeg, png, jpg, gif, svg.',
-                'icon.max' => 'The icon size may not exceed 2MB.',
-            ]);
-
-
-            if ($validator->fails()) {
-                throw new ValidationException($validator);
-            }
-
-
-            $iconPath = null;
-            if ($request->hasFile('icon')) {
-                $iconPath = $request->file('icon')->store('categories', 'public');
-            }
-
-            // Create the new category record in the database
-
             $category = new Category();
             $category->setTranslation('name', 'en', $request->name_en);
             $category->setTranslation('name', 'ar', $request->name_ar);
-            $category->setTranslation('slug', 'ar', Str::slug($request->name_ar));
             $category->setTranslation('slug', 'en', Str::slug($request->name_en));
-            $category->icon = $iconPath;
+            $category->setTranslation('slug', 'ar', Str::slug($request->name_ar));
             $category->save();
 
+            if ($request->hasFile('icon')) {
+                $category
+                    ->addMediaFromRequest('icon')
+                    ->usingFileName(Str::random(20) . '.' . $request->file('icon')->getClientOriginalExtension())
+                    ->storingConversionsOnDisk('categories')
+                    ->toMediaCollection('icon', 'categories');
+            }
 
-            // Return a success JSON response
-            return response()->json(['message' => 'Category added successfully!'], 200);
-
-        } catch (ValidationException $e) {
-            // Return JSON response for validation errors
-            return response()->json([
-                'message' => 'Validation failed.',
-                'errors' => $e->errors(),
-            ], 422);
+            return response()->json(['message' => 'Category added successfully.']);
         } catch (\Exception $e) {
-            // Log any unexpected errors for debugging
-            Log::error('Error adding category: ' . $e->getMessage());
-            // Return a generic error JSON response
-            return response()->json(['message' => 'An unexpected error occurred. Please try again.'], 500);
+            Log::error("Category creation error: " . $e->getMessage());
+            return response()->json(['message' => 'Unexpected error.'], 500);
         }
     }
-
 
     public function show($id)
     {
         $category = Category::findOrFail($id);
-
         return response()->json([
             'id' => $category->id,
             'name_en' => $category->getTranslation('name', 'en'),
             'name_ar' => $category->getTranslation('name', 'ar'),
-            'icon' => $category->getImage(), // optional: for preview if needed
+            'icon' => $category->getImageUrl(),
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateCategoryRequest $request, $id)
     {
-        $category = Category::findOrFail($id);
-
         try {
-            // Validate the request data
-            $validator = Validator::make($request->all(), [
-                'name_ar' => [
-                    'required',
-                    'string',
-                    'max:255',
-                    function ($attribute, $value, $fail) use ($category) {
-                        if (Category::where('id', '!=', $category->id)->where('name->ar', $value)->exists()) {
-                            $fail('This Arabic name already exists.');
-                        }
-                    },
-                ],
-                'name_en' => [
-                    'required',
-                    'string',
-                    'max:255',
-                    function ($attribute, $value, $fail) use ($category) {
-                        if (Category::where('id', '!=', $category->id)->where('name->en', $value)->exists()) {
-                            $fail('This English name already exists.');
-                        }
-                    },
-                ],
-                // Icon is no longer 'required' for update, but if present, must be an image
-                'icon' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
-            ], [
-                'name_ar.required' => 'The Arabic name is required.',
-                'name_ar.string' => 'The Arabic name must be a string.',
-                'name_ar.max' => 'The Arabic name may not be greater than 255 characters.',
+            $category = Category::findOrFail($id);
 
-                'name_en.required' => 'The English name is required.',
-                'name_en.string' => 'The English name must be a string.',
-                'name_en.max' => 'The English name may not be greater than 255 characters.',
-
-                'icon.image' => 'The file must be an image.',
-                'icon.mimes' => 'Supported icon formats are: jpeg, png, jpg, gif, svg.',
-                'icon.max' => 'The icon size may not exceed 2MB.',
-            ]);
-
-            if ($validator->fails()) {
-                throw new ValidationException($validator);
-            }
-
-            // Handle icon file upload (if a new one is provided)
-            if ($request->hasFile('icon')) {
-                // Delete old icon if it exists
-                if ($category->icon && Storage::disk('public')->exists($category->icon)) {
-                    Storage::disk('public')->delete($category->icon);
-                }
-                $iconPath = $request->file('icon')->store('categories_icons', 'public');
-                $category->icon = $iconPath; // Update icon path
-            }
-
-            // Update translatable 'name' attributes
             $category->setTranslation('name', 'en', $request->name_en);
             $category->setTranslation('name', 'ar', $request->name_ar);
-
-            // Update translatable 'slug' attributes
-            $category->setTranslation('slug', 'ar', Str::slug($request->name_ar));
             $category->setTranslation('slug', 'en', Str::slug($request->name_en));
+            $category->setTranslation('slug', 'ar', Str::slug($request->name_ar));
+            $category->save();
 
-            $category->save(); // Save all changes
+            if ($request->hasFile('icon')) {
+                // حذف الصور القديمة من مجموعة 'icon' فقط
+                $category->clearMediaCollection('icon');
 
-            // Return a success JSON response
-            return response()->json(['message' => 'Category updated successfully!'], 200);
+                // إضافة الصورة الجديدة على الديسك 'categories' ضمن مجموعة 'icon'
+                $category->addMediaFromRequest('icon')
+                    ->usingFileName(Str::random(20) . '.' . $request->file('icon')->getClientOriginalExtension())
+                    ->toMediaCollection('icon', 'categories');
+            }
 
-        } catch (ValidationException $e) {
-            return response()->json([
-                'message' => 'Validation failed.',
-                'errors' => $e->errors(),
-            ], 422);
+            return response()->json(['message' => 'Category updated successfully.']);
         } catch (\Exception $e) {
-            Log::error('Error updating category: ' . $e->getMessage());
-            return response()->json(['message' => 'An unexpected error occurred. Please try again.'], 500);
+            Log::error("Category update error: " . $e->getMessage());
+            return response()->json(['message' => 'Unexpected error.'], 500);
         }
     }
-
 
     public function destroy($id)
     {
         $category = Category::findOrFail($id);
 
-        // Check if the category has subcategories
+
         if ($category->subCategories()->count() > 0) {
             return response()->json(['message' => 'Cannot delete category with subcategories.'], 400);
         }
-        if ($category->icon && Storage::exists($category->icon)) {
-            Storage::delete($category->icon);
-        }
 
-        // Delete category from database
+        $category->clearMediaCollection('icon');
         $category->delete();
 
         return response()->json(['message' => 'Category deleted successfully.']);
     }
-
-
 }
