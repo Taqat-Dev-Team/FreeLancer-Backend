@@ -38,7 +38,8 @@ return Application::configure(basePath: dirname(__DIR__))
                 return response()->json([
                     'status' => false,
                     'code' => 422,
-                    'message' => __('messages.validation_failed'),
+//                    'message' =>   __('messages.validation_failed'),
+                    'message' => collect($e->errors())->first()[0] ?? __('messages.validation_failed'),
                     'errors' => $e->errors(),
                 ], 422);
             }

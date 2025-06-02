@@ -16,8 +16,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('cv')->nullable();
             $table->integer('cv_view_count')->default(0);
-            $table->foreignId('category_id')->constrained('categories');
-            $table->foreignId('sub_category_id')->constrained('sub_categories');
+            $table->foreignId('category_id')->constrained('categories')->nullOnDelete();
+            $table->foreignId('sub_category_id')->constrained('sub_categories')->nullOnDelete();
             $table->timestamps();
         });
     }

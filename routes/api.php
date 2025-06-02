@@ -9,9 +9,7 @@ use App\Http\Controllers\Front\Auth\ResetPasswordController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+
 
 //Google Auth
 Route::controller(SocialAuthController::class)->group(function () {
@@ -31,6 +29,7 @@ Route::controller(ResetPasswordController::class)->group(function () {
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('/register', 'register');
+    Route::get('/policies', 'policies');
     Route::post('/login', 'login');
     Route::post('/verify-otp', 'verifyOtp');
     Route::post('/resend-otp', 'resendOtp');
@@ -42,6 +41,8 @@ Route::controller(AuthController::class)->group(function () {
         Route::post('/logout', 'logout');
     });
 });
+
+
 
 
 
