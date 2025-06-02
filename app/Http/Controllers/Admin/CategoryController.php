@@ -32,7 +32,7 @@ class CategoryController extends Controller
 
         return DataTables::of($categories)
             ->addColumn('icon', fn($row) => '<img src="' . $row->getImageUrl() . '" class="w-50px h-50px rounded-circle">')
-            ->editColumn('sub_categories_count', fn($row) => '<span class="badge badge-info">' . $row->sub_categories_count . '</span>')
+            ->editColumn('sub_categories_count', fn($row) => '<span class="badge badge-light-primary">' . $row->sub_categories_count . '</span>')
             ->addColumn('actions', function ($row) {
                 return '<div class="dropdown">
                         <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
@@ -48,6 +48,7 @@ class CategoryController extends Controller
                         </div>
                     </div>';
             })
+                ->addIndexColumn()
             ->rawColumns(['icon', 'actions', 'sub_categories_count'])
             ->make(true);
     }

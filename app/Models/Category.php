@@ -9,16 +9,18 @@ use Spatie\Translatable\HasTranslations;
 
 class Category extends Model implements HasMedia
 {
-    use HasTranslations , InteractsWithMedia;
+    use HasTranslations, InteractsWithMedia;
 
-    public $translatable = ['name','slug'];
+    public $translatable = ['name', 'slug'];
     protected $fillable = ['name', 'icon'];
 
 
     public function getImageUrl()
     {
-        return $this->getFirstMediaUrl('icon') ?: url('logos/favicon.png');
+        return $this->getFirstMediaUrl('icon','thumb') ?: url('logos/favicon.png');
     }
+
+
 
     public function subCategories()
     {

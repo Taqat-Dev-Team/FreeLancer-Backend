@@ -27,9 +27,15 @@
 <style>
     body {
         font-family: 'Tajawal', sans-serif;
-        background-color: #f8f9fa;
+        font-size: 16px; /* الحجم الأساسي */
     }
 
-    </style>
+    * {
+        font-family: 'Tajawal', sans-serif !important;
+        font-size: 14px; /* الحجم الأساسي */
+
+    }
+
+</style>
 
 @stack('css')

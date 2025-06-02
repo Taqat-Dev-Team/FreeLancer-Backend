@@ -152,12 +152,7 @@
 
 
                                 <th class="">
-                                    <span class="dt-column-title">
-                                        <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
-                                            <input class="form-check-input" type="checkbox" data-kt-check="true"
-                                                   data-kt-check-target="#categories_table .form-check-input" value="1">
-                                        </div>
-                                    </span>
+                                   #
                                 </th>
                                 <th>Icon</th>
 
@@ -201,17 +196,9 @@
                             },
 
                             columns: [
-                                {
-                                    data: 'id',
-                                    name: 'id',
-                                    orderable: false,
-                                    searchable: false,
-                                    render: function (data, type, full, meta) {
-                                        return `<div class="form-check form-check-sm form-check-custom form-check-solid">
-                            <input class="form-check-input" type="checkbox" name="id[]" value="${data}" />
-                        </div>`;
-                                    }
-                                },
+
+                                {data: 'DT_RowIndex', name: 'id' },
+
                                 {data: 'icon', name: 'icon', orderable: false, searchable: false},
                                 {data: 'name.en', name: 'name', orderable: false, searchable: true},
                                 {data: 'name.ar', name: 'name'},

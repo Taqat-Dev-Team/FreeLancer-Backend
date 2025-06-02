@@ -37,8 +37,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::delete('categories/{id}', 'destroy')->name('categories.destroy');
             });
 
+            Route::controller(SubCategoryController::class)->group(function () {
+                Route::get('subcategories', 'index')->name('subcategories.index');
+                Route::get('subcategories/data', 'getData')->name('subcategories.data');
+                Route::post('subcategories', 'store')->name('subcategories.store');
+                Route::get('subcategories/{id}/show', 'show')->name('subcategories.show');
+                Route::put('subcategories/{id}', 'update')->name('subcategories.update');
+                Route::delete('subcategories/{id}', 'destroy')->name('subcategories.destroy');
+            });
 
-            Route::resource('subcategories', SubCategoryController::class);
+
         });
     });
 

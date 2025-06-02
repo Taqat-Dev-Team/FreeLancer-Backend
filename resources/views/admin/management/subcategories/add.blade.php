@@ -1,11 +1,11 @@
-<div class="modal fade" id="addCategoryModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="addSubCategoryModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog ">
 
-        <form id="addCategoryForm" enctype="multipart/form-data">
+        <form id="addSubCategoryForm">
             @csrf
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add Category</h5>
+                    <h5 class="modal-title">Add Sub Category</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                 </div>
@@ -14,40 +14,38 @@
                         <label for="name_ar" class="form-label">Arabic Name</label>
                         <input type="text" id="name_ar" name="name_ar" class="form-control"
                                placeholder="Enter Arabic Name">
-                        {{-- Validation feedback will be injected here by JS --}}
                     </div>
                     <div class="mb-3">
                         <label for="name_en" class="form-label">English Name</label>
                         <input type="text" id="name_en" name="name_en" class="form-control"
                                placeholder="Enter English Name">
-                        {{-- Validation feedback will be injected here by JS --}}
                     </div>
+
 
                     <div class="mb-3">
-                        <label for="icon" class="form-label">Category Icon</label>
-                        <input type="file" name="icon" id="icon" class="form-control" accept="image/*">
-                        {{-- Validation feedback will be injected here by JS --}}
+                        <label for="category_id" class="form-label">Category</label>
+                        <select class="form-select" name="category_id" data-control="select2" data-placeholder="Select an option">
+                                data-placeholder="Select Category">
+                            <option value="">Select Category</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->getTranslation('name', 'en') .' -- ' . $category->getTranslation('name', 'ar') }}</option>
+                            @endforeach
+                        </select>
+
                     </div>
 
-                    <div class="d-flex justify-content-center">
-                        <div class="symbol symbol-circle symbol-75px overflow-hidden me-3">
-                            <div class="symbol-label text-center justify-content-center">
-                                <img src="{{ url('logos/favicon.png') }}" id="icon-preview" alt="icon" class="w-75 h-75 object-fit-cover">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class=" modal-footer">
-                    <button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
-                        <span class="indicator-label">Save changes</span>
-                        <span class="indicator-progress">Please wait...
+                    <div class=" modal-footer">
+                        <button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
+                            <span class="indicator-label">Save changes</span>
+                            <span class="indicator-progress">Please wait...
                                   <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                    </button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        </button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+                    </div>
+
 
                 </div>
-
 
             </div>
         </form>
@@ -57,29 +55,15 @@
 <script>
     $(document).ready(function () {
         // Clear form and validation errors when the modal is hidden
-        $('#addCategoryModal').on('hidden.bs.modal', function () {
-            $('#addCategoryForm')[0].reset(); // Reset form fields
-            $('#icon-preview').attr('src', "{{ url('logos/favicon.png') }}"); // Reset image preview
+        $('#addSubCategoryModal').on('hidden.bs.modal', function () {
+            $('#addSubCategoryForm')[0].reset(); // Reset form fields
             $('.is-invalid').removeClass('is-invalid'); // Remove invalid classes from inputs
             $('.invalid-feedback').remove(); // Remove error messages
         });
 
-        // Image preview functionality for the icon
-        $('#addCategoryForm input[name="icon"]').on('change', function () {
-            const file = this.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#icon-preview').attr('src', e.target.result);
-                };
-                reader.readAsDataURL(file);
-            } else {
-                $('#icon-preview').attr('src', "{{ url('logos/favicon.png') }}");
-            }
-        });
 
         // Handle form submission
-        $('#addCategoryForm').on('submit', function (e) {
+        $('#addSubCategoryForm').on('submit', function (e) {
             e.preventDefault(); // Prevent default form submission
 
             let formData = new FormData(this);
@@ -95,23 +79,22 @@
             $('.invalid-feedback').remove();
 
             $.ajax({
-                url: "{{ route('admin.management.categories.store') }}",
+                url: "{{ route('admin.management.subcategories.store') }}",
                 type: 'POST',
                 data: formData,
                 contentType: false,
                 processData: false,
                 success: function (response) {
-                    $('#addCategoryModal').modal('hide');
+                    $('#addSubCategoryModal').modal('hide');
                     toastr.success(response.message || 'Category added successfully!');
-                    $('#categories_table').DataTable().ajax.reload();
-                    $('#addCategoryForm')[0].reset();
-                    $('#icon-preview').attr('src', "{{ url('logos/favicon.png') }}");
+                    $('#sub_categories_table').DataTable().ajax.reload();
+                    $('#addSubCategoryForm')[0].reset();
                 },
                 error: function (xhr) {
                     if (xhr.status === 422) {
                         let errors = xhr.responseJSON.errors;
                         $.each(errors, function (key, value) {
-                            let inputField = $('#addCategoryForm').find(`[name="${key}"]`);
+                            let inputField = $('#addSubCategoryForm').find(`[name="${key}"]`);
                             inputField.addClass('is-invalid');
                             let errorMessage = `<div class="invalid-feedback d-block">${value[0]}</div>`;
                             inputField.after(errorMessage);

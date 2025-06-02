@@ -41,6 +41,7 @@ class SocialAuthController extends Controller
                     Log::info('Existing user linked with Google account.', ['user_id' => $user->id, 'email' => $user->email]);
                 } else {
                     $user = User::create([
+                        'name' => $googleUser->name,
                         'email' => $googleUser->email,
                         'google_id' => $googleUser->id,
                         'provider' => 'google',
