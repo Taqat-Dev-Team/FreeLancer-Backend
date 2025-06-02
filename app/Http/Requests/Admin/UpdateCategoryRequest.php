@@ -22,4 +22,17 @@ class UpdateCategoryRequest extends FormRequest
             'icon' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
         ];
     }
+
+
+    public function messages()
+    {
+        return [
+            'name_ar.required' => 'The Arabic name is required.',
+            'name_en.required' => 'The English name is required.',
+            'icon.image' => 'The icon must be an image file.',
+            'icon.mimes' => 'The icon must be a file of type: jpeg, png, jpg, gif, svg.',
+            'icon.max' => 'The icon may not be greater than 2048 kilobytes.',
+
+        ];
+    }
 }

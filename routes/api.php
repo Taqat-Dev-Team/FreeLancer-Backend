@@ -37,6 +37,7 @@ Route::controller(AuthController::class)->group(function () {
 
     Route::middleware(['auth:sanctum', 'verified.email'])->group(function () {
         Route::get('/profile', 'profile');
+        Route::post('/account-type', 'type');
         Route::post('/lang', 'lang');
         Route::post('/logout', 'logout');
     });

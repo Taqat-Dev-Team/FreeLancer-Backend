@@ -279,7 +279,46 @@ class AuthController extends Controller
         );
     }
 
-    private function extractBearerToken(Request $request): ?string
+    public function type(Request $request)
+    {
+        $request->validate([
+            'type' => 'required|in:1,2', // 1 for freelancer, 2 for client
+        ]);
+        $user = Auth::user('sanctum');
+        if (!$user) {
+            return $this->apiResponse([], __('messages.not_authenticated'), false, 401);
+        }
+
+
+        $token = $this->extractBearerToken($request);
+
+        if ($user->client || $user->freelancer) {
+            return $this->apiResponse([], __('messages.user_already_has_type'), false, 400);
+        }
+
+        if ($request->type == 1) {
+            $user->freelancer()->updateOrCreate(
+                ['user_id' => $user->id],
+                ['status' => 'active']
+            );
+        } else {
+            $user->client()->updateOrCreate(
+                ['user_id' => $user->id],
+                ['status' => 'active']
+            );
+        }
+
+        return $this->apiResponse(
+           new UserResource($user,$token),
+            __('messages.account_type_success'),
+            true,
+            200
+        );
+    }
+
+
+    private
+    function extractBearerToken(Request $request): ?string
     {
         $authHeader = $request->header('Authorization');
 

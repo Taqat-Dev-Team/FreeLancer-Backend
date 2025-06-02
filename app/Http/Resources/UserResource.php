@@ -24,13 +24,32 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'email' => $this->email,
-            'lang' => $this->lang,
+        $baseData = [
+            'id'     => $this->id,
+            'name'   => $this->name,
+            'email'  => $this->email,
+            'mobile'  => $this->mobile,
+            'country' => new  CountryResource($this->country),
+            'lang'   => $this->lang,
             'status' => $this->status,
-            'token' => $this->token,
+            'token'  => $this->token,
+            'bio'  => $this->bio,
+            'type'   => $this->client ? 'client' : 'freelancer',
         ];
+
+        if ($this->client) {
+            return $baseData;
+        }
+
+        if ($this->freelancer) {
+            return array_merge($baseData, [
+                'cv_view_count' => $this->freelancer->cv_view_count,
+                'category'      => new CategoryResource($this->freelancer->category),
+                'subCategory'   => new SubCategoryResource($this->freelancer->subCategory),
+            ]);
+        }
+
+        return $baseData;
     }
+
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\StoreSubCategoryRequest;
+use App\Http\Requests\Admin\UpdateSubCategoryRequest;
 use App\Models\Category;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
@@ -71,13 +73,9 @@ class SubCategoryController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(StoreSubCategoryRequest $request)
     {
-        $request->validate([
-            'name_en' => 'required|string|max:255',
-            'name_ar' => 'required|string|max:255',
-            'category_id' => 'required|exists:categories,id',
-        ]);
+
 
         $subcategory = new SubCategory();
         $subcategory->setTranslation('name', 'en', $request->name_en);
@@ -90,7 +88,7 @@ class SubCategoryController extends Controller
         return response()->json(['success' => true, 'message' => 'SubCategory created successfully']);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateSubCategoryRequest $request, $id)
     {
         $request->validate([
             'name_en' => 'required|string|max:255',
@@ -115,12 +113,6 @@ class SubCategoryController extends Controller
         $subcategory->delete();
 
         return response()->json(['success' => true, 'message' => 'SubCategory deleted successfully']);
-    }
-
-    public function getSubCategoriesByCategory($categoryId)
-    {
-        $subcategories = SubCategory::where('category_id', $categoryId)->get();
-        return response()->json($subcategories);
     }
 
 

@@ -146,6 +146,8 @@ return [
         503 => 'Service Unavailable',
     ],
 
+    'account_type_success'=> 'Account type updated successfully',
+    'user_already_has_type'=> 'User already has  account type',
 
 ];
 
