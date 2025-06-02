@@ -29,7 +29,6 @@ Route::controller(ResetPasswordController::class)->group(function () {
     Route::post('/reset-password', 'reset'); // لإعادة تعيين كلمة المرور
 });
 
-// Auth Routes for non-authenticated users.
 Route::controller(AuthController::class)->group(function () {
     Route::post('/register', 'register');
     Route::post('/login', 'login');

@@ -17,21 +17,35 @@
     <!-- Google Fonts: Tajawal -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 
+
     <style>
         body {
-            font-family: 'Tajawal', sans-serif;
-            background-color: #f8f9fa;
+            background-image: url({{ url('admin//media/auth/bg10.jpeg') }});
         }
 
+        [data-bs-theme="dark"]
         body {
-            background-image: url("{{ url('admin/media/auth/bg10.jpeg') }}");
+            background-image: url({{url('admin/media/auth/bg9-dark.jpeg')}});
         }
+
+
+        body {
+            /*font-family: 'Tajawal', sans-serif;*/
+            /*background-color: #f8f9fa;*/
+        }
+
+
     </style>
+
+
     <div class="d-flex flex-column flex-lg-row flex-column-fluid justify-content-center">
         <div class="d-flex flex-column-fluid flex-lg-row-auto justify-content-center justify-content-lg-end p-12">
             <div class="bg-body d-flex flex-column flex-center rounded-4 w-md-600px p-10">
                 <a href="{{ url('/') }}" class=" justify-content-center text-center">
-                    <img alt="Logo" src="{{ url('logos/logo.png') }}" class="h-125px"/>
+                    <img alt="Logo" src="{{url('/logos/logo.png')}}" class="h-125px theme-light-show"/>
+                    <img alt="Logo" src="{{url('/logos/white.png')}}" class="h-80px theme-dark-show"/>
+
+
                 </a>
 
                 <div class="d-flex flex-center flex-column align-items-stretch h-50 w-md-400px ">
@@ -77,6 +91,8 @@
 <script src="{{ url('admin/plugins/global/plugins.bundle.js') }}"></script>
 <script src="{{ url('admin/js/scripts.bundle.js') }}"></script>
 <script src="{{ url('admin/js/custom/login.js') }}"></script>
+
+
 
 </body>
 
