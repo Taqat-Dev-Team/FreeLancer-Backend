@@ -38,14 +38,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::delete('categories/{id}', 'destroy')->name('categories.destroy');
             });
 
-            Route::controller(CountryController::class)->group(function () {
-                Route::get('countries', 'index')->name('countries.index');
-                Route::get('countries/data', 'getData')->name('countries.data');
-                Route::post('countries', 'store')->name('countries.store');
-                Route::get('countries/{id}/show', 'show')->name('countries.show');
-                Route::put('countries/{id}', 'update')->name('countries.update');
-                Route::delete('countries/{id}', 'destroy')->name('countries.destroy');
-            });
 
 
             Route::controller(SubCategoryController::class)->group(function () {
@@ -56,6 +48,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::put('subcategories/{id}', 'update')->name('subcategories.update');
                 Route::delete('subcategories/{id}', 'destroy')->name('subcategories.destroy');
             });
+
+            Route::controller(CountryController::class)->group(function () {
+                Route::get('countries', 'index')->name('countries.index');
+                Route::get('countries/data', 'getData')->name('countries.data');
+                Route::post('countries', 'store')->name('countries.store');
+                Route::get('countries/{id}/show', 'show')->name('countries.show');
+                Route::put('countries/{id}', 'update')->name('countries.update');
+                Route::delete('countries/{id}', 'destroy')->name('countries.destroy');
+            });
+
 
 
         });

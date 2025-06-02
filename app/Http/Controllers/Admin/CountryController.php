@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreCategoryRequest;
 use App\Http\Requests\Admin\UpdateCategoryRequest;
 use App\Models\Category;
+use App\Models\Country;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
@@ -20,19 +21,25 @@ class CountryController extends Controller
 
     public function getData(Request $request)
     {
-        $categories = Category::withCount('subCategories')->orderBy('created_at', 'desc');
+        $categories = Country::orderBy('created_at', 'desc');
 
         if ($request->has('search')) {
             $search = strtolower($request->search);
             $categories = $categories->where(function ($query) use ($search) {
                 $query->whereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.en'))) LIKE ?", ["%{$search}%"])
-                    ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.ar'))) LIKE ?", ["%{$search}%"]);
+                    ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.ar'))) LIKE ?", ["%{$search}%"])
+                    ->orWhere('code', 'LIKE', "%{$search}%")
+                    ->orWhere('number_code', 'LIKE', "%{$search}%");
+
             });
         }
 
         return DataTables::of($categories)
-            ->addColumn('icon', fn($row) => '<img src="' . $row->getImageUrl() . '" class="w-50px h-50px rounded-circle">')
-            ->editColumn('sub_categories_count', fn($row) => '<span class="badge badge-light-primary">' . $row->sub_categories_count . '</span>')
+            ->addColumn('flag', function ($row) {
+                $countryCode = strtolower($row->code); // مثال: "SA" => "sa"
+                $flagUrl = "https://flagcdn.com/w40/{$countryCode}.png";
+                return '<img src="' . $flagUrl . '"  class="w-30px h-30px rounded-circle"  alt="Flag">';
+            })
             ->addColumn('actions', function ($row) {
                 return '<div class="dropdown">
                         <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
@@ -40,16 +47,16 @@ class CountryController extends Controller
                         </a>
                         <div class="menu menu-sub menu-sub-dropdown menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px py-3" data-kt-menu="true">
                             <div class="menu-item px-3">
-                                <a href="#" class="menu-link px-3 edit-category" data-id="' . $row->id . '">Edit</a>
+                                <a href="#" class="menu-link px-3 edit-country" data-id="' . $row->id . '">Edit</a>
                             </div>
                             <div class="menu-item px-3">
-                                <a href="#" class="menu-link px-3 delete-category btn btn-active-light-danger" data-id="' . $row->id . '">Delete</a>
+                                <a href="#" class="menu-link px-3 delete-country btn btn-active-light-danger" data-id="' . $row->id . '">Delete</a>
                             </div>
                         </div>
                     </div>';
             })
-                ->addIndexColumn()
-            ->rawColumns(['icon', 'actions', 'sub_categories_count'])
+            ->addIndexColumn()
+            ->rawColumns(['icon', 'actions','flag'])
             ->make(true);
     }
 

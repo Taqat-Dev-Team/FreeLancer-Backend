@@ -65,7 +65,8 @@
                 </div>
                 <!--end:Menu item-->
                 <!--begin:Menu item-->
-                <div data-kt-menu-trigger="click" class="menu-item {{ request()->routeIs('admin.management*') ? 'here show' : '' }} menu-accordion" >
+                <div data-kt-menu-trigger="click"
+                     class="menu-item {{ request()->routeIs('admin.management*') ? 'here show' : '' }} menu-accordion">
                     <!--begin:Menu link-->
                     <span class="menu-link">
                         <span class="menu-icon">
@@ -80,7 +81,8 @@
                     <!--begin:Menu sub-->
                     <div class="menu-sub menu-sub-accordion">
                         <!--begin:Menu item-->
-                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('admin.management.categories.*') || request()->routeIs('admin.management.subcategories.*')? 'here show' : '' }}">
+                        <div data-kt-menu-trigger="click"
+                             class="menu-item menu-accordion {{ request()->routeIs('admin.management.categories.*') || request()->routeIs('admin.management.subcategories.*')? 'here show' : '' }}">
                             <!--begin:Menu link-->
                             <span class="menu-link">
                                 <span class="menu-bullet">
@@ -95,7 +97,8 @@
                                 <!--begin:Menu item-->
                                 <div class="menu-item">
                                     <!--begin:Menu link-->
-                                    <a class="menu-link {{ request()->routeIs('admin.management.categories.*') ? 'active': ''}} " href="{{route('admin.management.categories.index')}}">
+                                    <a class="menu-link {{ request()->routeIs('admin.management.categories.*') ? 'active': ''}} "
+                                       href="{{route('admin.management.categories.index')}}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
@@ -107,7 +110,8 @@
                                 <!--begin:Menu item-->
                                 <div class="menu-item">
                                     <!--begin:Menu link-->
-                                    <a class="menu-link {{ request()->routeIs('admin.management.subcategories.*') ? 'active': ''}}" href="{{route('admin.management.subcategories.index')}}">
+                                    <a class="menu-link {{ request()->routeIs('admin.management.subcategories.*') ? 'active': ''}}"
+                                       href="{{route('admin.management.subcategories.index')}}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
@@ -123,6 +127,19 @@
 
 
                     </div>
+
+                    <div class="menu-item menu-sub-accordion">
+                        <!--begin:Menu link-->
+                        <a class="menu-link  {{request()->routeIs('admin.management.countries.*')? 'active' : '' }} "
+                           href="{{route('admin.management.countries.index')}}">
+													<span class="menu-bullet">
+														<span class="bullet bullet-dot"></span>
+													</span>
+                            <span class="menu-title">Countries</span>
+                        </a>
+                        <!--end:Menu link-->
+                    </div>
+
                     <!--end:Menu sub-->
                 </div>
                 <!--end:Menu item-->
