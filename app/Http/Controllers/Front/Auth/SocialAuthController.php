@@ -56,7 +56,7 @@ class SocialAuthController extends Controller
             // إنشاء Sanctum Token
             $token = $user->createToken('auth-token')->plainTextToken;
 
-            return redirect(env('FRONTEND_URL') . '/auth/callback#token=' . $token . '&user_id=' . $user->id);
+            return redirect(env('FRONTEND_URL') . '/auth/callback&token=' . $token . '&user_id=' . $user->id);
 
         } catch (Exception $e) {
             Log::error('Google social login failed.', [

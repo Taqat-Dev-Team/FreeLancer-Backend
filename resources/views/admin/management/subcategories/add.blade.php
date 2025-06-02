@@ -24,13 +24,13 @@
 
                     <div class="mb-3">
                         <label for="category_id" class="form-label">Category</label>
-                        <select class="form-select" name="category_id" data-control="select2" data-placeholder="Select an option">
-                                data-placeholder="Select Category">
+                        <select class="form-select" name="category_id" id="category_id_add" data-control="select2" data-placeholder="Select Category">
                             <option value="">Select Category</option>
                             @foreach($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->getTranslation('name', 'en') .' -- ' . $category->getTranslation('name', 'ar') }}</option>
                             @endforeach
                         </select>
+
 
                     </div>
 
@@ -54,11 +54,18 @@
 
 <script>
     $(document).ready(function () {
+
+
+        $('#category_id_add').select2({
+            dropdownParent: $('#addSubCategoryModal'),
+            width: '100%'
+        });
         // Clear form and validation errors when the modal is hidden
         $('#addSubCategoryModal').on('hidden.bs.modal', function () {
             $('#addSubCategoryForm')[0].reset(); // Reset form fields
             $('.is-invalid').removeClass('is-invalid'); // Remove invalid classes from inputs
             $('.invalid-feedback').remove(); // Remove error messages
+
         });
 
 

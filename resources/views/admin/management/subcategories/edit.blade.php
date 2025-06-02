@@ -52,8 +52,10 @@
 </div>
 <script>
     $(document).ready(function () {
-        // ... (previous JavaScript code for hidden.bs.modal and icon preview remains the same) ...
-
+        $('#edit_category_id').select2({
+            dropdownParent: $('#editSubCategoryModal'),
+            width: '100%'
+        });
         // Event listener for opening the edit modal and populating data
         $(document).on('click', '.edit-subcategory', function (e) {
             e.preventDefault();
