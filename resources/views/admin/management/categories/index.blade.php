@@ -1,7 +1,7 @@
-@extends('admin.layouts.master', ['title' => 'Categories'])
+@extends('admin.layouts.master', ['title' => 'Categories Management'])
 
 
-@section('toolbarTitle', 'Categories')
+@section('toolbarTitle', 'Categories Management')
 @section('toolbarSubTitle', 'Management')
 @section('toolbarPage', 'All Categories')
 @section('toolbarActions')
@@ -200,7 +200,7 @@
 
                                 {data: 'DT_RowIndex', name: 'id' },
 
-                                {data: 'icon', name: 'icon', orderable: false, searchable: false},
+                                {data: 'icon', name: 'icon', orderable: true, searchable: false},
                                 {data: 'name.en', name: 'name', orderable: false, searchable: true},
                                 {data: 'name.ar', name: 'name'},
                                 {

@@ -21,21 +21,11 @@
 <link href="{{url('admin/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
 
 
-<!-- Google Fonts: Tajawal -->
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
 <style>
     body {
-        font-family: 'Tajawal', sans-serif;
-        font-size: 16px; /* الحجم الأساسي */
+        font-family: 'Cairo', sans-serif;
     }
-
-    * {
-        font-family: 'Tajawal', sans-serif !important;
-        font-size: 14px; /* الحجم الأساسي */
-
-    }
-
 </style>
 
 @stack('css')

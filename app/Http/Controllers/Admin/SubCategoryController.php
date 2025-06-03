@@ -75,8 +75,6 @@ class SubCategoryController extends Controller
 
     public function store(StoreSubCategoryRequest $request)
     {
-
-
         $subcategory = new SubCategory();
         $subcategory->setTranslation('name', 'en', $request->name_en);
         $subcategory->setTranslation('name', 'ar', $request->name_ar);

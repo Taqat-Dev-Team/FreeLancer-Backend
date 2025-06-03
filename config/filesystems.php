@@ -54,6 +54,14 @@ return [
         ],
 
 
+
+        'skills' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/uploads/skills'),
+            'url' => env('APP_URL') . '/storage/uploads/skills',
+            'visibility' => 'public',
+        ],
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),

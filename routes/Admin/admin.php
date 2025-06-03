@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\CountryController;
+use App\Http\Controllers\Admin\SkillsController;
 
 
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -56,6 +57,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::get('countries/{id}/show', 'show')->name('countries.show');
                 Route::put('countries/{id}', 'update')->name('countries.update');
                 Route::delete('countries/{id}', 'destroy')->name('countries.destroy');
+            });
+
+            Route::controller(SkillsController::class)->group(function () {
+                Route::get('skills', 'index')->name('skills.index');
+                Route::get('skills/data', 'getData')->name('skills.data');
+                Route::post('skills', 'store')->name('skills.store');
+                Route::get('skills/{id}/show', 'show')->name('skills.show');
+                Route::put('skills/{id}', 'update')->name('skills.update');
+                Route::delete('skills/{id}', 'destroy')->name('skills.destroy');
             });
 
 

@@ -1,13 +1,13 @@
-@extends('admin.layouts.master', ['title' => 'Sub Categories Management'])
+@extends('admin.layouts.master', ['title' => 'Skills Management'])
 
 
-@section('toolbarTitle', 'Sub Categories Management')
+@section('toolbarTitle', 'Skills Management')
 @section('toolbarSubTitle', 'Management')
-@section('toolbarPage', 'All Sub Categories')
+@section('toolbarPage', 'All Skills')
 @section('toolbarActions')
     <div class="d-flex align-items-center gap-2 gap-lg-3">
         <a href="#" class="btn btn-flex btn-primary h-40px fs-7 fw-bold" data-bs-toggle="modal"
-           data-bs-target="#addSubCategoryModal"><i class="ki-outline ki-plus"></i> Add Sub Category</a>
+           data-bs-target="#addSkillModal"><i class="ki-outline ki-plus"></i> Add Skills</a>
 
     </div>
 @stop
@@ -24,12 +24,12 @@
                     <div class="d-flex align-items-center position-relative my-1">
                         <i class="ki-outline ki-magnifier fs-3 position-absolute ms-5"></i>
                         <input type="text"
-                               id="SubcategorySearchInput" class="form-control form-control-solid w-250px ps-13"
-                               placeholder="Search Sub Category">
+                               id="SkillsSearchInput" class="form-control form-control-solid w-250px ps-13"
+                               placeholder="Search Skills">
                     </div>
                     <!--end::Search-->
                 </div>
-                <!--begin::Card title-->
+
                 <!--begin::Card toolbar-->
                 <div class="card-toolbar">
                     <!--begin::Toolbar-->
@@ -97,10 +97,10 @@
             <!--begin::Card body-->
             <div class="card-body py-4">
                 <!--begin::Table-->
-                <div id="Subcategories" class="dt-container dt-bootstrap5 dt-empty-footer">
+                <div id="skills" class="dt-container dt-bootstrap5 dt-empty-footer">
                     <div id="" class="table-responsive">
 
-                        <table id="sub_categories_table" class="table table-row-bordered gy-5">
+                        <table id="skills_table" class="table table-row-bordered gy-5">
                             <thead>
                             <tr class="fw-semibold fs-6 text-muted">
 
@@ -108,6 +108,7 @@
                                 <th class="">
                                     #
                                 </th>
+                                <th>Icon</th>
 
                                 <th>Name En</th>
                                 <th>Name Ar</th>
@@ -134,67 +135,69 @@
                       type="text/css"/>
                 <script src="{{url('admin/plugins/custom/datatables/datatables.bundle.js')}}"></script>
 
-
-
-
                 {{--            datatable--}}
                 <script>
                     $(document).ready(function () {
-                        const table = $('#sub_categories_table').DataTable({
+                        const table = $('#skills_table').DataTable({
                             processing: true,
                             serverSide: true,
                             order: [[0, 'desc']],
+
                             ajax: {
-                                url: '{{ route('admin.management.subcategories.data') }}',
+                                url: '{{ route('admin.management.skills.data') }}',
                                 data: function (d) {
-                                    d.search = $('#SubcategorySearchInput').val();
+                                    d.search = $('#SkillsSearchInput').val();
                                     d.category_id = $('#category_id').val();
+
                                 }
                             },
 
-
-
                             columns: [
+
                                 {data: 'DT_RowIndex', name: 'id'},
+
+                                {data: 'icon', name: 'icon', orderable: false, searchable: false},
                                 {data: 'name.en', name: 'name', orderable: true, searchable: true},
                                 {data: 'name.ar', name: 'name'},
                                 {
                                     data: 'category',
                                     class: 'text-center',
                                     name: 'category',
-                                    orderable: false,
-                                    searchable: true
+                                    orderable: true,
+                                    searchable: false
                                 },
                                 {data: 'actions', name: 'actions', orderable: false, searchable: false},
                             ],
                             drawCallback: function () {
                                 // Re-init dropdowns after DataTable redraw
                                 KTMenu.createInstances();
+                                // Bind delete and edit button events
                                 bindActionButtons();
                             }
 
                         });
 
+
                         // Apply Filter
                         $('#applyFilters').on('click', function () {
-                            $('#sub_categories_table').DataTable().ajax.reload();
+                            $('#skills_table').DataTable().ajax.reload();
                         });
 
-// Reset Filter
+
                         $('#resetFilters').on('click', function () {
                             $('#category_id').val([]).trigger('change'); // تعيين مصفوفة فارغة بدلاً من null
-                            $('#sub_categories_table').DataTable().ajax.reload();
+                            $('#skills_table').DataTable().ajax.reload();
                         });
 
 
-                        // Search input event
-                        $('#SubcategorySearchInput').on('keyup', function () {
+
+                        $('#SkillsSearchInput').on('keyup', function () {
                             table.search(this.value).draw();
                         });
 
 
                         function bindActionButtons() {
-                            $('.delete-subcategory').off('click').on('click', function (e) {
+                            $('.delete-skill').off('click').on('click', function (e) {
                                 e.preventDefault();
                                 const id = $(this).data('id');
                                 Swal.fire({
@@ -208,17 +211,17 @@
                                 }).then((result) => {
                                     if (result.isConfirmed) {
                                         $.ajax({
-                                            url: '/admin/subcategories/' + id,
+                                            url: '/admin/skills/' + id,
                                             type: 'DELETE',
                                             data: {
                                                 _token: '{{ csrf_token() }}'
                                             },
                                             success: function (response) {
-                                                toastr.success('Sub Category deleted successfully');
-                                                $('#sub_categories_table').DataTable().ajax.reload();
+                                                toastr.success('Skill deleted successfully');
+                                                $('#skills_table').DataTable().ajax.reload();
                                             },
                                             error: function (xhr) {
-                                                toastr.error('Error deleting Sub category', xhr.responseJSON.message || 'An error occurred');
+                                                toastr.error('Error deleting Skill', xhr.responseJSON.message || 'An error occurred');
                                             }
                                         });
                                     }
@@ -231,8 +234,8 @@
                 </script>
 
 
-    @include('admin.management.subcategories.add')
-    @include('admin.management.subcategories.edit')
+    @include('admin.management.skills.add')
+    @include('admin.management.skills.edit')
     @endpush
 
 @stop

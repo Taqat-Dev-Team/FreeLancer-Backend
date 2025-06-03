@@ -91,6 +91,11 @@ class User extends Authenticatable implements HasMedia
         return $this->getFirstMediaUrl('photo', 'thumb') ?: url('logos/favicon.png');
     }
 
+    public function skills()
+    {
+        return $this->belongsToMany(Skills::class, 'freelancers_skills', 'freelancer_id', 'skill_id')
+            ->withTimestamps();
+    }
 
 
 }

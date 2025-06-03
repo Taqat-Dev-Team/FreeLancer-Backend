@@ -1,7 +1,7 @@
-@extends('admin.layouts.master', ['title' => 'Countries'])
+@extends('admin.layouts.master', ['title' => 'Countries Management'])
 
 
-@section('toolbarTitle', 'Countries')
+@section('toolbarTitle', 'Countries Management')
 @section('toolbarSubTitle', 'Management')
 @section('toolbarPage', 'All Countries')
 @section('toolbarActions')
@@ -97,7 +97,7 @@
 
                                 {data: 'DT_RowIndex', name: 'id'},
 
-                                {data: 'flag', name: 'flag', orderable: false, searchable: false},
+                                {data: 'flag', name: 'flag', orderable: true, searchable: false},
                                 {data: 'name.en', name: 'name', orderable: true, searchable: true},
                                 {data: 'name.ar', name: 'name', orderable: true, searchable: true},
                                 {data: 'code', name: 'code', orderable: true, searchable: true},

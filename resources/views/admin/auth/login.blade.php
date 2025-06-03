@@ -14,24 +14,21 @@
 <body id="kt_body" class="app-blank bgi-size-cover bgi-attachment-fixed bgi-position-center">
 <div class="d-flex flex-column flex-root" id="kt_app_root">
 
-    <!-- Google Fonts: Tajawal -->
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
 
 
     <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+        }
+
         body {
             background-image: url({{ url('admin//media/auth/bg10.jpeg') }});
         }
 
         [data-bs-theme="dark"]
         body {
-            background-image: url({{url('admin/media/auth/bg9-dark.jpeg')}});
-        }
-
-
-        body {
-            /*font-family: 'Tajawal', sans-serif;*/
-            /*background-color: #f8f9fa;*/
+            background-image: url({{url('admin/media/auth/1920x1080.png')}});
         }
 
 
@@ -91,7 +88,6 @@
 <script src="{{ url('admin/plugins/global/plugins.bundle.js') }}"></script>
 <script src="{{ url('admin/js/scripts.bundle.js') }}"></script>
 <script src="{{ url('admin/js/custom/login.js') }}"></script>
-
 
 
 </body>

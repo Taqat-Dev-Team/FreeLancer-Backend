@@ -82,13 +82,13 @@
                     <div class="menu-sub menu-sub-accordion">
                         <!--begin:Menu item-->
                         <div data-kt-menu-trigger="click"
-                             class="menu-item menu-accordion {{ request()->routeIs('admin.management.categories.*') || request()->routeIs('admin.management.subcategories.*')? 'here show' : '' }}">
+                             class="menu-item menu-accordion {{ request()->routeIs('admin.management.categories.*') || request()->routeIs('admin.management.subcategories.*') || request()->routeIs('admin.management.skills.*')? 'here show' : '' }}">
                             <!--begin:Menu link-->
                             <span class="menu-link">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
-                                <span class="menu-title">Categories</span>
+                                <span class="menu-title">Categories & Skills</span>
                                 <span class="menu-arrow"></span>
                             </span>
                             <!--end:Menu link-->
@@ -120,13 +120,24 @@
                                     <!--end:Menu link-->
                                 </div>
 
+                                <div class="menu-item">
+                                    <!--begin:Menu link-->
+                                    <a class="menu-link {{ request()->routeIs('admin.management.skills.*') ? 'active': ''}}"
+                                       href="{{route('admin.management.skills.index')}}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">Skills</span>
+                                    </a>
+                                    <!--end:Menu link-->
+                                </div>
+
                             </div>
                             <!--end:Menu sub-->
                         </div>
                         <!--end:Menu item-->
-
-
                     </div>
+
 
                     <div class="menu-item menu-sub-accordion">
                         <!--begin:Menu link-->
@@ -139,6 +150,7 @@
                         </a>
                         <!--end:Menu link-->
                     </div>
+
 
                     <!--end:Menu sub-->
                 </div>
