@@ -103,7 +103,7 @@ return [
     'login_success' => 'Login successful.',
     'logout_success' => 'Logout successful.',
     'profile_success' => 'User profile retrieved successfully.',
-    'invalid_credentials' => 'Invalid credentials.',
+    'invalid_credentials' => ' Invalid email or password.',
     'not_authenticated' => 'User not authenticated.',
     'language_updated' => 'Language updated successfully.',
     'success' => 'Operation completed successfully.',

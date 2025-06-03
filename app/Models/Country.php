@@ -10,6 +10,9 @@ class Country extends Model
     use HasTranslations;
     protected $fillable = ['name', 'code', 'number_code'];
 
+    protected $appends = ['flag'];
+
+
     public $timestamps = false;
 
     public $translatable = ['name'];
@@ -17,5 +20,12 @@ class Country extends Model
     public function users()
     {
         return $this->hasMany(User::class);
+    }
+
+
+    public function getFlagAttribute()
+    {
+        $countryCode = strtolower($this->code);
+        return "https://flagcdn.com/w40/{$countryCode}.png";
     }
 }

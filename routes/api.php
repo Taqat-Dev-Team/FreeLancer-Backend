@@ -48,6 +48,7 @@ Route::controller(AuthController::class)->group(function () {
 Route::controller(GeneralController::class)->group(function () {
     Route::get('/policies', 'policies');
     Route::get('/categories', 'categories');
+    Route::get('/countries', 'countries');
     Route::get('/subcategories', 'subcategories');
     Route::get('/subcategories/{id}', 'CategorySubcategories');
 });
@@ -55,3 +56,4 @@ Route::controller(GeneralController::class)->group(function () {
 
 
 require  __DIR__ . '/freelancers.php';
+require  __DIR__ . '/clients.php';

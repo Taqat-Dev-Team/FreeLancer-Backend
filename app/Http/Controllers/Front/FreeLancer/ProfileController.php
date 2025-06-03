@@ -21,14 +21,7 @@ class ProfileController extends Controller
 
     public function saveData(FreelancerProfileRequest $request)
     {
-
         $user = Auth::user();
-
-
-        if (!$user) {
-            return $this->apiResponse([], __('messages.not_authenticated'), false, 401);
-        }
-
         $token = $this->extractBearerToken($request);
 
         try {

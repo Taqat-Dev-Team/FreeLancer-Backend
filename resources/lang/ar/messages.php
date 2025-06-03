@@ -92,7 +92,7 @@ return [
     'login_success' => 'تم تسجيل الدخول بنجاح.',
     'logout_success' => 'تم تسجيل الخروج بنجاح.',
     'profile_success' => 'تم استرجاع ملف المستخدم بنجاح.',
-    'invalid_credentials' => 'بيانات الاعتماد غير صحيحة.',
+    'invalid_credentials' => 'خطأ في كلمة البريد او كلمة المرور',
     'not_authenticated' => 'المستخدم غير مصادق.',
     'language_updated' => 'تم تحديث اللغة بنجاح.',
     'success' => 'تمت العملية بنجاح.',

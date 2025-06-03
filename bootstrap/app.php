@@ -24,11 +24,14 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin' => \App\Http\Middleware\admin::class,
             'verified.email' => \App\Http\Middleware\EnsureEmailIsVerified::class,
+            'client' => \App\Http\Middleware\ClientMiddleware::class,
+            'freelancer' => \App\Http\Middleware\FreeLancerMiddleware::class,
 
         ]);
 
         $middleware->appendToGroup('api', [
             \App\Http\Middleware\SetLocale::class,
+
 
         ]);
     })

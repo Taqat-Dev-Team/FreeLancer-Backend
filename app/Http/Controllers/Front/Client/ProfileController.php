@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front\Client;
 use App\ApiResponseTrait;
 use App\Http\Controllers\Controller;
 
+use App\Http\Requests\Front\ClientProfileRequest;
 use App\Http\Resources\UserResource;
 use App\Mail\OtpMail;
 
@@ -13,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 
 class ProfileController extends Controller
@@ -20,36 +22,33 @@ class ProfileController extends Controller
     use ApiResponseTrait;
 
 
-    public function saveData(Request $request)
+    public function saveData(ClientProfileRequest $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'bio' => 'nullable|string|max:2000',
-            'birth_date' => 'required|date',
-            'available_hire' => 'nullable|boolean',
-            'category_id'=> 'required|exists:categories,id',
-            'sub_category_id'=> 'required|exists:sub_categories,id',
-        ]);
 
         $user = Auth::user();
-        if (!$user) {
-            return $this->apiResponse([], __('messages.not_authenticated'), false, 401);
-        }
-
         $token = $this->extractBearerToken($request);
-
         try {
-            $user->name = $validatedData['name'];
+            $user->fill([
+                'name' => $request->name,
+                'bio' => $request->bio ?? '',
+                'gender' => $request->gender,
+            ]);
+
+            // معالجة الصورة
             if ($request->hasFile('photo')) {
-
+                $user->clearMediaCollection('photo');
+                $user->addMediaFromRequest('photo')
+                    ->usingFileName(Str::random(20) . '.' . $request->file('photo')->getClientOriginalExtension())
+                    ->toMediaCollection('photo', 'clients');
             }
-            $user->bio = $validatedData['bio'] ?? '';
-            $user->birth_date = $validatedData['birth_date'];
-            $user->available_hire = $validatedData['available_hire'] ?? false;
-            $user->save();
 
-            // هنا يمكنك حفظ الفئات والبيانات الأخرى حسب الحاجة
+            // تحديث بيانات الكلاينت المرتبطة
+            $client = $user->client;
+            $client->update([
+                'website' => $request->website ?? '',
+            ]);
+
+            $user->save();
 
             return $this->apiResponse(
                 new UserResource($user, $token),
@@ -64,9 +63,9 @@ class ProfileController extends Controller
                 'file' => $e->getFile(),
                 'line' => $e->getLine()
             ]);
+
             return $this->apiResponse([], __('messages.data_save_failed'), false, 500);
         }
-
     }
 
     private function extractBearerToken(Request $request): ?string

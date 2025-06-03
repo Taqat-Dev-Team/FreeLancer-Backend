@@ -36,9 +36,8 @@ class CountryController extends Controller
 
         return DataTables::of($categories)
             ->addColumn('flag', function ($row) {
-                $countryCode = strtolower($row->code); // مثال: "SA" => "sa"
-                $flagUrl = "https://flagcdn.com/w40/{$countryCode}.png";
-                return '<img src="' . $flagUrl . '"  class="w-30px h-30px rounded-circle"  alt="Flag">';
+
+                return '<img src="' . $row->flag . '"  class="w-30px h-30px rounded-circle"  alt="Flag">';
             })
             ->addColumn('actions', function ($row) {
                 return '<div class="dropdown">

@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Front;
 use App\ApiResponseTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CategoryResource;
+use App\Http\Resources\CountryResource;
 use App\Http\Resources\SubCategoryResource;
 use App\Models\Category;
+use App\Models\Country;
 use App\Models\SubCategory;
 
 class GeneralController extends Controller
@@ -26,6 +28,27 @@ class GeneralController extends Controller
         }
         return $this->apiResponse(
             CategoryResource:: collection($categories),
+            __('messages.success'),
+            true,
+            200,
+        );
+
+    }
+
+
+    public function countries()
+    {
+        $countries = Country::all();
+        if ($countries->isEmpty()) {
+            return $this->apiResponse(
+                null,
+                __('messages.success'),
+                false,
+                404,
+            );
+        }
+        return $this->apiResponse(
+            CountryResource:: collection($countries),
             __('messages.success'),
             true,
             200,

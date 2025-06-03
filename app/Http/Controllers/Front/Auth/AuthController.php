@@ -290,10 +290,6 @@ class AuthController extends Controller
             'type' => 'required|in:1,2', // 1 for freelancer, 2 for client
         ]);
         $user = Auth::user('sanctum');
-        if (!$user) {
-            return $this->apiResponse([], __('messages.not_authenticated'), false, 401);
-        }
-
 
         $token = $this->extractBearerToken($request);
 
@@ -301,12 +297,14 @@ class AuthController extends Controller
             return $this->apiResponse([], __('messages.user_already_has_type'), false, 400);
         }
 
-        if ($request->type == 1) {
+        if ($request->type == 2) {
+            $user->client()->delete(); // Delete existing client record if exists
             $user->freelancer()->updateOrCreate(
                 ['user_id' => $user->id],
                 ['status' => 'active']
             );
         } else {
+            $user->freelancer()->delete(); // Delete existing freelancer record if exists
             $user->client()->updateOrCreate(
                 ['user_id' => $user->id],
                 ['status' => 'active']

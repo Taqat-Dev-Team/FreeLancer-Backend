@@ -46,7 +46,10 @@ class UserResource extends JsonResource
             return array_merge($baseData, [
                 'cv_view_count' => $this->freelancer->cv_view_count,
                 'category' => new CategoryResource($this->freelancer->category),
-                'subCategory' => new SubCategoryResource($this->freelancer->subCategory),
+                'subCategory' => [
+                    'name' => $this->freelancer->subCategory?->name,
+                    'slug' => $this->freelancer->subCategory?->slug,
+                ],
             ]);
         }
 
