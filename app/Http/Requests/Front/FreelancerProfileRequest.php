@@ -50,6 +50,14 @@ class FreelancerProfileRequest extends FormRequest
             'country_id.exists' => __('validation.exists', ['attribute' => __('messages.country')]),
             'gender.required' => __('validation.required', ['attribute' => __('messages.gender')]),
             'gender.in' => __('validation.in', ['attribute' => __('messages.gender')]),
-            ];
-  }
+            'name.string' => __('validation.string', ['attribute' => __('messages.name')]),
+            'name.max' => __('validation.max.string', ['attribute' => __('messages.name'), 'max' => 255]),
+            'bio.string' => __('validation.string', ['attribute' => __('messages.bio')]),
+            'birth_date.date' => __('validation.date', ['attribute' => __('messages.birth_date')]),
+            'category_id.exists' => __('validation.exists', ['attribute' => __('messages.category')]),
+            'sub_category_id.exists' => __('validation.exists', ['attribute' => __('messages.sub_category')]),
+            'country_id.required' => __('validation.required', ['attribute' => __('messages.country')]),
+
+        ];
+    }
 }

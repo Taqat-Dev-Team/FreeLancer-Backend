@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreCategoryRequest;
+use App\Http\Requests\Admin\StoreCountryRequest;
 use App\Http\Requests\Admin\UpdateCategoryRequest;
+use App\Http\Requests\Admin\UpdateCountryRequest;
 use App\Models\Category;
 use App\Models\Country;
 use Illuminate\Http\Request;
@@ -55,86 +57,71 @@ class CountryController extends Controller
                     </div>';
             })
             ->addIndexColumn()
-            ->rawColumns(['icon', 'actions','flag'])
+            ->rawColumns(['icon', 'actions', 'flag'])
             ->make(true);
     }
 
-    public function store(StoreCategoryRequest $request)
+    public function store(StoreCountryRequest $request)
     {
         try {
-            $category = new Category();
-            $category->setTranslation('name', 'en', $request->name_en);
-            $category->setTranslation('name', 'ar', $request->name_ar);
-            $category->setTranslation('slug', 'en', Str::slug($request->name_en));
-            $category->setTranslation('slug', 'ar', Str::slug($request->name_ar));
-            $category->save();
+            $country = new Country();
+            $country->setTranslation('name', 'en', $request->name_en);
+            $country->setTranslation('name', 'ar', $request->name_ar);
+            $country->code = $request->code;
+            $country->number_code = $request->number_code;
+            $country->save();
 
-            if ($request->hasFile('icon')) {
-                $category
-                    ->addMediaFromRequest('icon')
-                    ->usingFileName(Str::random(20) . '.' . $request->file('icon')->getClientOriginalExtension())
-                    ->storingConversionsOnDisk('categories')
-                    ->toMediaCollection('icon', 'categories');
-            }
 
-            return response()->json(['message' => 'Category added successfully.']);
+            return response()->json(['message' => 'Country added successfully.']);
         } catch (\Exception $e) {
-            Log::error("Category creation error: " . $e->getMessage());
+            Log::error("Country creation error: " . $e->getMessage());
             return response()->json(['message' => 'Unexpected error.'], 500);
         }
     }
 
     public function show($id)
     {
-        $category = Category::findOrFail($id);
+        $country = Country::findOrFail($id);
         return response()->json([
-            'id' => $category->id,
-            'name_en' => $category->getTranslation('name', 'en'),
-            'name_ar' => $category->getTranslation('name', 'ar'),
-            'icon' => $category->getImageUrl(),
+            'id' => $country->id,
+            'name_en' => $country->getTranslation('name', 'en'),
+            'name_ar' => $country->getTranslation('name', 'ar'),
+            'code' => $country->code,
+            'number_code' => $country->number_code,
         ]);
     }
 
-    public function update(UpdateCategoryRequest $request, $id)
+
+    public function update(UpdateCountryRequest $request, $id)
     {
         try {
-            $category = Category::findOrFail($id);
+            $country = Country::findOrFail($id);
 
-            $category->setTranslation('name', 'en', $request->name_en);
-            $category->setTranslation('name', 'ar', $request->name_ar);
-            $category->setTranslation('slug', 'en', Str::slug($request->name_en));
-            $category->setTranslation('slug', 'ar', Str::slug($request->name_ar));
-            $category->save();
+            $country->setTranslation('name', 'en', $request->name_en);
+            $country->setTranslation('name', 'ar', $request->name_ar);
+            $country->code = $request->code;
+            $country->number_code = $request->number_code;
+            $country->save();
 
-            if ($request->hasFile('icon')) {
-                // حذف الصور القديمة من مجموعة 'icon' فقط
-                $category->clearMediaCollection('icon');
 
-                // إضافة الصورة الجديدة على الديسك 'categories' ضمن مجموعة 'icon'
-                $category->addMediaFromRequest('icon')
-                    ->usingFileName(Str::random(20) . '.' . $request->file('icon')->getClientOriginalExtension())
-                    ->toMediaCollection('icon', 'categories');
-            }
-
-            return response()->json(['message' => 'Category updated successfully.']);
+            return response()->json(['message' => 'Country updated successfully.']);
         } catch (\Exception $e) {
-            Log::error("Category update error: " . $e->getMessage());
+            Log::error("Country update error: " . $e->getMessage());
             return response()->json(['message' => 'Unexpected error.'], 500);
         }
     }
 
+
     public function destroy($id)
     {
-        $category = Category::findOrFail($id);
+        $category = Country::findOrFail($id);
 
-
-        if ($category->subCategories()->count() > 0) {
-            return response()->json(['message' => 'Cannot delete category with subcategories.'], 400);
+        if ($category->users()->count() > 0) {
+            return response()->json(['message' => 'Cannot delete Country with Users.'], 400);
         }
 
-        $category->clearMediaCollection('icon');
         $category->delete();
 
-        return response()->json(['message' => 'Category deleted successfully.']);
+        return response()->json(['message' => 'Country deleted successfully.']);
     }
 }

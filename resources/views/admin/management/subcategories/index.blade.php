@@ -143,7 +143,7 @@
                         const table = $('#sub_categories_table').DataTable({
                             processing: true,
                             serverSide: true,
-
+                            order: [[0, 'desc']],
                             ajax: {
                                 url: '{{ route('admin.management.subcategories.data') }}',
                                 data: function (d) {
@@ -228,12 +228,11 @@
                     });
 
 
-
                 </script>
 
 
-        @include('admin.management.subcategories.add')
-        @include('admin.management.subcategories.edit')
+    @include('admin.management.subcategories.add')
+    @include('admin.management.subcategories.edit')
     @endpush
 
 @stop

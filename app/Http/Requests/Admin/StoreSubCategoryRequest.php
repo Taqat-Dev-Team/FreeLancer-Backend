@@ -36,6 +36,12 @@ class StoreSubCategoryRequest extends FormRequest
             'name_ar.required' => 'The Arabic name is required.',
             'name_en.required' => 'The English name is required.',
             'category_id.required' => 'The category is required.',
+            'name_ar.unique' => 'The Arabic name must be unique.',
+            'name_en.unique' => 'The English name must be unique.',
+            'name_ar.max' => 'The Arabic name may not be greater than 255 characters.',
+            'name_en.max' => 'The English name may not be greater than 255 characters.',
+            'category_id.exists' => 'The selected category does not exist.',
+
         ];
     }
 }

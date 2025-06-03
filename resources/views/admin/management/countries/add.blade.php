@@ -1,11 +1,11 @@
-<div class="modal fade" id="addSubCategoryModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="addCountryModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog ">
 
-        <form id="addSubCategoryForm">
+        <form id="addCountryForm">
             @csrf
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add Sub Category</h5>
+                    <h5 class="modal-title">Add Country</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                 </div>
@@ -21,17 +21,15 @@
                                placeholder="Enter English Name">
                     </div>
 
-
                     <div class="mb-3">
-                        <label for="category_id" class="form-label">Category</label>
-                        <select class="form-select" name="category_id" id="category_id_add" data-control="select2" data-placeholder="Select Category">
-                            <option value="">Select Category</option>
-                            @foreach($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->getTranslation('name', 'en') .' -- ' . $category->getTranslation('name', 'ar') }}</option>
-                            @endforeach
-                        </select>
-
-
+                        <label for="code" class="form-label">Code</label>
+                        <input type="text" id="code" name="code" class="form-control"
+                               placeholder="Enter Code">
+                    </div>
+                    <div class="mb-3">
+                        <label for="number_code" class="form-label">Number Code</label>
+                        <input type="text" id="number_code" name="number_code" class="form-control"
+                               placeholder="Enter Number Code">
                     </div>
 
                     <div class=" modal-footer">
@@ -55,14 +53,9 @@
 <script>
     $(document).ready(function () {
 
-
-        $('#category_id_add').select2({
-            dropdownParent: $('#addSubCategoryModal'),
-            width: '100%'
-        });
         // Clear form and validation errors when the modal is hidden
-        $('#addSubCategoryModal').on('hidden.bs.modal', function () {
-            $('#addSubCategoryForm')[0].reset(); // Reset form fields
+        $('#addCountryModal').on('hidden.bs.modal', function () {
+            $('#addCountryForm')[0].reset(); // Reset form fields
             $('.is-invalid').removeClass('is-invalid'); // Remove invalid classes from inputs
             $('.invalid-feedback').remove(); // Remove error messages
 
@@ -70,7 +63,7 @@
 
 
         // Handle form submission
-        $('#addSubCategoryForm').on('submit', function (e) {
+        $('#addCountryForm').on('submit', function (e) {
             e.preventDefault(); // Prevent default form submission
 
             let formData = new FormData(this);
@@ -86,22 +79,22 @@
             $('.invalid-feedback').remove();
 
             $.ajax({
-                url: "{{ route('admin.management.subcategories.store') }}",
+                url: "{{ route('admin.management.countries.store') }}",
                 type: 'POST',
                 data: formData,
                 contentType: false,
                 processData: false,
                 success: function (response) {
-                    $('#addSubCategoryModal').modal('hide');
-                    toastr.success(response.message || 'Category added successfully!');
-                    $('#sub_categories_table').DataTable().ajax.reload();
-                    $('#addSubCategoryForm')[0].reset();
+                    $('#addCountryModal').modal('hide');
+                    toastr.success(response.message || 'Country added successfully!');
+                    $('#countries_table').DataTable().ajax.reload();
+                    $('#addCountryForm')[0].reset();
                 },
                 error: function (xhr) {
                     if (xhr.status === 422) {
                         let errors = xhr.responseJSON.errors;
                         $.each(errors, function (key, value) {
-                            let inputField = $('#addSubCategoryForm').find(`[name="${key}"]`);
+                            let inputField = $('#addCountryForm').find(`[name="${key}"]`);
                             inputField.addClass('is-invalid');
                             let errorMessage = `<div class="invalid-feedback d-block">${value[0]}</div>`;
                             inputField.after(errorMessage);

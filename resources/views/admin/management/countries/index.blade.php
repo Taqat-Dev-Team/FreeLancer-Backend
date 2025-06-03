@@ -7,7 +7,7 @@
 @section('toolbarActions')
     <div class="d-flex align-items-center gap-2 gap-lg-3">
         <a href="#" class="btn btn-flex btn-primary h-40px fs-7 fw-bold" data-bs-toggle="modal"
-           data-bs-target="#addSubCategoryModal"><i class="ki-outline ki-plus"></i> Add Country</a>
+           data-bs-target="#addCountryModal"><i class="ki-outline ki-plus"></i> Add Country</a>
 
     </div>
 @stop
@@ -77,13 +77,13 @@
 
 
 
-
                 {{--            datatable--}}
                 <script>
                     $(document).ready(function () {
                         const table = $('#countries_table').DataTable({
                             processing: true,
                             serverSide: true,
+                            order: [[0, 'desc']],
 
                             ajax: {
                                 url: '{{ route('admin.management.countries.data') }}',
@@ -101,7 +101,7 @@
                                 {data: 'name.en', name: 'name', orderable: true, searchable: true},
                                 {data: 'name.ar', name: 'name', orderable: true, searchable: true},
                                 {data: 'code', name: 'code', orderable: true, searchable: true},
-                                {data: 'number_code', name: 'number_code',orderable: true, searchable: true},
+                                {data: 'number_code', name: 'number_code', orderable: true, searchable: true},
                                 // {
                                 //     data: 'category',
                                 //     class: 'text-center',
@@ -164,8 +164,8 @@
                 </script>
 
 
-    {{--        @include('admin.management.subcategories.add')--}}
-    {{--        @include('admin.management.subcategories.edit')--}}
+    @include('admin.management.countries.add')
+            @include('admin.management.countries.edit')
     @endpush
 
 @stop

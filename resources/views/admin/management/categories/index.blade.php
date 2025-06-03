@@ -187,6 +187,7 @@
                         const table = $('#categories_table').DataTable({
                             processing: true,
                             serverSide: true,
+                            order: [[0, 'desc']],
 
                             ajax: {
                                 url: '{{ route('admin.management.categories.data') }}',

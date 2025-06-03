@@ -1,15 +1,15 @@
-<div class="modal fade" id="editSubCategoryModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="editCountryModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
-        <form id="editSubCategoryForm" >
+        <form id="editCountryForm">
             @csrf
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Edit Category</h5>
+                    <h5 class="modal-title">Edit Country</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="hidden" id="edit_subcategory_id" name="id">
+                    <input type="hidden" id="edit_country_id" name="id">
 
                     <div class="mb-3">
                         <label for="edit_name_ar" class="form-label">Arabic Name</label>
@@ -23,15 +23,15 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="edit_category_id" class="form-label">Category</label>
-                        <select class="form-select" name="category_id" id="edit_category_id" data-control="select2"
-                                data-placeholder="Select Category">
-                            <option value="">Select Category</option>
-                            @foreach($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->getTranslation('name', 'en') .' -- ' . $category->getTranslation('name', 'ar') }}</option>
-                            @endforeach
-                        </select>
+                        <label for="edit_code" class="form-label">Code</label>
+                        <input type="text" id="edit_code" name="code" class="form-control"
+                               placeholder="Country Code">
+                    </div>
 
+                    <div class="mb-3">
+                        <label for="edit_number_code" class="form-label">Number Code</label>
+                        <input type="text" id="edit_number_code" name="number_code" class="form-control"
+                               placeholder="Country Number Code">
                     </div>
 
 
@@ -52,12 +52,9 @@
 </div>
 <script>
     $(document).ready(function () {
-        $('#edit_category_id').select2({
-            dropdownParent: $('#editSubCategoryModal'),
-            width: '100%'
-        });
+
         // Event listener for opening the edit modal and populating data
-        $(document).on('click', '.edit-subcategory', function (e) {
+        $(document).on('click', '.edit-country', function (e) {
             e.preventDefault();
             const id = $(this).data('id');
 
@@ -66,16 +63,16 @@
             $('.invalid-feedback').remove();
 
             $.ajax({
-                url: `/admin/subcategories/${id}/show`, // Use your existing show route
+                url: `/admin/countries/${id}/show`, // Use your existing show route
                 type: 'GET',
                 success: function (response) {
                     // Populate the form fields
-                    $('#edit_subcategory_id').val(response.id);
-                    $('#edit_category_id').val(response.category_id).trigger('change'); // Set category and trigger change for select2
-                    // Access name_en and name_ar directly from response
+                    $('#edit_country_id').val(response.id);
                     $('#edit_name_en').val(response.name_en || '');
                     $('#edit_name_ar').val(response.name_ar || '');
-                    $('#editSubCategoryModal').modal('show');
+                    $('#edit_code').val(response.code || '');
+                    $('#edit_number_code').val(response.number_code || '');
+                    $('#editCountryModal').modal('show');
                 },
                 error: function (xhr) {
                     toastr.error('Error fetching category details.');
@@ -84,13 +81,12 @@
         });
 
 
-
         // Submit handler for the edit form (remains largely the same, but review error mapping for translatable fields)
-        $('#editSubCategoryForm').on('submit', function (e) {
+        $('#editCountryForm').on('submit', function (e) {
             e.preventDefault();
 
             let formData = new FormData(this);
-            const id = $('#edit_subcategory_id').val();
+            const id = $('#edit_country_id').val();
             formData.append('_method', 'PUT'); // For PUT request with FormData
 
             // Clear previous validation errors
@@ -106,24 +102,24 @@
 
 
             $.ajax({
-                url: `/admin/subcategories/${id}`, // RESTful route for 'update'
+                url: `/admin/countries/${id}`, // RESTful route for 'update'
                 type: 'POST', // Method must be POST for FormData with _method override
                 data: formData,
                 contentType: false,
                 processData: false,
                 success: function (response) {
-                    toastr.success(response.message || 'Sub Category updated successfully!');
-                    $('#editSubCategoryModal').modal('hide');
-                    $('#sub_categories_table').DataTable().ajax.reload();
+                    toastr.success(response.message || 'Countries updated successfully!');
+                    $('#editCountryModal').modal('hide');
+                    $('#countries_table').DataTable().ajax.reload();
                 },
                 error: function (xhr) {
                     if (xhr.status === 422) { // Laravel validation errors
                         let errors = xhr.responseJSON.errors;
                         $.each(errors, function (key, value) {
-                            let inputField = $(`#editSubCategoryForm [name="${key}"]`);
+                            let inputField = $(`#editCountryForm [name="${key}"]`);
                             if (inputField.length === 0) {
                                 let fieldName = key.replace('.', '_');
-                                inputField = $(`#editSubCategoryForm [name="${fieldName}"]`);
+                                inputField = $(`#editCountryForm [name="${fieldName}"]`);
                             }
 
                             inputField.addClass('is-invalid');

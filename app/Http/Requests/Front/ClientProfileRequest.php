@@ -42,6 +42,12 @@ class ClientProfileRequest extends FormRequest
 
             'gender.required' => __('validation.required', ['attribute' => __('messages.gender')]),
             'gender.in' => __('validation.in', ['attribute' => __('messages.gender')]),
+            'country_id.required' => __('validation.required', ['attribute' => __('messages.country')]),
+            'country_id.exists' => __('validation.exists', ['attribute' => __('messages.country')]),
+            'name.string' => __('validation.string', ['attribute' => __('messages.name')]),
+            'name.max' => __('validation.max.string', ['attribute' => __('messages.name'), 'max' => 255]),
+            'bio.string' => __('validation.string', ['attribute' => __('messages.bio')]),
+
         ];
     }
 }
