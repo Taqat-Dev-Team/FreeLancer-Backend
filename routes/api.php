@@ -47,6 +47,7 @@ Route::controller(AuthController::class)->group(function () {
 
 Route::controller(GeneralController::class)->group(function () {
     Route::get('/policies', 'policies');
+    Route::get('/skills', 'skills');
     Route::get('/categories', 'categories');
     Route::get('/countries', 'countries');
     Route::get('/subcategories', 'subcategories');

@@ -6,9 +6,11 @@ use App\ApiResponseTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\CountryResource;
+use App\Http\Resources\SkillsResource;
 use App\Http\Resources\SubCategoryResource;
 use App\Models\Category;
 use App\Models\Country;
+use App\Models\Skills;
 use App\Models\SubCategory;
 
 class GeneralController extends Controller
@@ -49,6 +51,26 @@ class GeneralController extends Controller
         }
         return $this->apiResponse(
             CountryResource:: collection($countries),
+            __('messages.success'),
+            true,
+            200,
+        );
+
+    }
+
+    public function skills()
+    {
+        $countries = Skills::all();
+        if ($countries->isEmpty()) {
+            return $this->apiResponse(
+                null,
+                __('messages.success'),
+                false,
+                404,
+            );
+        }
+        return $this->apiResponse(
+            SkillsResource:: collection($countries),
             __('messages.success'),
             true,
             200,
