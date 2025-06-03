@@ -22,18 +22,18 @@ class SetLocale
         $defaultLocale = config('app.locale', 'en');
         $locale = $defaultLocale;
 
-        if ($request->user()) {
-            $userPreferredLocale = $request->user()->lang;
-            if (in_array($userPreferredLocale, $supportedLocales)) {
-                $locale = $userPreferredLocale;
-            }
+        $headerLocale = $request->getPreferredLanguage($supportedLocales);
+
+        if ($headerLocale && in_array($headerLocale, $supportedLocales)) {
+            $locale = $headerLocale;
         }
 
-        // Set the locale for both Laravel and LaravelLocalization
+        // 2. تعيين اللغة في Laravel و LaravelLocalization
         app()->setLocale($locale);
         LaravelLocalization::setLocale($locale);
 
         return $next($request);
     }
+
 
 }

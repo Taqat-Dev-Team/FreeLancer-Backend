@@ -1,12 +1,22 @@
 <?php
 
 return [
-    'name' => 'Name is required',
-    'email' => 'Email is required',
+    'name' => 'Name',
+    'email' => 'Email',
     'email-email' => 'Invalid email format',
     'about' => 'About Us is required',
     'error' => 'An error occurred',
 
+    'photo' => 'Photo',
+    'bio' => 'Bio',
+    'birth_date' => 'Birth Date',
+    'available_hire' => 'Available for Hire',
+    'category' => 'Category',
+    'sub_category' => 'Sub Category',
+    'country' => 'Country',
+    'gender' => 'Gender',
+    'data_save_failed'=> 'Data save failed',
+    'data_saved_successfully' => 'Data saved successfully',
 
     'updated' => 'Updated',
     'success-update' => 'Updated successfully',
@@ -122,7 +132,7 @@ return [
 
     'otp_subject' => 'Your Taqat Verification Code',
 
-    'registration_success_verify_email'=> 'Registration successful. Please verify your email to complete the process.',
+    'registration_success_verify_email' => 'Registration successful. Please verify your email to complete the process.',
 
     'social_login_success' => 'Logged in successfully via Google.',
     'social_login_failed' => 'Google login failed. Please try again or contact support.',
@@ -146,8 +156,22 @@ return [
         503 => 'Service Unavailable',
     ],
 
-    'account_type_success'=> 'Account type updated successfully',
-    'user_already_has_type'=> 'User already has  account type',
+    'account_inactive' => 'Your account is inactive. Please contact support.',
+    'account_type_success' => 'Account type updated successfully',
+    'user_already_has_type' => 'User already has  account type',
+
+
+    'name.required' => 'The name is required.',
+    'photo.required' => 'The photo is required.',
+    'bio.max' => 'The bio must not exceed 2000 characters.',
+    'birth_date.required' => 'The birth date is required.',
+    'available_hire.boolean' => 'The available for hire field must be true or false.',
+    'category_id.required' => 'The category is required.',
+    'sub_category_id.required' => 'The sub-category is required.',
+    'country_id.exists' => 'The selected country does not exist.',
+    'Access Denied' => 'Access Denied',
+    'user_already_save_data'=> 'User already has saved data. Cannot save data again.',
+
 
 ];
 

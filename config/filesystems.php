@@ -32,8 +32,24 @@ return [
 
         'categories' => [
             'driver' => 'local',
-            'root' => public_path('uploads/categories'),
-            'url' => env('APP_URL') . '/uploads/categories',
+            'root' => storage_path('app/public/uploads/categories'),
+            'url' => env('APP_URL') . '/storage/uploads/categories',
+            'visibility' => 'public',
+        ],
+
+
+        'freelancers' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/uploads/freelancers'),
+            'url' => env('APP_URL') . '/storage/uploads/freelancers',
+            'visibility' => 'public',
+        ],
+
+
+        'clients' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/uploads/clients'),
+            'url' => env('APP_URL') . '/storage/uploads/clients',
             'visibility' => 'public',
         ],
 

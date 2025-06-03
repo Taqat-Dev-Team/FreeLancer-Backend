@@ -8,12 +8,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasApiTokens, HasFactory, Notifiable ,CanResetPassword;
+    use HasApiTokens, HasFactory, Notifiable, CanResetPassword, InteractsWithMedia;
+
 
     /**
      * The attributes that are mass assignable.
@@ -22,7 +25,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name', 'email', 'password', 'status', 'country_id', 'photo', 'bio', 'email_verified_at', 'mobile', 'lang', 'google_id',
-        'provider',
+        'provider', 'birth_date', 'available_hire', 'gender'
     ];
 
     protected $dates = [
@@ -50,6 +53,9 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'birth_date' => 'date',
+            'available_hire' => 'boolean',
+            'languages' => 'array',
         ];
     }
 
@@ -79,4 +85,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Notification::class);
     }
+
+    public function getImageUrl()
+    {
+        return $this->getFirstMediaUrl('photo', 'thumb') ?: url('logos/favicon.png');
+    }
+
+
+
 }

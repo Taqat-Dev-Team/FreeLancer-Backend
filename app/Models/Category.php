@@ -21,7 +21,6 @@ class Category extends Model implements HasMedia
     }
 
 
-
     public function subCategories()
     {
         return $this->hasMany(SubCategory::class);
@@ -42,9 +41,6 @@ class Category extends Model implements HasMedia
         return $this->hasMany(Project::class);
     }
 
-    public function getImage()
-    {
-        return $this->icon ? asset('storage/' . $this->icon) : asset('logos/favicon.png');
-    }
+
 }
 

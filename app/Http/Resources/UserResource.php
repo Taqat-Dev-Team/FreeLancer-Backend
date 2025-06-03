@@ -25,16 +25,17 @@ class UserResource extends JsonResource
     public function toArray(Request $request): array
     {
         $baseData = [
-            'id'     => $this->id,
-            'name'   => $this->name,
-            'email'  => $this->email,
-            'mobile'  => $this->mobile,
+            'id' => $this->id,
+            'name' => $this->name,
+            'photo' => $this->getFirstMediaUrl('photo', 'thumb'),
+            'email' => $this->email,
+            'mobile' => $this->mobile,
             'country' => new  CountryResource($this->country),
-            'lang'   => $this->lang,
+//            'lang'   => $this->lang,
             'status' => $this->status,
-            'token'  => $this->token,
-            'bio'  => $this->bio,
-            'type'   => $this->client ? 'client' : 'freelancer',
+            'token' => $this->token,
+            'bio' => $this->bio,
+            'type' => $this->client ? 'client' : ($this->freelancer ? 'freelancer' : null),
         ];
 
         if ($this->client) {
@@ -44,8 +45,8 @@ class UserResource extends JsonResource
         if ($this->freelancer) {
             return array_merge($baseData, [
                 'cv_view_count' => $this->freelancer->cv_view_count,
-                'category'      => new CategoryResource($this->freelancer->category),
-                'subCategory'   => new SubCategoryResource($this->freelancer->subCategory),
+                'category' => new CategoryResource($this->freelancer->category),
+                'subCategory' => new SubCategoryResource($this->freelancer->subCategory),
             ]);
         }
 

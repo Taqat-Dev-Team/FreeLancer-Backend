@@ -130,10 +130,36 @@ return [
     */
 
     'custom' => [
+        'name' => [
+            'required' => 'The name is required.',
+        ],
+        'photo' => [
+            'required' => 'The photo is required.',
+        ],
+        'bio' => [
+            'max' => 'The bio must not exceed 2000 characters.',
+        ],
+        'birth_date' => [
+            'required' => 'The birth date is required.',
+        ],
+        'available_hire' => [
+            'boolean' => 'The available for hire field must be true or false.',
+        ],
+        'category_id' => [
+            'required' => 'The category is required.',
+        ],
+        'sub_category_id' => [
+            'required' => 'The sub-category is required.',
+        ],
+        'country_id' => [
+            'exists' => 'The selected country does not exist.',
+        ],
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
     ],
+
+
 
     /*
     |--------------------------------------------------------------------------

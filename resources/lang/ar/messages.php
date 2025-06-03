@@ -1,11 +1,19 @@
 <?php
 
 return [
-    'name' => 'الاسم مطلوب',
+    'name' => 'الاسم',
     'email' => 'البريد مطلوب',
     'email-email' => 'البريد غير صحيح',
     'about' => 'من نحن مطلوب',
     'error' => 'يوجد خطأ',
+    'photo' => 'الصورة',
+    'bio' => 'نبذة',
+    'birth_date' => 'تاريخ الميلاد',
+    'available_hire' => 'متاح للعمل',
+    'category' => 'التصنيف',
+    'sub_category' => 'التصنيف الفرعي',
+    'country' => 'الدولة',
+    'gender' => 'النوع',
     'success-update' => 'تم التحديث بنجاح',
     'success-created' => 'تم الاضافة بنجاح',
     'sure?' => 'هل انت متأكد',
@@ -17,6 +25,8 @@ return [
     'upload-contract' => 'ارفق العقد',
     'required-contract' => 'العقد مطلوب',
     'required-payment' => 'وصل الدفع مطلوب',
+    'data_save_failed'=> 'فشل حفظ البيانات',
+    'data_saved_successfully' => 'تم حفظ البيانات بنجاح',
 
     'cancel' => 'الغاء',
     'delete-success' => 'تم الحذف بنجاح',
@@ -135,6 +145,19 @@ return [
         503 => 'الخدمة غير متوفرة',
     ],
 
+    'account_inactive' => 'حسابك غير نشط. يرجى الاتصال بالدعم الفني.',
     'account_type_success' => 'تم تحديث نوع الحساب بنجاح',
     'user_already_has_type' => 'المستخدم لديه بالفعل نوع حساب محدد',
-];
+    'name.required' => 'الاسم مطلوب.',
+    'photo.required' => 'الصورة مطلوبة.',
+    'bio.max' => 'السيرة الذاتية يجب ألا تتجاوز 2000 حرف.',
+    'birth_date.required' => 'تاريخ الميلاد مطلوب.',
+    'available_hire.boolean' => 'قيمة التوفر للتوظيف غير صحيحة.',
+    'category_id.required' => 'التصنيف مطلوب.',
+    'sub_category_id.required' => 'التصنيف الفرعي مطلوب.',
+    'country_id.exists' => 'الدولة المحددة غير موجودة.',
+    'Access Denied'=>'تم رفض الوصول',
+    'user_already_save_data'=> 'المستخدم لديه بيانات محفوظة بالفعل. لا يمكن حفظ البيانات مرة أخرى.',
+
+    ];
+

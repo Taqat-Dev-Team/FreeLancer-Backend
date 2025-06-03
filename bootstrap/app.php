@@ -5,6 +5,7 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -23,14 +24,16 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin' => \App\Http\Middleware\admin::class,
             'verified.email' => \App\Http\Middleware\EnsureEmailIsVerified::class,
+
         ]);
 
         $middleware->appendToGroup('api', [
             \App\Http\Middleware\SetLocale::class,
+
         ]);
     })
-    ->withExceptions(function (Exceptions $exceptions) {
 
+    ->withExceptions(function (Exceptions $exceptions) {
 
         // ValidationException
         $exceptions->render(function (ValidationException $e, Request $request) {
@@ -66,6 +69,19 @@ return Application::configure(basePath: dirname(__DIR__))
                 ], 401);
             }
         });
+
+        // Access Denied Exception
+        $exceptions->render(function (AccessDeniedHttpException $e, Request $request) {
+            if ($request->expectsJson() || $request->is('api/*')) {
+                return response()->json([
+                    'status' => false,
+                    'code' => 403,
+                    'message' => __('messages.Access Denied'),
+                ], 403);
+            }
+        });
+
+
 
         // NotFoundHttpException
         $exceptions->render(function (NotFoundHttpException $e, Request $request) {

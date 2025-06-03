@@ -76,6 +76,11 @@ class AuthController extends Controller
         }
 
         $user = Auth::user();
+
+        if ($user->status == 0) {
+            Auth::logout();
+            return $this->apiResponse([], __('messages.account_inactive'), false, 403);
+        }
         if (is_null($user->email_verified_at)) {
             try {
                 $otpSentSuccessfully = $this->sendOtp($user);
@@ -88,7 +93,7 @@ class AuthController extends Controller
                     return $this->apiResponse([], __('messages.email_not_verified_otp_send_failed'), false, 500);
                 }
                 Auth::logout(); // تسجيل الخروج من المستخدم الذي لم يتم التحقق منه
-                return $this->apiResponse([], __('messages.email_not_verified_send_otp'), false, 403);
+                return $this->apiResponse(['is_verified'=>false], __('messages.email_not_verified_send_otp'), false, 403);
             } catch (Exception $e) { // هذا الكاتش ربما لن يتم الوصول إليه إذا sendOtp تتعامل مع الـ Exception داخلياً
                 Log::error('Unexpected error during OTP re-send in login.', [
                     'user_id' => $user->id,
@@ -309,15 +314,14 @@ class AuthController extends Controller
         }
 
         return $this->apiResponse(
-           new UserResource($user,$token),
+            new UserResource($user, $token),
             __('messages.account_type_success'),
             true,
             200
         );
     }
 
-
-    private    function extractBearerToken(Request $request): ?string
+    private function extractBearerToken(Request $request): ?string
     {
         $authHeader = $request->header('Authorization');
 
@@ -326,38 +330,5 @@ class AuthController extends Controller
             : null;
     }
 
-    public function policies()
-    {
-        $data='  <p>نحن في [اسم الموقع] نولي أهمية كبيرة لخصوصيتك. تهدف سياسة الخصوصية هذه إلى شرح كيفية جمع معلوماتك الشخصية واستخدامها ومشاركتها عند زيارة موقعنا.</p>
 
-  <h2>1. المعلومات التي نجمعها</h2>
-  <p>قد نقوم بجمع معلومات شخصية مثل الاسم، البريد الإلكتروني، رقم الهاتف، وعنوان IP عند التسجيل أو استخدام خدماتنا.</p>
-
-  <h2>2. كيفية استخدام المعلومات</h2>
-  <p>نستخدم المعلومات لتحسين تجربتك، الرد على الاستفسارات، إرسال التحديثات، وتحليل استخدام الموقع.</p>
-
-  <h2>3. مشاركة المعلومات</h2>
-  <p>لا نقوم ببيع أو تأجير معلوماتك الشخصية لأطراف خارجية. قد نشاركها مع مزودي الخدمات الذين يساعدوننا في تشغيل الموقع.</p>
-
-  <h2>4. ملفات تعريف الارتباط (Cookies)</h2>
-  <p>نستخدم ملفات تعريف الارتباط لتحسين أداء الموقع وتخصيص المحتوى.</p>
-
-  <h2>5. حقوقك</h2>
-  <p>يحق لك الوصول إلى معلوماتك الشخصية وتصحيحها أو طلب حذفها.</p>
-
-  <h2>6. التغييرات على السياسة</h2>
-  <p>قد نقوم بتحديث هذه السياسة من وقت لآخر. سيتم نشر أي تغييرات على هذه الصفحة.</p>
-
-  <h2>7. الاتصال بنا</h2>
-  <p>لأي استفسارات حول سياسة الخصوصية، يرجى الاتصال بنا على: [البريد الإلكتروني].</p>';
-
-        return $this->apiResponse(
-            $data,
-            __('messages.success'),
-            true,
-            200,
-
-        );
-
-    }
 }
