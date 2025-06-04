@@ -76,7 +76,7 @@ License: For each use you must have a valid license purchased only from above li
                         <!--begin::Content container-->
                         <div id="kt_app_content_container" class="app-container container-fluid">
 
-                         @include('admin.layouts.breadcrumbs')
+                            @include('admin.layouts.breadcrumbs')
 
                             <!--begin::Row-->
 

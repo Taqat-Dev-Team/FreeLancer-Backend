@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             FreeLancerSeeder::class,
             ClinetSeeder::class,
             EducationLevelSeeder::class,
+            SocialMediaSeeder::class,
             LaratrustSeeder::class,
 
 

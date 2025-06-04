@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Freelancer extends Model
 {
     protected $fillable = [
-        'user_id', 'cv', 'cv_view_count', 'category_id', 'sub_category_id','hourly_rate',
+        'user_id', 'cv', 'cv_view_count', 'category_id', 'sub_category_id', 'hourly_rate',
     ];
 
 
@@ -47,6 +47,13 @@ class Freelancer extends Model
         return $this->belongsToMany(Skills::class, 'freelancers_skills', 'freelancer_id', 'skill_id')
             ->withTimestamps();
 
+    }
+
+    public function socials()
+    {
+        return $this->belongsToMany(SocialMedia::class, 'free_lancer_social_media', 'freelancer_id', 'social_media_id')
+            ->withPivot('link')
+            ->withTimestamps();
     }
 
     public function badges()

@@ -69,6 +69,17 @@
                                 <div class="fv-plugins-message-container invalid-feedback mt-2"
                                      data-field-error="password"></div>
                             </div>
+
+                            <div class="fv-row mt-5 mb-5">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="1" name="remember"
+                                           id="flexCheckDefault"/>
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        Remember me
+                                    </label>
+                                </div>
+                            </div>
+
                             <div class="d-grid mb-10">
                                 <button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
                                     <span class="indicator-label">Sign In</span>

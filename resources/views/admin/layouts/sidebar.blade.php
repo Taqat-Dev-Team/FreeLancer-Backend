@@ -161,6 +161,17 @@
                         </a>
                         <!--end:Menu link-->
                     </div>
+                    <div class="menu-item menu-sub-accordion">
+                        <!--begin:Menu link-->
+                        <a class="menu-link  {{request()->routeIs('admin.management.socials.*')? 'active' : '' }} "
+                           href="{{route('admin.management.socials.index')}}">
+													<span class="menu-bullet">
+														<span class="bullet bullet-dot"></span>
+													</span>
+                            <span class="menu-title">Socials Media</span>
+                        </a>
+                        <!--end:Menu link-->
+                    </div>
 
 
                     <!--end:Menu sub-->
@@ -181,7 +192,7 @@
             <div class="d-flex align-items-center" data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
                  data-kt-menu-overflow="true" data-kt-menu-placement="top-start">
                 <div class="d-flex flex-center cursor-pointer symbol symbol-circle symbol-40px">
-                    <img src="{{url(auth('admin')->user()->getImage())}}" alt="image"/>
+                    <img src="{{url(auth('admin')->user()->getImageUrl())}}" alt="image"/>
                 </div>
                 <!--begin::Name-->
                 <div class="d-flex flex-column align-items-start justify-content-center ms-3">
@@ -201,7 +212,7 @@
                     <div class="menu-content d-flex align-items-center px-3">
                         <!--begin::Avatar-->
                         <div class="symbol symbol-50px me-5">
-                            <img alt="Logo" src="{{url(auth('admin')->user()->getImage())}}"/>
+                            <img alt="Logo" src="{{url(auth('admin')->user()->getImageUrl())}}"/>
                         </div>
                         <!--end::Avatar-->
                         <!--begin::Username-->

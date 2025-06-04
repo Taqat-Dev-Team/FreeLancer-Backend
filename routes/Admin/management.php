@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\SkillsController;
 use App\Http\Controllers\Admin\EducationLevelController;
+use App\Http\Controllers\Admin\SocialMediaController;
 
 
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -77,6 +78,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::get('educations/{id}/show', 'show')->name('educations.show');
                 Route::put('educations/{id}', 'update')->name('educations.update');
                 Route::delete('educations/{id}', 'destroy')->name('educations.destroy');
+            });
+
+            Route::controller(SocialMediaController::class)->group(function () {
+                Route::get('socials', 'index')->name('socials.index');
+                Route::get('socials/data', 'getData')->name('socials.data');
+                Route::post('socials', 'store')->name('socials.store');
+                Route::get('socials/{id}/show', 'show')->name('socials.show');
+                Route::put('socials/{id}', 'update')->name('socials.update');
+                Route::delete('socials/{id}', 'destroy')->name('socials.destroy');
             });
 
 
