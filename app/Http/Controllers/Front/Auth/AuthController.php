@@ -289,13 +289,13 @@ class AuthController extends Controller
         $request->validate([
             'type' => 'required|in:1,2', // 1 for freelancer, 2 for client
         ]);
+
         $user = Auth::user('sanctum');
 
-        $token = $this->extractBearerToken($request);
-
         if ($user->client || $user->freelancer) {
-            return $this->apiResponse([], __('messages.user_already_has_type'), false, 400);
+            return $this->apiResponse(['is_select_tye'=>1], __('messages.user_already_has_type'), false, 400);
         }
+        $token = $this->extractBearerToken($request);
 
         if ($request->type == 2) {
             $user->client()->delete(); // Delete existing client record if exists

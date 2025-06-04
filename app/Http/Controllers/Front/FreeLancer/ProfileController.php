@@ -26,7 +26,7 @@ class ProfileController extends Controller
 
         if ($user->save_data) {
             return $this->apiResponse(
-                [],
+                ['save_data' => 1],
                 __('messages.Access Denied'),
                 false,
                 401

@@ -53,6 +53,7 @@ Route::controller(GeneralController::class)->group(function () {
     Route::get('/countries', 'countries');
     Route::get('/subcategories', 'subcategories');
     Route::get('/subcategories/{id}', 'CategorySubcategories');
+    Route::get('/education-levels', 'education_levels');
 });
 
 

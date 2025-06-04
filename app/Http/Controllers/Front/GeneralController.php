@@ -6,10 +6,12 @@ use App\ApiResponseTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\CountryResource;
+use App\Http\Resources\EducationLevlesResource;
 use App\Http\Resources\SkillsResource;
 use App\Http\Resources\SubCategoryResource;
 use App\Models\Category;
 use App\Models\Country;
+use App\Models\EducationLevel;
 use App\Models\Skills;
 use App\Models\SubCategory;
 
@@ -24,8 +26,8 @@ class GeneralController extends Controller
             return $this->apiResponse(
                 null,
                 __('messages.success'),
-                false,
-                404,
+                true,
+                200,
             );
         }
         return $this->apiResponse(
@@ -45,8 +47,8 @@ class GeneralController extends Controller
             return $this->apiResponse(
                 null,
                 __('messages.success'),
-                false,
-                404,
+                true,
+                200,
             );
         }
         return $this->apiResponse(
@@ -65,8 +67,8 @@ class GeneralController extends Controller
             return $this->apiResponse(
                 null,
                 __('messages.success'),
-                false,
-                404,
+                true,
+                200,
             );
         }
         return $this->apiResponse(
@@ -86,8 +88,8 @@ class GeneralController extends Controller
             return $this->apiResponse(
                 null,
                 __('messages.success'),
-                false,
-                404,
+                true,
+                200,
             );
         }
         return $this->apiResponse(
@@ -106,8 +108,8 @@ class GeneralController extends Controller
             return $this->apiResponse(
                 null,
                 __('messages.success'),
-                false,
-                404,
+                true,
+                200,
             );
         }
         return $this->apiResponse(
@@ -126,8 +128,8 @@ class GeneralController extends Controller
             return $this->apiResponse(
                 null,
                 __('messages.success'),
-                false,
-                404,
+                true,
+                200,
             );
         }
         return $this->apiResponse(
@@ -139,9 +141,27 @@ class GeneralController extends Controller
 
     }
 
+    public function education_levels()
+    {
+        $levels = EducationLevel::all();
+        if ($levels->isEmpty()) {
+            return $this->apiResponse(
+                null,
+                __('messages.success'),
+                true,
+                200,
+            );
+        }
+        return $this->apiResponse(
+           EducationLevlesResource::collection($levels),
+            __('messages.success'),
+            true,
+            200,
+        );
 
-    public
-    function policies()
+    }
+
+    public function policies()
     {
         $data = '  <p>نحن في [اسم الموقع] نولي أهمية كبيرة لخصوصيتك. تهدف سياسة الخصوصية هذه إلى شرح كيفية جمع معلوماتك الشخصية واستخدامها ومشاركتها عند زيارة موقعنا.</p>
 
