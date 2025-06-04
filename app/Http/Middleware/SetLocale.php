@@ -28,6 +28,13 @@ class SetLocale
             $locale = $headerLocale;
         }
 
+//        حفظ لغة الهيدر في جدول المستخدم
+        if (Auth::check()) {
+            $user = Auth::user();
+            $user->lang = $locale;
+            $user->save();
+        }
+
         // 2. تعيين اللغة في Laravel و LaravelLocalization
         app()->setLocale($locale);
         LaravelLocalization::setLocale($locale);

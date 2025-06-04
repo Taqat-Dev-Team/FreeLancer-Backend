@@ -24,7 +24,7 @@ class ClientProfileRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'bio' => 'nullable|string|max:2000',
+            'bio' => 'nullable|string|max:1000',
             'country_id' => 'required|exists:countries,id',
 //            'gender' => 'required|in:male,female',
         ];

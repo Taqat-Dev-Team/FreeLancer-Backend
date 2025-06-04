@@ -150,6 +150,17 @@
                         </a>
                         <!--end:Menu link-->
                     </div>
+                    <div class="menu-item menu-sub-accordion">
+                        <!--begin:Menu link-->
+                        <a class="menu-link  {{request()->routeIs('admin.management.educations.*')? 'active' : '' }} "
+                           href="{{route('admin.management.educations.index')}}">
+													<span class="menu-bullet">
+														<span class="bullet bullet-dot"></span>
+													</span>
+                            <span class="menu-title">Educations Levels</span>
+                        </a>
+                        <!--end:Menu link-->
+                    </div>
 
 
                     <!--end:Menu sub-->

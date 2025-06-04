@@ -78,6 +78,27 @@ class GeneralController extends Controller
 
     }
 
+
+    public function categorySkills($id)
+    {
+        $countries = Skills::where('category_id', $id)->get();
+        if ($countries->isEmpty()) {
+            return $this->apiResponse(
+                null,
+                __('messages.success'),
+                false,
+                404,
+            );
+        }
+        return $this->apiResponse(
+            SkillsResource:: collection($countries),
+            __('messages.success'),
+            true,
+            200,
+        );
+
+    }
+
     public function subCategories()
     {
         $subcategories = SubCategory::all();

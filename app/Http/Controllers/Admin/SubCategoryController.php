@@ -23,7 +23,7 @@ class SubCategoryController extends Controller
 
     public function getData(Request $request)
     {
-        $categories = SubCategory::with('category')->orderBy('created_at', 'desc');
+        $categories = SubCategory::with('category');
 
         if ($request->has('search')) {
             $search = strtolower($request->search);
@@ -88,11 +88,6 @@ class SubCategoryController extends Controller
 
     public function update(UpdateSubCategoryRequest $request, $id)
     {
-        $request->validate([
-            'name_en' => 'required|string|max:255',
-            'name_ar' => 'required|string|max:255',
-            'category_id' => 'required|exists:categories,id',
-        ]);
 
         $subcategory = SubCategory::findOrFail($id);
         $subcategory->setTranslation('name', 'en', $request->name_en);

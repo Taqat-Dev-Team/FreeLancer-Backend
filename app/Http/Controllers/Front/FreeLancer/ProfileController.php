@@ -24,7 +24,17 @@ class ProfileController extends Controller
         $user = Auth::user();
         $token = $this->extractBearerToken($request);
 
+        if ($user->save_data) {
+            return $this->apiResponse(
+                [],
+                __('messages.Access Denied'),
+                false,
+                401
+            );
+        }
+
         try {
+
 
             $user->fill([
                 'name' => $request->name,
@@ -32,6 +42,8 @@ class ProfileController extends Controller
                 'birth_date' => $request->birth_date,
                 'country_id' => $request->country_id,
                 'gender' => $request->gender,
+                'save_data' => 1,
+                'mobile' => $request->mobile,
             ]);
 
             // معالجة الصورة
@@ -48,7 +60,12 @@ class ProfileController extends Controller
                 'category_id' => $request->category_id,
                 'sub_category_id' => $request->sub_category_id,
                 'available_hire' => $request->available_hire ?? false,
+                'hourly_rate' => $request->hourly_rate ?? null,
             ]);
+
+            if ($request->has('skills')) {
+                $freelancer->skills()->sync($request->skills);
+            }
 
             $user->save();
 

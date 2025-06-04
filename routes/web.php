@@ -23,5 +23,5 @@ Route::get('/', function () {
     return redirect()->route('admin.login');
 })->name('home');
 
-require  __DIR__.'/Admin/admin.php';
+require  __DIR__.'/Admin/management.php';
 

@@ -23,7 +23,7 @@ class CountryController extends Controller
 
     public function getData(Request $request)
     {
-        $categories = Country::orderBy('created_at', 'desc');
+        $categories = Country::query();
 
         if ($request->has('search')) {
             $search = strtolower($request->search);

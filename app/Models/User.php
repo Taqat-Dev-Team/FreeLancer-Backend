@@ -25,12 +25,19 @@ class User extends Authenticatable implements HasMedia
      */
     protected $fillable = [
         'name', 'email', 'password', 'status', 'country_id', 'photo', 'bio', 'email_verified_at', 'mobile', 'lang', 'google_id',
-        'provider', 'birth_date', 'available_hire', 'gender'
+        'provider', 'birth_date', 'available_hire', 'gender','save_data'
     ];
 
     protected $dates = [
         'email_verified_at',
     ];
+
+    public function getBirthDateAttribute()
+    {
+        return isset($this->attributes['birth_date']) && $this->attributes['birth_date']
+            ? date('Y-m-d')
+            : null;
+    }
 
 
     /**

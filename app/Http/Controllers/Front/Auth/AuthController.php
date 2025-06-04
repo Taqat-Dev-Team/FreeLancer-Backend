@@ -50,7 +50,7 @@ class AuthController extends Controller
             DB::commit();
 
             return $this->apiResponse(
-                ['user_id' => $user->id, 'message' => __('messages.registration_success_verify_email')],
+                ['email' => $user->email, 'otp' => $user->otpCodes->last()->code],
                 __('messages.register_success'),
                 true,
                 201
@@ -93,7 +93,7 @@ class AuthController extends Controller
                     return $this->apiResponse([], __('messages.email_not_verified_otp_send_failed'), false, 500);
                 }
                 Auth::logout(); // تسجيل الخروج من المستخدم الذي لم يتم التحقق منه
-                return $this->apiResponse(['is_verified'=>false], __('messages.email_not_verified_send_otp'), false, 403);
+                return $this->apiResponse(['is_verified' => false], __('messages.email_not_verified_send_otp'), false, 403);
             } catch (Exception $e) { // هذا الكاتش ربما لن يتم الوصول إليه إذا sendOtp تتعامل مع الـ Exception داخلياً
                 Log::error('Unexpected error during OTP re-send in login.', [
                     'user_id' => $user->id,

@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\SkillsController;
+use App\Http\Controllers\Admin\EducationLevelController;
 
 
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -40,7 +41,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
             });
 
 
-
             Route::controller(SubCategoryController::class)->group(function () {
                 Route::get('subcategories', 'index')->name('subcategories.index');
                 Route::get('subcategories/data', 'getData')->name('subcategories.data');
@@ -48,6 +48,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::get('subcategories/{id}/show', 'show')->name('subcategories.show');
                 Route::put('subcategories/{id}', 'update')->name('subcategories.update');
                 Route::delete('subcategories/{id}', 'destroy')->name('subcategories.destroy');
+
             });
 
             Route::controller(CountryController::class)->group(function () {
@@ -68,6 +69,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::delete('skills/{id}', 'destroy')->name('skills.destroy');
             });
 
+
+            Route::controller(EducationLevelController::class)->group(function () {
+                Route::get('educations', 'index')->name('educations.index');
+                Route::get('educations/data', 'getData')->name('educations.data');
+                Route::post('educations', 'store')->name('educations.store');
+                Route::get('educations/{id}/show', 'show')->name('educations.show');
+                Route::put('educations/{id}', 'update')->name('educations.update');
+                Route::delete('educations/{id}', 'destroy')->name('educations.destroy');
+            });
 
 
         });

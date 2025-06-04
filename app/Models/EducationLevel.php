@@ -9,6 +9,7 @@ class EducationLevel extends Model
 {
     use  HasTranslations;
 
+    protected $table= 'education_levels';
     protected $fillable = ['name'];
 
 

@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Freelancer extends Model
 {
     protected $fillable = [
-        'user_id', 'cv', 'cv_view_count', 'category_id', 'sub_category_id'
+        'user_id', 'cv', 'cv_view_count', 'category_id', 'sub_category_id','hourly_rate',
     ];
+
 
     public function user()
     {
@@ -40,9 +41,12 @@ class Freelancer extends Model
         return $this->hasMany(FreelancerPortfolio::class);
     }
 
+
     public function skills()
     {
-        return $this->belongsToMany(FreeLancerSkill::class, 'free_lancer_skills');
+        return $this->belongsToMany(Skills::class, 'freelancers_skills', 'freelancer_id', 'skill_id')
+            ->withTimestamps();
+
     }
 
     public function badges()

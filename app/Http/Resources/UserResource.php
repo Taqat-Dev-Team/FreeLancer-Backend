@@ -26,14 +26,17 @@ class UserResource extends JsonResource
     {
         $baseData = [
             'id' => $this->id,
+            'token' => $this->token,
             'name' => $this->name,
             'photo' => $this->getFirstMediaUrl('photo', 'thumb'),
             'email' => $this->email,
             'mobile' => $this->mobile,
-            'country' => new  CountryResource($this->country),
-//            'lang'   => $this->lang,
-            'status' => $this->status,
-            'token' => $this->token,
+            'country' => $this->country?->name,
+            'birth_date' => $this->birth_date,
+            'save_date'=> $this->save_date,
+//            'lang' => $this->lang,
+//            'status' => $this->status,
+
             'bio' => $this->bio,
             'type' => $this->client ? 'client' : ($this->freelancer ? 'freelancer' : null),
         ];
@@ -50,6 +53,12 @@ class UserResource extends JsonResource
                     'name' => $this->freelancer->subCategory?->name,
                     'slug' => $this->freelancer->subCategory?->slug,
                 ],
+                'hourly_rate' => $this->freelancer->hourly_rate,
+                'available_hire' => $this->freelancer->available_hire,
+                'skills' =>
+                    SkillsResource::collection($this->freelancer->skills),
+
+
             ]);
         }
 

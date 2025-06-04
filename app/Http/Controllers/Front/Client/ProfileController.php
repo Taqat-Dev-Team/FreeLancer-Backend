@@ -26,12 +26,24 @@ class ProfileController extends Controller
     {
 
         $user = Auth::user();
+
+        if ($user->save_data) {
+            return $this->apiResponse(
+                [],
+                __('messages.Access Denied'),
+                false,
+                401
+            );
+        }
         $token = $this->extractBearerToken($request);
         try {
             $user->fill([
                 'name' => $request->name,
                 'bio' => $request->bio ?? '',
                 'gender' => $request->gender,
+                'country_id' => $request->country_id,
+                'save_data' => 1,
+
             ]);
 
             // معالجة الصورة

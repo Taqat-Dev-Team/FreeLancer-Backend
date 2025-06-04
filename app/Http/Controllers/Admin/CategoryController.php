@@ -20,7 +20,7 @@ class CategoryController extends Controller
 
     public function getData(Request $request)
     {
-        $categories = Category::withCount('subCategories')->orderBy('created_at', 'desc');
+        $categories = Category::withCount('subCategories');
 
         if ($request->has('search')) {
             $search = strtolower($request->search);

@@ -26,9 +26,9 @@ class Skills extends Model implements HasMedia
         return $this->belongsTo(Category::class);
     }
 
-    public function users()
+    public function freeLancer()
     {
-        return $this->belongsToMany(User::class, 'freelancers_skills', 'skill_id', 'freelancer_id')
+        return $this->belongsToMany(Freelancer::class, 'freelancers_skills', 'skill_id', 'freelancer_id')
             ->withTimestamps();
 
     }

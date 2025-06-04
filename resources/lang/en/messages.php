@@ -3,6 +3,7 @@
 return [
     'name' => 'Name',
     'email' => 'Email',
+    'mobile' => 'Mobile',
     'email-email' => 'Invalid email format',
     'about' => 'About Us is required',
     'error' => 'An error occurred',
@@ -171,6 +172,13 @@ return [
     'country_id.exists' => 'The selected country does not exist.',
     'Access Denied' => 'Access Denied',
     'user_already_save_data'=> 'User already has saved data. Cannot save data again.',
+
+    'data_saved_already' => 'Data already saved.',
+
+    'mobile.required' => 'The mobile number is required.',
+    'mobile.digits_between' => 'The mobile number must be between 7 and 15 digits.',
+    'mobile.regex' => 'The mobile number must contain digits only, with no symbols or spaces.',
+
 
 
 ];
