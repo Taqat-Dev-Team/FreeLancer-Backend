@@ -33,7 +33,7 @@ class UserResource extends JsonResource
             'mobile' => $this->mobile,
             'country' => $this->country?->name,
             'birth_date' => $this->birth_date,
-            'save_date'=> $this->save_date,
+            'save_data' => $this->save_data,
 //            'lang' => $this->lang,
 //            'status' => $this->status,
 
@@ -55,14 +55,19 @@ class UserResource extends JsonResource
                 ],
                 'hourly_rate' => $this->freelancer->hourly_rate,
                 'available_hire' => $this->freelancer->available_hire,
-                'skills' =>
-                    SkillsResource::collection($this->freelancer->skills),
-
+                'skills' => $this->freelancer->skills->map(function ($skill) {
+                    return [
+                        'id' => $skill->id,
+                        'name' => $skill->name,
+                        'icon' => $skill->icon,
+                    ];
+                }),
 
             ]);
         }
 
         return $baseData;
     }
+
 
 }

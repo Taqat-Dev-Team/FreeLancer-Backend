@@ -26,7 +26,7 @@
                     <div class="mb-3">
                         <label for="icon" class="form-label">Icon</label>
                         <input type="text" id="icon_edit" name="icon" class="form-control"
-                               placeholder="Enter Icon Class (e.g., fa fa-facebook)">
+                               placeholder="Enter Icon Class (e.g., fa-brands fa-facebook)">
                         <div class="form-text">You can use any Font Awesome icon class.</div>
 
                     </div>

@@ -105,6 +105,13 @@
                                 <span class="menu-title">Socials Media</span>
                             </a>
                         </div>
+                        <div class="menu-item">
+                            <a class="menu-link {{ request()->routeIs('admin.management.badges.*')? 'active' : '' }}"
+                               href="{{ route('admin.management.badges.index') }}">
+                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                                <span class="menu-title">Badges</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -175,6 +175,7 @@ return [
 
     'data_saved_already' => 'Data already saved.',
 
+    'Access Denied, already saved data'=>'Access Denied, already saved data',
     'mobile.required' => 'The mobile number is required.',
     'mobile.digits_between' => 'The mobile number must be between 7 and 15 digits.',
     'mobile.regex' => 'The mobile number must contain digits only, with no symbols or spaces.',

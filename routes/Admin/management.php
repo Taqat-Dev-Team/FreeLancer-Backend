@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\SkillsController;
 use App\Http\Controllers\Admin\EducationLevelController;
 use App\Http\Controllers\Admin\SocialMediaController;
+use App\Http\Controllers\Admin\BadgesController;
 
 
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -87,6 +88,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::get('socials/{id}/show', 'show')->name('socials.show');
                 Route::put('socials/{id}', 'update')->name('socials.update');
                 Route::delete('socials/{id}', 'destroy')->name('socials.destroy');
+            });
+
+            Route::controller(BadgesController::class)->group(function () {
+                Route::get('badges', 'index')->name('badges.index');
+                Route::get('badges/data', 'getData')->name('badges.data');
+                Route::post('badges', 'store')->name('badges.store');
+                Route::get('badges/{id}/show', 'show')->name('badges.show');
+                Route::put('badges/{id}', 'update')->name('badges.update');
+                Route::delete('badges/{id}', 'destroy')->name('badges.destroy');
             });
 
 

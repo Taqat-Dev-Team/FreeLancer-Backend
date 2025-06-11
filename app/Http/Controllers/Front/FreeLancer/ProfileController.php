@@ -27,7 +27,7 @@ class ProfileController extends Controller
         if ($user->save_data) {
             return $this->apiResponse(
                 ['save_data' => 1],
-                __('messages.Access Denied'),
+                __('messages.Access Denied, already saved data'),
                 false,
                 401
             );
@@ -68,6 +68,13 @@ class ProfileController extends Controller
             }
 
             $user->save();
+
+            $user->load([
+                'freelancer.skills',
+                'freelancer.category',
+                'freelancer.subCategory'
+            ]);
+
 
             return $this->apiResponse(
                 new UserResource($user, $token),

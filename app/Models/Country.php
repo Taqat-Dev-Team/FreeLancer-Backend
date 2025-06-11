@@ -8,7 +8,7 @@ use Spatie\Translatable\HasTranslations;
 class Country extends Model
 {
     use HasTranslations;
-    protected $fillable = ['name', 'code', 'number_code'];
+    protected $fillable = ['name', 'code', 'number_code','status'];
 
     protected $appends = ['flag'];
 

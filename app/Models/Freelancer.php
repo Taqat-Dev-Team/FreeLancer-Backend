@@ -58,7 +58,7 @@ class Freelancer extends Model
 
     public function badges()
     {
-        return $this->belongsToMany(Badge::class, 'free_lancer_badges');
+        return $this->belongsToMany(User::class, 'freelancer_badges', 'freelancer_id', 'badge_id');
     }
 
     public function images()

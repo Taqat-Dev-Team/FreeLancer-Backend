@@ -158,6 +158,7 @@ return [
     'sub_category_id.required' => 'التصنيف الفرعي مطلوب.',
     'country_id.exists' => 'الدولة المحددة غير موجودة.',
     'Access Denied'=>'تم رفض الوصول',
+    'Access Denied, already saved data'=>'تم رفض الوصل، تم حفظ البيانات مسبقاً',
     'user_already_save_data'=> 'المستخدم لديه بيانات محفوظة بالفعل. لا يمكن حفظ البيانات مرة أخرى.',
     'data_saved_already' => 'البيانات محفوظة بالفعل.',
     'mobile.required' => 'رقم الجوال مطلوب.',
