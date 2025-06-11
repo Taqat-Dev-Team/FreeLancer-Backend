@@ -60,6 +60,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::get('countries/{id}/show', 'show')->name('countries.show');
                 Route::put('countries/{id}', 'update')->name('countries.update');
                 Route::delete('countries/{id}', 'destroy')->name('countries.destroy');
+                Route::post('countries/change-status', 'changeStatus')->name('countries.changeStatus');
+
             });
 
             Route::controller(SkillsController::class)->group(function () {

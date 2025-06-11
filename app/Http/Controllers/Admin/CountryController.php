@@ -37,8 +37,14 @@ class CountryController extends Controller
         }
 
         return DataTables::of($categories)
+            ->editColumn('status', function ($row) {
+                $checked = $row->status == 1 ? 'checked' : '';
+                return '<div class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
+                <input class="form-check-input toggle-status" type="checkbox" data-id="' . $row->id . '" ' . $checked . '>
+                <label class="form-check-label">' . ($row->status ? 'Active' : 'Inactive') . '</label>
+            </div>';
+            })
             ->addColumn('flag', function ($row) {
-
                 return '<img src="' . $row->flag . '"  class="w-30px h-30px rounded-circle"  alt="Flag">';
             })
             ->addColumn('actions', function ($row) {
@@ -57,9 +63,20 @@ class CountryController extends Controller
                     </div>';
             })
             ->addIndexColumn()
-            ->rawColumns(['icon', 'actions', 'flag'])
+            ->rawColumns(['icon', 'actions', 'flag', 'status'])
             ->make(true);
     }
+
+
+    public function changeStatus(Request $request)
+    {
+        $category = Country::findOrFail($request->id);
+        $category->status = $request->status;
+        $category->save();
+
+        return response()->json(['message' => 'Status updated successfully.']);
+    }
+
 
     public function store(StoreCountryRequest $request)
     {

@@ -52,8 +52,7 @@
                                 <th>Name Ar</th>
                                 <th>Coder</th>
                                 <th>Number Code</th>
-
-                                {{--                                <th class="text-center">Category</th>--}}
+                                <th>Status</th>
                                 <th>Options</th>
                             </tr>
                             </thead>
@@ -77,13 +76,39 @@
 
 
 
+                <script>
+                    $(document).on('change', '.toggle-status', function () {
+                        let status = $(this).is(':checked') ? 1 : 0;
+                        let id = $(this).data('id');
+
+                        $.ajax({
+                            url: '{{route('admin.management.countries.changeStatus')}}',
+                            type: 'POST',
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                id: id,
+                                status: status
+                            },
+                            success: function (response) {
+                                toastr.success(response.message)
+                                $('#countries_table').DataTable().ajax.reload();
+
+
+                            },
+                            error: function () {
+                                toastr.error('Something went wrong. Please try again.');
+                            }
+                        });
+                    });
+                </script>
+
                 {{--            datatable--}}
                 <script>
                     $(document).ready(function () {
                         const table = $('#countries_table').DataTable({
                             processing: true,
                             serverSide: true,
-                            order: [[0, 'desc']],
+                            order: [[6, 'desc']],
 
                             ajax: {
                                 url: '{{ route('admin.management.countries.data') }}',
@@ -102,6 +127,7 @@
                                 {data: 'name.ar', name: 'name', orderable: true, searchable: true},
                                 {data: 'code', name: 'code', orderable: true, searchable: true},
                                 {data: 'number_code', name: 'number_code', orderable: true, searchable: true},
+                                {data: 'status', name: 'status', orderable: true, searchable: true},
                                 // {
                                 //     data: 'category',
                                 //     class: 'text-center',
@@ -165,7 +191,7 @@
 
 
     @include('admin.management.countries.add')
-            @include('admin.management.countries.edit')
+    @include('admin.management.countries.edit')
     @endpush
 
 @stop
