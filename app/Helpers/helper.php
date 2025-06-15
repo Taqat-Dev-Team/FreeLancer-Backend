@@ -15,4 +15,11 @@ function languages_levels()
         'Advanced',
         'Native',
     ];
+
+}
+
+
+function unreadContactsCount()
+{
+    return \App\Models\Contact::where('status',0)->count();
 }

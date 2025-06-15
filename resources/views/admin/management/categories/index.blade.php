@@ -174,6 +174,8 @@
                 <!--end::Card-->
             </div>
 
+        </div>
+        </div>
 
             @push('js')
 

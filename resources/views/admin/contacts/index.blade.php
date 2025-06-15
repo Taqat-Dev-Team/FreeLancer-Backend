@@ -1,16 +1,9 @@
-@extends('admin.layouts.master', ['title' => 'Education Levels Management'])
+@extends('admin.layouts.master', ['title' => 'Contacts'])
 
 
-@section('toolbarTitle', 'Education Levels Management')
-@section('toolbarSubTitle', 'Management')
-@section('toolbarPage', 'All Education Levels')
-@section('toolbarActions')
-    <div class="d-flex align-items-center gap-2 gap-lg-3">
-        <a href="#" class="btn btn-flex btn-primary h-40px fs-7 fw-bold" data-bs-toggle="modal"
-           data-bs-target="#addLevelModal"><i class="ki-outline ki-plus"></i> Add Education Level</a>
-
-    </div>
-@stop
+@section('toolbarTitle', 'Contacts  Management')
+@section('toolbarSubTitle', 'Contacts')
+@section('toolbarPage', 'All Contacts')
 
 @section('content')
     <div id="kt_app_content_container" class="app-container container-fluid mt-5">
@@ -24,8 +17,8 @@
                     <div class="d-flex align-items-center position-relative my-1">
                         <i class="ki-outline ki-magnifier fs-3 position-absolute ms-5"></i>
                         <input type="text"
-                               id="EducationLevelSearchInput" class="form-control form-control-solid w-250px ps-13"
-                               placeholder="Search Education Level">
+                               id="ContactSearchInput" class="form-control form-control-solid w-250px ps-13"
+                               placeholder="Search Contact">
                     </div>
                     <!--end::Search-->
                 </div>
@@ -35,17 +28,23 @@
             <!--begin::Card body-->
             <div class="card-body py-4">
                 <!--begin::Table-->
-                <div id="education" class="dt-container dt-bootstrap5 dt-empty-footer">
+                <div id="countries" class="dt-container dt-bootstrap5 dt-empty-footer">
                     <div id="" class="table-responsive">
 
-                        <table id="educations_table" class="table table-row-bordered gy-5">
+                        <table id="countries_table" class="table table-row-bordered gy-5">
                             <thead>
                             <tr class="fw-semibold fs-6 text-muted">
 
-                                <th class="">#</th>
-                                <th>Name En</th>
-                                <th>Name Ar</th>
-                                {{--                                <th class="text-center">Category</th>--}}
+                                <th class="">
+                                    #
+                                </th>
+
+                                <th>Subject</th>
+                                <th>Name </th>
+                                <th>Email</th>
+                                <th>phone</th>
+                                <th>Message</th>
+                                <th>Status</th>
                                 <th>Options</th>
                             </tr>
                             </thead>
@@ -59,9 +58,9 @@
                 </div>
                 <!--end::Card-->
             </div>
-        </div>
-        </div>
 
+        </div>
+        </div>
             @push('js')
 
                 <link href="{{url('admin/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet"
@@ -70,18 +69,19 @@
 
 
 
+
                 {{--            datatable--}}
                 <script>
                     $(document).ready(function () {
-                        const table = $('#educations_table').DataTable({
+                        const table = $('#countries_table').DataTable({
                             processing: true,
                             serverSide: true,
-                            order: [[0, 'desc']],
+                            order: [[6, 'desc']],
 
                             ajax: {
-                                url: '{{ route('admin.management.educations.data') }}',
+                                url: '{{ route('admin.contacts.data') }}',
                                 data: function (d) {
-                                    d.search = $('#EducationLevelSearchInput').val();
+                                    d.search = $('#ContactSearchInput').val();
                                 }
                             },
 
@@ -89,16 +89,12 @@
 
                                 {data: 'DT_RowIndex', name: 'id'},
 
-                                {data: 'name.en', name: 'name', orderable: true, searchable: true},
-                                {data: 'name.ar', name: 'name', orderable: true, searchable: true},
-
-                                // {
-                                //     data: 'category',
-                                //     class: 'text-center',
-                                //     name: 'category',
-                                //     orderable: true,
-                                //     searchable: true
-                                // },
+                                {data: 'title', name: 'title', orderable: true, searchable: true},
+                                {data: 'name', name: 'name', orderable: true, searchable: true},
+                                {data: 'email', name: 'email', orderable: true, searchable: true},
+                                {data: 'phone', name: 'phone', orderable: true, searchable: true},
+                                {data: 'message', name: 'message', orderable: true, searchable: true},
+                                {data: 'status', name: 'status', orderable: true, searchable: true},
                                 {data: 'actions', name: 'actions', orderable: false, searchable: false},
                             ],
                             drawCallback: function () {
@@ -111,13 +107,13 @@
 
 
                         // Search input event
-                        $('#EducationLevelSearchInput').on('keyup', function () {
+                        $('#ContactSearchInput').on('keyup', function () {
                             table.search(this.value).draw();
                         });
 
 
                         function bindActionButtons() {
-                            $('.delete-level').off('click').on('click', function (e) {
+                            $('.delete-contact').off('click').on('click', function (e) {
                                 e.preventDefault();
                                 const id = $(this).data('id');
                                 Swal.fire({
@@ -131,17 +127,17 @@
                                 }).then((result) => {
                                     if (result.isConfirmed) {
                                         $.ajax({
-                                            url: '/admin/educations/' + id,
+                                            url: '/admin/contacts/' + id,
                                             type: 'DELETE',
                                             data: {
                                                 _token: '{{ csrf_token() }}'
                                             },
                                             success: function (response) {
-                                                toastr.success('Level deleted successfully');
-                                                $('#educations_table').DataTable().ajax.reload();
+                                                toastr.success('Country deleted successfully');
+                                                $('#countries_table').DataTable().ajax.reload();
                                             },
                                             error: function (xhr) {
-                                                toastr.error('Error deleting Level', xhr.responseJSON.message || 'An error occurred');
+                                                toastr.error('Error deleting Country', xhr.responseJSON.message || 'An error occurred');
                                             }
                                         });
                                     }
@@ -154,8 +150,6 @@
                 </script>
 
 
-    @include('admin.management.education_levels.add')
-            @include('admin.management.education_levels.edit')
     @endpush
 
 @stop

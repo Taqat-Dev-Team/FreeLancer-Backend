@@ -4,9 +4,11 @@
      data-kt-drawer-width="250px" data-kt-drawer-direction="start"
      data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
 
-    <div class="app-sidebar-logo flex-shrink-0 d-none d-lg-flex flex-center align-items-center" id="kt_app_sidebar_logo">
-        <a href="{{ url('/') }}"> {{-- يفضل توجيه الشعار للصفحة الرئيسية للموقع وليس # --}}
-            <img alt="Logo" src="{{ asset('logos/logo.png') }}" class="h-75px d-none d-sm-inline app-sidebar-logo-default theme-light-show"/>
+    <div class="app-sidebar-logo flex-shrink-0 d-none d-lg-flex flex-center align-items-center"
+         id="kt_app_sidebar_logo">
+        <a href="{{ url('/') }}">
+            <img alt="Logo" src="{{ asset('logos/logo.png') }}"
+                 class="h-75px d-none d-sm-inline app-sidebar-logo-default theme-light-show"/>
             <img alt="Logo" src="{{ asset('logos/white.png') }}" class="h-40px theme-dark-show"/>
         </a>
         <div class="d-flex align-items-center d-lg-none ms-n3 me-1" title="Show aside menu">
@@ -86,7 +88,6 @@
                         </div>
 
 
-
                         <div class="menu-item">
                             <a class="menu-link {{ request()->routeIs('admin.management.countries.*')? 'active' : '' }}"
                                href="{{ route('admin.management.countries.index') }}">
@@ -105,7 +106,7 @@
                             <a class="menu-link {{ request()->routeIs('admin.management.socials.*')? 'active' : '' }}"
                                href="{{ route('admin.management.socials.index') }}">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                                <span class="menu-title">Socials Media</span>
+                                <span class="menu-title">Social Media</span>
                             </a>
                         </div>
                         <div class="menu-item">
@@ -125,9 +126,29 @@
                         </div>
                     </div>
                 </div>
+
+
+                <div class="menu-item {{ request()->routeIs('admin.contacts.*') ? 'here show' : '' }}">
+                    <a class="menu-link {{ request()->routeIs('admin.contacts.*')? 'active':'' }}"
+                       href="{{ route('admin.contacts.index') }}">
+                        <span class="menu-icon">
+                            <i class="ki-outline ki-message-text-2 fs-2 {{ request()->routeIs('admin.contacts.*')? 'text-white':'' }}"></i>
+                        </span>
+
+                        <span class="menu-title {{ request()->routeIs('admin.contacts.*')? 'text-white':'' }}">Contacts</span>
+                        @if(unreadContactsCount()>0)
+                            <span class="menu-badge">
+                                <span class="badge badge-light-danger ms-2">
+                                    {{unreadContactsCount()}}
+                                </span>
+                                @endif
+                            </span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
+
     <div class="app-sidebar-footer d-flex align-items-center px-8 pb-10" id="kt_app_sidebar_footer">
         <div class="">
             <div class="d-flex align-items-center" data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
@@ -137,11 +158,13 @@
                 </div>
                 <div class="d-flex flex-column align-items-start justify-content-center ms-3">
                     <span class="text-gray-500 fs-8 fw-semibold">Hello</span>
-                    <a href="{{ route('admin.profile') }}" class="text-gray-800 fs-7 fw-bold text-hover-primary">{{ auth('admin')->user()->name }}</a>
+                    <a href="{{ route('admin.profile') }}"
+                       class="text-gray-800 fs-7 fw-bold text-hover-primary">{{ auth('admin')->user()->name }}</a>
                 </div>
             </div>
-            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
-                 data-kt-menu="true">
+            <div
+                class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
+                data-kt-menu="true">
                 <div class="menu-item px-3">
                     <div class="menu-content d-flex align-items-center px-3">
                         <div class="symbol symbol-50px me-5">
@@ -150,12 +173,14 @@
                         <div class="d-flex flex-column">
                             <div class="fw-bold d-flex align-items-center fs-5">{{ auth('admin')->user()->name }}
                                 @forelse(auth('admin')->user()->roles as $role)
-                                    <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-1">{{ $role->display_name }}</span>
+                                    <span
+                                        class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-1">{{ $role->display_name }}</span>
                                 @empty
                                     <span class="text-muted fs-8">No roles assigned</span>
                                 @endforelse
                             </div>
-                            <a href="{{ auth('admin')->user()->email }}" class="fw-semibold text-muted text-hover-primary fs-7">{{ auth('admin')->user()->email }}</a>
+                            <a href="{{ auth('admin')->user()->email }}"
+                               class="fw-semibold text-muted text-hover-primary fs-7">{{ auth('admin')->user()->email }}</a>
                         </div>
                     </div>
                 </div>
@@ -180,17 +205,20 @@
                             </span>
                         </span>
                     </a>
-                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-title-gray-700 menu-icon-gray-500 menu-active-bg menu-state-color fw-semibold py-4 fs-base w-150px"
-                         data-kt-menu="true" data-kt-element="theme-mode-menu">
+                    <div
+                        class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-title-gray-700 menu-icon-gray-500 menu-active-bg menu-state-color fw-semibold py-4 fs-base w-150px"
+                        data-kt-menu="true" data-kt-element="theme-mode-menu">
                         <div class="menu-item px-3 my-0">
                             <a href="#" class="menu-link px-3 py-2" data-kt-element="mode" data-kt-value="light">
-                                <span class="menu-icon" data-kt-element="icon"><i class="ki-outline ki-night-day fs-2"></i></span>
+                                <span class="menu-icon" data-kt-element="icon"><i
+                                        class="ki-outline ki-night-day fs-2"></i></span>
                                 <span class="menu-title">Light</span>
                             </a>
                         </div>
                         <div class="menu-item px-3 my-0">
                             <a href="#" class="menu-link px-3 py-2" data-kt-element="mode" data-kt-value="dark">
-                                <span class="menu-icon" data-kt-element="icon"><i class="ki-outline ki-moon fs-2"></i></span>
+                                <span class="menu-icon" data-kt-element="icon"><i
+                                        class="ki-outline ki-moon fs-2"></i></span>
                                 <span class="menu-title">Dark</span>
                             </a>
                         </div>

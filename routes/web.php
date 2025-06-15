@@ -24,4 +24,5 @@ Route::get('/', function () {
 })->name('home');
 
 require  __DIR__.'/Admin/management.php';
+require  __DIR__.'/Admin/admin.php';
 

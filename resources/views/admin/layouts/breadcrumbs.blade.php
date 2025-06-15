@@ -1,3 +1,5 @@
+
+@if( !request()->routeIs('admin.dashboard') )
 <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
     <!--begin::Page title-->
     <div class="page-title d-flex flex-column justify-content-center gap-1 me-3">
@@ -39,3 +41,5 @@
 
     <!--end::Actions-->
 </div>
+
+@endif

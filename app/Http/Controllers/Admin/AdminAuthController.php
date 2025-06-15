@@ -18,6 +18,10 @@ class AdminAuthController extends Controller
      */
     public function showLoginForm()
     {
+        if (Auth::guard('admin')->check()) {
+            return redirect()->route('admin.dashboard');
+        }
+
         return view('admin.auth.login'); // Ensure the path is correct for your Blade file
     }
 
@@ -69,6 +73,7 @@ class AdminAuthController extends Controller
             return redirect()->back()->withErrors($e->errors())->withInput($request->only('email'));
         }
     }
+
     /**
      * Log the user out of the application.
      *

@@ -129,6 +129,9 @@
             </div>
 
 
+        </div>
+        </div>
+
             @push('js')
 
                 <link href="{{url('admin/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet"

@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\CountryController;
@@ -14,26 +13,12 @@ use App\Http\Controllers\Admin\languageController;
 
 Route::prefix('admin')->name('admin.')->group(function () {
 
-    Route::controller(AdminAuthController::class)->group(function () {
-        Route::get('login', 'showLoginForm')->name('login');
-        Route::post('login', 'login')->name('login.submit');
-    });
 
     Route::middleware('admin')->group(function () {
 
 
-        Route::get('/dashboard', function () {
-            return view('admin.dashboard');
-        })->name('dashboard');
-
-        Route::controller(AdminAuthController::class)->group(function () {
-            Route::post('logout', 'logout')->name('logout');
-            Route::view('profile', 'admin.profile')->name('profile');
-            Route::post('profile', 'updateProfile')->name('profile.update');
-        });
-
-
         Route::name('management.')->group(function () {
+
             Route::controller(CategoryController::class)->group(function () {
                 Route::get('categories', 'index')->name('categories.index');
                 Route::get('categories/data', 'getData')->name('categories.data');
@@ -116,4 +101,4 @@ Route::prefix('admin')->name('admin.')->group(function () {
     });
 
 
-});
+    });

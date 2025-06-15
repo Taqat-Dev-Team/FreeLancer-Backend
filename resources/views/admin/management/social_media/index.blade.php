@@ -61,6 +61,8 @@
                 </div>
                 <!--end::Card-->
             </div>
+            </div>
+            </div>
 
 
             @push('js')
@@ -68,7 +70,6 @@
                 <link href="{{url('admin/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet"
                       type="text/css"/>
                 <script src="{{url('admin/plugins/custom/datatables/datatables.bundle.js')}}"></script>
-
 
 
                 {{--            datatable--}}
@@ -150,9 +151,6 @@
 
 
 
-
-    @include('admin.management.social_media.add')
-    @include('admin.management.social_media.edit')
     @endpush
 
 @stop

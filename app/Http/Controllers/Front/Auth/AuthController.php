@@ -229,9 +229,6 @@ class AuthController extends Controller
     public function profile(Request $request)
     {
         $user = Auth::user();
-        if (!$user) {
-            return $this->apiResponse([], __('messages.not_authenticated'), false, 401);
-        }
 
         $token = $this->extractBearerToken($request);
 
