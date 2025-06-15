@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\SkillsController;
 use App\Http\Controllers\Admin\EducationLevelController;
 use App\Http\Controllers\Admin\SocialMediaController;
 use App\Http\Controllers\Admin\BadgesController;
+use App\Http\Controllers\Admin\languageController;
 
 
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -99,6 +100,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::get('badges/{id}/show', 'show')->name('badges.show');
                 Route::put('badges/{id}', 'update')->name('badges.update');
                 Route::delete('badges/{id}', 'destroy')->name('badges.destroy');
+            });
+
+            Route::controller(languageController::class)->group(function () {
+                Route::get('languages', 'index')->name('languages.index');
+                Route::get('languages/data', 'getData')->name('languages.data');
+                Route::post('languages', 'store')->name('languages.store');
+                Route::get('languages/{id}/show', 'show')->name('languages.show');
+                Route::put('languages/{id}', 'update')->name('languages.update');
+                Route::delete('languages/{id}', 'destroy')->name('languages.destroy');
             });
 
 

@@ -54,6 +54,8 @@ Route::controller(GeneralController::class)->group(function () {
     Route::get('/subcategories', 'subcategories');
     Route::get('/subcategories/{id}', 'CategorySubcategories');
     Route::get('/education-levels', 'education_levels');
+    Route::get('/social', 'social');
+    Route::get('/languages_levels', 'languages_levels');
 });
 
 

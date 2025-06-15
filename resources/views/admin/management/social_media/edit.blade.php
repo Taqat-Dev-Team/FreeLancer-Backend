@@ -22,86 +22,121 @@
                                placeholder="English Name">
                     </div>
 
-
                     <div class="mb-3">
-                        <label for="icon" class="form-label">Icon</label>
-                        <input type="text" id="icon_edit" name="icon" class="form-control"
-                               placeholder="Enter Icon Class (e.g., fa-brands fa-facebook)">
-                        <div class="form-text">You can use any Font Awesome icon class.</div>
+                        <label class="form-label">Social Media Icon</label>
+                        <input type="hidden" name="icon" id="icon_edit">
+                        <div id="iconEditPreview" class="fs-1 mb-2 text-primary"></div>
 
+                        <div class="icon-picker border rounded p-3 bg-light" style="max-height: 500px; overflow-y: auto;">
+                            @php
+                                $icons = [
+                                  'fa-brands fa-facebook', 'fa-brands fa-twitter', 'fa-brands fa-instagram', 'fa-brands fa-linkedin', 'fa-brands fa-tiktok', 'fa-brands fa-youtube', 'fa-brands fa-telegram', 'fa-brands fa-whatsapp',
+                                  'fa-brands fa-snapchat', 'fa-brands fa-pinterest', 'fa-brands fa-reddit', 'fa-brands fa-discord', 'fa-brands fa-twitch',
+                                  'fa-brands fa-github', 'fa-brands fa-dribbble', 'fa-brands fa-behance', 'fa-brands fa-vimeo', 'fa-brands fa-slack', 'fa-brands fa-stack-overflow', 'fa-brands fa-medium', 'fa-brands fa-codepen',
+                                  'fa-brands fa-google', 'fa-brands fa-facebook-f', 'fa-brands fa-twitter-square', 'fa-brands fa-linkedin-in', 'fa-brands fa-youtube-square', 'fa-brands fa-spotify',
+                                  'fa-brands fa-stack-exchange', 'fa-brands fa-wordpress', 'fa-brands fa-shopify', 'fa-brands fa-etsy', 'fa-brands fa-fiverr', 'fa-brands fa-upwork'
+                                ];
+                            @endphp
+                            @foreach ($icons as $icon)
+                                <i class="fa-brands {{ $icon }} m-2 p-2 rounded text-center"
+                                   style="font-size: 24px; cursor: pointer;"
+                                   data-icon="{{ $icon }}"></i>
+                            @endforeach
+                        </div>
                     </div>
 
                 </div>
 
-
-                    <div class=" modal-footer">
-                        <button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
-                            <span class="indicator-label">Save changes</span>
-                            <span class="indicator-progress">Please wait...
-                                  <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                        </button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-
-                    </div>
-
-
+                <div class="modal-footer">
+                    <button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
+                        <span class="indicator-label">Save changes</span>
+                        <span class="indicator-progress">Please wait...
+                              <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 </div>
+
+            </div>
         </form>
     </div>
 </div>
+
 <script>
     $(document).ready(function () {
 
-        // Event listener for opening the edit modal and populating data
+        // عند الضغط على زر التعديل، جلب بيانات السوشيال وفتح المودال
         $(document).on('click', '.edit-social', function (e) {
             e.preventDefault();
             const id = $(this).data('id');
 
-            // Clear previous validation errors before fetching data
+            // إزالة أخطاء التحقق السابقة
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').remove();
 
             $.ajax({
-                url: `/admin/socials/${id}/show`, // Use your existing show route
+                url: `/admin/socials/${id}/show`,
                 type: 'GET',
                 success: function (response) {
-                    // Populate the form fields
                     $('#edit_social_id').val(response.id);
                     $('#edit_name_en').val(response.name_en || '');
                     $('#edit_name_ar').val(response.name_ar || '');
+
+                    // ضبط قيمة الأيقونة وعرضها في preview
                     $('#icon_edit').val(response.icon || '');
+                    $('#iconEditPreview').html(response.icon ? `<i class="${response.icon}"></i>` : '');
+
+                    // إزالة تمييز الأيقونات السابقة
+                    $('#editSocialModal .icon-picker i').removeClass('border-primary bg-primary-subtle');
+
+                    // تمييز الأيقونة المختارة في القائمة
+                    if (response.icon) {
+                        $(`#editSocialModal .icon-picker i[data-icon="${response.icon}"]`).addClass('border-primary bg-primary-subtle');
+                    }
+
                     $('#editSocialModal').modal('show');
                 },
-                error: function (xhr) {
-                    toastr.error('Error fetching Level details.');
+                error: function () {
+                    toastr.error('Error fetching social media details.');
                 }
             });
         });
 
+        // التعامل مع اختيار الأيقونة داخل مودال التعديل (يجب ربط الحدث خارج الـ ajax error)
+        $('#editSocialModal .icon-picker i').on('click', function () {
+            // إزالة التحديد السابق
+            $('#editSocialModal .icon-picker i').removeClass('border-primary bg-primary-subtle');
 
-        // Submit handler for the edit form (remains largely the same, but review error mapping for translatable fields)
+            // تمييز العنصر الحالي
+            $(this).addClass('border-primary bg-primary-subtle');
+
+            // تعيين القيمة في input
+            let selectedIcon = $(this).data('icon');
+            $('#icon_edit').val(selectedIcon);
+
+            // عرض الأيقونة في preview
+            $('#iconEditPreview').html(`<i class="${selectedIcon}"></i>`);
+        });
+
+        // إرسال الفورم للتعديل
         $('#editSocialForm').on('submit', function (e) {
             e.preventDefault();
 
             let formData = new FormData(this);
             const id = $('#edit_social_id').val();
-            formData.append('_method', 'PUT'); // For PUT request with FormData
+            formData.append('_method', 'PUT'); // override method PUT
 
-            // Clear previous validation errors
+            // إزالة أخطاء التحقق السابقة
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').remove();
 
             const submitButton = $(this).find('button[type="submit"]');
-
-            // Disable the button and show the spinner
             submitButton.attr('disabled', true);
             submitButton.find('.indicator-label').hide();
             submitButton.find('.indicator-progress').show();
 
-
             $.ajax({
-                url: `/admin/socials/${id}`, // RESTful route for 'update'
-                type: 'POST', // Method must be POST for FormData with _method override
+                url: `/admin/socials/${id}`,
+                type: 'POST', // POST مع _method=PUT
                 data: formData,
                 contentType: false,
                 processData: false,
@@ -111,7 +146,7 @@
                     $('#socials_table').DataTable().ajax.reload();
                 },
                 error: function (xhr) {
-                    if (xhr.status === 422) { // Laravel validation errors
+                    if (xhr.status === 422) {
                         let errors = xhr.responseJSON.errors;
                         $.each(errors, function (key, value) {
                             let inputField = $(`#editSocialForm [name="${key}"]`);
@@ -130,12 +165,12 @@
                     }
                 },
                 complete: function () {
-                    // Re-enable the button and hide the spinner
                     submitButton.attr('disabled', false);
                     submitButton.find('.indicator-label').show();
                     submitButton.find('.indicator-progress').hide();
                 }
             });
         });
+
     });
 </script>

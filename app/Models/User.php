@@ -66,6 +66,11 @@ class User extends Authenticatable implements HasMedia
         ];
     }
 
+    public function getImageUrl()
+    {
+        return $this->getFirstMediaUrl('photo','thumb') ?: url('logos/favicon.png');
+    }
+
 
     public function country()
     {
@@ -93,10 +98,6 @@ class User extends Authenticatable implements HasMedia
         return $this->hasMany(Notification::class);
     }
 
-    public function getImageUrl()
-    {
-        return $this->getFirstMediaUrl('photo', 'thumb') ?: url('logos/favicon.png');
-    }
 
     public function skills()
     {

@@ -22,13 +22,34 @@
                     </div>
 
 
-                   <div class="mb-3">
-                        <label for="icon" class="form-label">Icon</label>
-                        <input type="text" id="icon" name="icon" class="form-control"
-                               placeholder="Enter Icon Class (e.g., fa-brands fa-facebook)">
-                        <div class="form-text">You can use any Font Awesome icon class.</div>
+                    <div class="mb-3">
+                        <label class="form-label">Social Media Icon</label>
+                        <input type="hidden" name="icon" id="icon">
+                        <div id="iconPreview" class="fs-1 mb-2 text-primary"></div>
 
-                   </div>
+                        <div class="icon-picker border rounded p-3 bg-light" style="max-height: 500px; overflow-y: auto;">
+                            @php
+                                $icons = [
+          // سوشيال ميديا شهيرة
+          'fa-brands fa-facebook', 'fa-brands fa-twitter', 'fa-brands fa-instagram', 'fa-brands fa-linkedin', 'fa-brands fa-tiktok', 'fa-brands fa-youtube', 'fa-brands fa-telegram', 'fa-brands fa-whatsapp',
+          'fa-brands fa-snapchat', 'fa-brands fa-pinterest', 'fa-brands fa-reddit', 'fa-brands fa-discord', 'fa-brands fa-twitch',
+
+          // منصات للفريلانسر/محترفين ومجتمعات مطورين ومبدعين
+          'fa-brands fa-github', 'fa-brands fa-dribbble', 'fa-brands fa-behance', 'fa-brands fa-vimeo', 'fa-brands fa-slack', 'fa-brands fa-stack-overflow', 'fa-brands fa-medium', 'fa-brands fa-codepen',
+
+          // إضافات أخرى شائعة
+          'fa-brands fa-google', 'fa-brands fa-facebook-f', 'fa-brands fa-twitter-square', 'fa-brands fa-linkedin-in', 'fa-brands fa-youtube-square', 'fa-brands fa-spotify',
+          'fa-brands fa-stack-exchange', 'fa-brands fa-wordpress', 'fa-brands fa-shopify', 'fa-brands fa-etsy', 'fa-brands fa-fiverr', 'fa-brands fa-upwork'
+      ];
+
+                            @endphp
+                            @foreach ($icons as $icon)
+                                <i class="fa-brands {{ $icon }} m-2 p-2  rounded text-center"
+                                   style="font-size: 24px; cursor: pointer;"
+                                   data-icon="{{ $icon }}"></i>
+                            @endforeach
+                        </div>
+                    </div>
 
                     <div class=" modal-footer">
                         <button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
@@ -53,14 +74,34 @@
 <script>
 
     $(document).ready(function () {
+        $(document).ready(function () {
+            const icons = document.querySelectorAll('.icon-picker i');
+            const preview = document.getElementById('iconPreview');
+            const input = document.getElementById('icon');
 
-        // Clear form and validation errors when the modal is hidden
-        $('#addSocialModal').on('hidden.bs.modal', function () {
-            $('#addSocialForm')[0].reset();
-            $('.is-invalid').removeClass('is-invalid');
-            $('.invalid-feedback').remove();
+            icons.forEach(icon => {
+                icon.addEventListener('click', function () {
+                    // إزالة التحديد السابق
+                    icons.forEach(i => i.classList.remove('border-primary', 'bg-primary-subtle'));
+
+                    // تحديد العنصر الحالي
+                    this.classList.add('border-primary', 'bg-primary-subtle');
+
+                    // تعيين القيمة في hidden input
+                    const selected = this.dataset.icon;
+                    input.value = selected;
+
+                    // عرض الأيقونة
+                    preview.innerHTML = `<i class="fa-brands ${selected}"></i>`;
+                });
+            });
+
+            // Reset on modal close
+            $('#addSocialModal').on('hidden.bs.modal', function () {
+                $('#iconPreview').html('');
+                $('.icon-picker i').removeClass('border-primary bg-primary-subtle');
+            });
         });
-
 
         // Handle form submission
         $('#addSocialForm').on('submit', function (e) {

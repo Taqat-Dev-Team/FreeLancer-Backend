@@ -84,7 +84,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="menu-item"> {{-- لا تحتاج menu-sub-accordion هنا إذا كان مجرد رابط واحد --}}
+
+
+
+                        <div class="menu-item">
                             <a class="menu-link {{ request()->routeIs('admin.management.countries.*')? 'active' : '' }}"
                                href="{{ route('admin.management.countries.index') }}">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
@@ -112,6 +115,14 @@
                                 <span class="menu-title">Badges</span>
                             </a>
                         </div>
+
+                        <div class="menu-item">
+                            <a class="menu-link {{ request()->routeIs('admin.management.languages.*')? 'active' : '' }}"
+                               href="{{ route('admin.management.languages.index') }}">
+                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                                <span class="menu-title">Languages</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -122,11 +133,11 @@
             <div class="d-flex align-items-center" data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
                  data-kt-menu-overflow="true" data-kt-menu-placement="top-start">
                 <div class="d-flex flex-center cursor-pointer symbol symbol-circle symbol-40px">
-                    <img src="{{ asset(auth('admin')->user()->getImageUrl()) }}" alt="image"/> {{-- استخدام asset() أفضل هنا --}}
+                    <img src="{{ asset(auth('admin')->user()->getImageUrl()) }}" alt="image"/>
                 </div>
                 <div class="d-flex flex-column align-items-start justify-content-center ms-3">
                     <span class="text-gray-500 fs-8 fw-semibold">Hello</span>
-                    <a href="{{ route('admin.profile') }}" class="text-gray-800 fs-7 fw-bold text-hover-primary">{{ auth('admin')->user()->name }}</a> {{-- يفضل جعل الاسم رابطًا لصفحة الملف الشخصي --}}
+                    <a href="{{ route('admin.profile') }}" class="text-gray-800 fs-7 fw-bold text-hover-primary">{{ auth('admin')->user()->name }}</a>
                 </div>
             </div>
             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
@@ -144,7 +155,7 @@
                                     <span class="text-muted fs-8">No roles assigned</span>
                                 @endforelse
                             </div>
-                            <a href="mailto:{{ auth('admin')->user()->email }}" class="fw-semibold text-muted text-hover-primary fs-7">{{ auth('admin')->user()->email }}</a> {{-- جعل البريد الإلكتروني رابطًا للبريد --}}
+                            <a href="{{ auth('admin')->user()->email }}" class="fw-semibold text-muted text-hover-primary fs-7">{{ auth('admin')->user()->email }}</a>
                         </div>
                     </div>
                 </div>

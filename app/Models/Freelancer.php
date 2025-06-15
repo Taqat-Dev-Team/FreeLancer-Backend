@@ -11,6 +11,7 @@ class Freelancer extends Model
     ];
 
 
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -52,14 +53,14 @@ class Freelancer extends Model
     public function socials()
     {
         return $this->belongsToMany(SocialMedia::class, 'free_lancer_social_media', 'freelancer_id', 'social_media_id')
-            ->withPivot('link')
-            ->withTimestamps();
+            ->withPivot('link');
     }
 
     public function badges()
     {
-        return $this->belongsToMany(User::class, 'freelancer_badges', 'freelancer_id', 'badge_id');
+        return $this->belongsToMany(Badge::class, 'freelancer_badges', 'freelancer_id', 'badge_id');
     }
+
 
     public function images()
     {
@@ -71,11 +72,6 @@ class Freelancer extends Model
         return $this->hasMany(FreelancerVideos::class);
     }
 
-    public function socialMedia()
-    {
-        return $this->belongsToMany(SocialMedia::class, 'social_media_freelancer')
-            ->withPivot('link');
-    }
 
     public function proposals()
     {
@@ -85,5 +81,15 @@ class Freelancer extends Model
     public function projects()
     {
         return $this->hasMany(Project::class);
+    }
+    public function idVerified()
+    {
+        return true;
+    }
+    public function languages()
+    {
+        return $this->belongsToMany(Language::class, 'free_lancer_languages','freelancer_id','language_id')
+            ->withPivot('level');
+
     }
 }

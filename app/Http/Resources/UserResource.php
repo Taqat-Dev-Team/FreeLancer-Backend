@@ -24,11 +24,13 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+
+
         $baseData = [
             'id' => $this->id,
             'token' => $this->token,
             'name' => $this->name,
-            'photo' => $this->getFirstMediaUrl('photo', 'thumb'),
+            'photo' => $this->getImageUrl(),
             'email' => $this->email,
             'mobile' => $this->mobile,
             'country' => $this->country?->name,
@@ -38,6 +40,7 @@ class UserResource extends JsonResource
 //            'status' => $this->status,
 
             'bio' => $this->bio,
+            'joined_date' => $this->created_at->format('d M, Y') . ' - ' . $this->created_at->diffForHumans(),
             'type' => $this->client ? 'client' : ($this->freelancer ? 'freelancer' : null),
         ];
 
@@ -47,19 +50,45 @@ class UserResource extends JsonResource
 
         if ($this->freelancer) {
             return array_merge($baseData, [
+                'id_verified' => $this->freelancer->idVerified(),
                 'cv_view_count' => $this->freelancer->cv_view_count,
                 'category' => new CategoryResource($this->freelancer->category),
-                'subCategory' => [
-                    'name' => $this->freelancer->subCategory?->name,
-                    'slug' => $this->freelancer->subCategory?->slug,
-                ],
+                'subCategory' => $this->freelancer->subCategory?->name,
+
                 'hourly_rate' => $this->freelancer->hourly_rate,
                 'available_hire' => $this->freelancer->available_hire,
+
                 'skills' => $this->freelancer->skills->map(function ($skill) {
                     return [
                         'id' => $skill->id,
                         'name' => $skill->name,
-                        'icon' => $skill->icon,
+                        'icon' => $skill->getImageUrl(),
+                    ];
+                }),
+
+                'socials' => $this->freelancer->socials->map(function ($social) {
+                    return [
+                        'id' => $social->id,
+                        'name' => $social->name,
+                        'icon' => $social->icon,
+                        'link' => $social->pivot->link,
+                    ];
+                }),
+
+                'languages' => $this->freelancer->languages->map(function ($language) {
+                    return [
+                        'id' => $language->id,
+                        'name' => $language->name,
+                        'level' => $language->pivot->level,
+                    ];
+                }),
+
+                'badges' => $this->freelancer->badges->map(function ($badge) {
+                    return [
+                        'id' => $badge->id,
+                        'name' => $badge->name,
+                        'icon' => $badge->getImageUrl(),
+                        'description' => $badge->description,
                     ];
                 }),
 

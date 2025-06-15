@@ -298,19 +298,20 @@ class AuthController extends Controller
         $token = $this->extractBearerToken($request);
 
         if ($request->type == 2) {
-            $user->client()->delete(); // Delete existing client record if exists
+            $user->client()->delete();
             $user->freelancer()->updateOrCreate(
                 ['user_id' => $user->id],
                 ['status' => 'active']
             );
         } else {
-            $user->freelancer()->delete(); // Delete existing freelancer record if exists
+            $user->freelancer()->delete();
             $user->client()->updateOrCreate(
                 ['user_id' => $user->id],
                 ['status' => 'active']
             );
         }
 
+        $user->load(['client', 'freelancer']);
         return $this->apiResponse(
             new UserResource($user, $token),
             __('messages.account_type_success'),

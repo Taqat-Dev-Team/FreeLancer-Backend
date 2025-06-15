@@ -9,7 +9,7 @@ use Spatie\Translatable\HasTranslations;
 
 class Badge extends Model implements HasMedia
 {
-    protected $fillable = ['name', 'icon', 'description','status'];
+    protected $fillable = ['name', 'icon', 'description'];
 
     use HasTranslations, InteractsWithMedia;
 

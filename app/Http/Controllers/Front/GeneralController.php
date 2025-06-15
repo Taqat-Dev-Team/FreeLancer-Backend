@@ -8,16 +8,30 @@ use App\Http\Resources\CategoryResource;
 use App\Http\Resources\CountryResource;
 use App\Http\Resources\EducationLevlesResource;
 use App\Http\Resources\SkillsResource;
+use App\Http\Resources\SocialMediaResource;
 use App\Http\Resources\SubCategoryResource;
 use App\Models\Category;
 use App\Models\Country;
 use App\Models\EducationLevel;
 use App\Models\Skills;
+use App\Models\SocialMedia;
 use App\Models\SubCategory;
 
 class GeneralController extends Controller
 {
     use ApiResponseTrait;
+
+    public function languages_levels()
+    {
+        $langs = languages_levels();
+        return $this->apiResponse(
+            $langs,
+            __('messages.success'),
+            true,
+            200,
+        );
+    }
+
 
     public function categories()
     {
@@ -153,7 +167,27 @@ class GeneralController extends Controller
             );
         }
         return $this->apiResponse(
-           EducationLevlesResource::collection($levels),
+            EducationLevlesResource::collection($levels),
+            __('messages.success'),
+            true,
+            200,
+        );
+
+    }
+
+    public function social()
+    {
+        $social = SocialMedia::all();
+        if ($social->isEmpty()) {
+            return $this->apiResponse(
+                null,
+                __('messages.success'),
+                true,
+                200,
+            );
+        }
+        return $this->apiResponse(
+            SocialMediaResource::collection($social),
             __('messages.success'),
             true,
             200,
