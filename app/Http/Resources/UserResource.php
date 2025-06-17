@@ -98,7 +98,11 @@ class UserResource extends JsonResource
                     ];
                 }),
 
+                'profile_complete' => $this->freelancer->profile_completion_status,
+
+
             ]);
+
         }
 
         return $baseData;

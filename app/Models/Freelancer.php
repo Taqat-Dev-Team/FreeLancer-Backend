@@ -11,6 +11,98 @@ class Freelancer extends Model
     ];
 
 
+    public function getProfileCompletionStatusAttribute()
+    {
+        // الأوزان لكل عنصر
+        $weights = [
+            'summary'            => 10,
+            'skills'             => 10,
+            'languages'          => 5,
+            'social'             => 5,
+            'video_introduction' => 10,
+            'profile_picture'    => 15,
+            'work_field'         => 10,
+        ];
+
+        // وصف ونقاط كل عنصر
+        $details = [
+            'summary' => 'Tell us more about your skills, work experience, and what makes you stand out.',
+            'skills' => 'Select key skills to help us recommend the right projects.',
+            'languages' => 'Add the languages you speak and your level.',
+            'social' => 'Connect your social profiles like LinkedIn, GitHub, or Behance.',
+            'video_introduction' => 'Upload a short video to introduce yourself and stand out.',
+            'profile_picture' => 'Show your clients who they\'re working with.',
+            'work_field' => 'Choose your main work category and a relevant subcategory.',
+        ];
+
+        // شروط التحقق من الاكتمال
+        $checks = [
+            'summary'            => !empty($this->user->bio),
+            'skills'             => $this->hasSkills(),
+            'languages'          => $this->hasLanguages(),
+            'social'             => $this->hasSocial(),
+            'video_introduction' => !empty($this->video_introduction_url),
+            'profile_picture'    => !empty($this->user->photo),
+            'work_field'         => !empty($this->category_id),
+        ];
+
+        $earnedPoints = 0;
+        $detailedStatus = [];
+        $totalPoints = array_sum($weights);
+        $completedItems = 0;
+
+        foreach ($weights as $key => $point) {
+            $isCompleted = $checks[$key] ?? false;
+
+            if ($isCompleted) {
+                $earnedPoints += $point;
+                $completedItems++;
+            }
+
+            $detailedStatus[] = [
+                'id'           => count($detailedStatus) + 1,
+                'name'         => ucwords(str_replace('_', ' ', $key)),
+                'is_completed' => $isCompleted,
+                'description'  => $details[$key] ?? '',
+                'percentage'   => "{$point}%",
+            ];
+        }
+
+        return [
+            'completed_items' => $completedItems,
+            'total_items'     => count($weights),
+            'percentage'      => $totalPoints > 0 ? round(($earnedPoints / $totalPoints) * 100) : 0,
+            'status'          => $detailedStatus,
+        ];
+    }
+    public function hasSkills()
+    {
+        return $this->skills()->exists();
+
+    }
+
+//    public function hasEmployment()
+//    {
+//        // For example, if employment entries are in a separate table:
+//        return $this->employment()->exists();
+//    }
+
+    public function hasLanguages()
+    {
+        return $this->languages()->exists();
+    }
+
+//    public function hasPortfolio()
+//    {
+//        // For example, if portfolio items are in a separate table:
+//        return $this->portfolio()->exists();
+//    }
+
+    public function hasSocial()
+    {
+        // For example, if social links are stored as JSON in 'social_links' column:
+        return $this->socials()->exists();
+    }
 
     public function user()
     {
