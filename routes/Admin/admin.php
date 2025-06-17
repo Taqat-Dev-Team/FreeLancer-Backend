@@ -26,19 +26,17 @@ Route::prefix('admin')->name('admin.')->group(function () {
         });
 
 
-
-
-
         Route::controller(ContactController::class)->group(function () {
             Route::get('contacts', 'index')->name('contacts.index');
             Route::get('contacts/data', 'getData')->name('contacts.data');
             Route::get('contacts/{id}/show', 'show')->name('contacts.show');
             Route::delete('contacts/{id}', 'destroy')->name('contacts.destroy');
+            Route::post('contacts/reply{id}', 'reply')->name('contacts.reply');
+
         });
 
 
     });
-
 
 
 });

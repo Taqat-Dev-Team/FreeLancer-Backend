@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreBadgeRequest;
 use App\Http\Requests\Admin\UpdateBadgeRequest;
+use App\Mail\ReplyMail;
 use App\Models\Badge;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
@@ -28,7 +30,7 @@ class ContactController extends Controller
             $search = strtolower($request->search);
             $badges = $badges->where(function ($query) use ($search) {
                 $query->where('title', 'like', "%{$search}%")
-                        ->orWhere('name', 'like', "%{$search}%")
+                    ->orWhere('name', 'like', "%{$search}%")
                     ->orWhere('email', 'like', "%{$search}%")
                     ->orWhere('message', 'like', "%{$search}%");
             });
@@ -45,7 +47,7 @@ class ContactController extends Controller
                         </a>
                         <div class="menu menu-sub menu-sub-dropdown menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px py-3" data-kt-menu="true">
                             <div class="menu-item px-3">
-                                <a href="'.route('admin.contacts.show',$row->id).'" class="menu-link px-3" data-id="' . $row->id . '">View</a>
+                                <a href="' . route('admin.contacts.show', $row->id) . '" class="menu-link px-3" data-id="' . $row->id . '">View</a>
                             </div>
                             <div class="menu-item px-3">
                                 <a href="#" class="menu-link px-3 delete-contact btn btn-active-light-danger" data-id="' . $row->id . '">Delete</a>
@@ -62,40 +64,43 @@ class ContactController extends Controller
     public function show($id)
     {
         $contact = Contact::findOrFail($id);
-        $contact->update(['status'=>1]);
-        return view('admin.contacts.show',['contact'=>$contact]);
+        $contact->update(['status' => 1, 'read_at' => now()]);
+        return view('admin.contacts.show', ['contact' => $contact]);
     }
 
 
-    public function update(UpdateBadgeRequest $request, $id)
+    public function reply(Request $request, $id)
     {
+        $request->validate([
+            'reply' => 'required|string',
+        ]);
 
         try {
-            $badge = Badge::findOrFail($id);
+            $contact = Contact::findOrFail($id);
+            $contact->update(['status' => 1]);
 
-            $badge->setTranslation('name', 'en', $request->name_en);
-            $badge->setTranslation('name', 'ar', $request->name_ar);
-            $badge->setTranslation('description', 'en', $request->description_en);
-            $badge->setTranslation('description', 'ar', $request->description_ar);
-            $badge->save();
+            $contact->reply()->create([
+                'text' => $request->reply,
+            ]);
 
-            if ($request->hasFile('icon')) {
-                $badge->clearMediaCollection('icon');
-                $badge->addMediaFromRequest('icon')
-                    ->usingFileName(Str::random(20) . '.' . $request->file('icon')->getClientOriginalExtension())
-                    ->toMediaCollection('icon', 'badges');
-            }
+            //send mail
+            Mail::to($contact->email)->send(new ReplyMail(
+                replyText: $request->reply,
+                locale: app()->getLocale(),
+                userName: $contact->name ?? null
+            ));
 
-            return response()->json(['message' => 'Badge updated successfully.']);
+            return response()->json(['message' => 'Message Send successfully.']);
         } catch (\Exception $e) {
-            Log::error("Badge update error: " . $e->getMessage());
+            Log::error("Message Sending error: " . $e->getMessage());
             return response()->json(['message' => 'Unexpected error.'], 500);
         }
 
     }
 
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $badge = Contact::findOrFail($id);
         $badge->delete();
         return response()->json(['message' => 'Contact deleted successfully.']);
