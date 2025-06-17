@@ -30,22 +30,19 @@
                         <div class="icon-picker border rounded p-3 bg-light" style="max-height: 500px; overflow-y: auto;">
                             @php
                                 $icons = [
-          // سوشيال ميديا شهيرة
           'fa-brands fa-facebook', 'fa-brands fa-twitter', 'fa-brands fa-instagram', 'fa-brands fa-linkedin', 'fa-brands fa-tiktok', 'fa-brands fa-youtube', 'fa-brands fa-telegram', 'fa-brands fa-whatsapp',
-          'fa-brands fa-snapchat', 'fa-brands fa-pinterest', 'fa-brands fa-reddit', 'fa-brands fa-discord', 'fa-brands fa-twitch',
+          'fa-brands fa-snapchat','fa fa-link',  'fa-brands fa-pinterest', 'fa-brands fa-reddit', 'fa-brands fa-discord', 'fa-brands fa-twitch',
 
-          // منصات للفريلانسر/محترفين ومجتمعات مطورين ومبدعين
           'fa-brands fa-github', 'fa-brands fa-dribbble', 'fa-brands fa-behance', 'fa-brands fa-vimeo', 'fa-brands fa-slack', 'fa-brands fa-stack-overflow', 'fa-brands fa-medium', 'fa-brands fa-codepen',
 
-          // إضافات أخرى شائعة
           'fa-brands fa-google', 'fa-brands fa-facebook-f', 'fa-brands fa-twitter-square', 'fa-brands fa-linkedin-in', 'fa-brands fa-youtube-square', 'fa-brands fa-spotify',
           'fa-brands fa-stack-exchange', 'fa-brands fa-wordpress', 'fa-brands fa-shopify', 'fa-brands fa-etsy', 'fa-brands fa-fiverr', 'fa-brands fa-upwork'
       ];
 
                             @endphp
                             @foreach ($icons as $icon)
-                                <i class="fa-brands {{ $icon }} m-2 p-2  rounded text-center"
-                                   style="font-size: 24px; cursor: pointer;"
+                                <i class=" {{ $icon }} m-2 p-2  rounded text-center"
+                                  title="{{ str_replace(['fa-brands ', 'fa-'], '', $icon) }}" style="font-size: 24px; cursor: pointer;"
                                    data-icon="{{ $icon }}"></i>
                             @endforeach
                         </div>
@@ -73,7 +70,6 @@
 
 <script>
 
-    $(document).ready(function () {
         $(document).ready(function () {
             const icons = document.querySelectorAll('.icon-picker i');
             const preview = document.getElementById('iconPreview');
@@ -92,7 +88,7 @@
                     input.value = selected;
 
                     // عرض الأيقونة
-                    preview.innerHTML = `<i class="fa-brands ${selected}"></i>`;
+                    preview.innerHTML = `<i class=" ${selected}"></i>`;
                 });
             });
 
@@ -102,7 +98,6 @@
                 $('.icon-picker i').removeClass('border-primary bg-primary-subtle');
             });
         });
-
         // Handle form submission
         $('#addSocialForm').on('submit', function (e) {
             e.preventDefault(); // Prevent default form submission
@@ -153,5 +148,4 @@
                 }
             });
         });
-    });
 </script>

@@ -187,7 +187,8 @@ return [
         'original place'=>'original place',
         'lang'=>'language',
 
-        'displacement place'=>'displacement place'
+        'displacement place'=>'displacement place',
+        'socials.*.link' => 'social account link',
 
     ],
 

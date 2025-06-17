@@ -7,6 +7,21 @@ return [
     'email-email' => 'Invalid email format',
     'about' => 'About Us is required',
     'error' => 'An error occurred',
+    'hourly_rate' => 'Hourly rate',
+    'experience' => 'Experience',
+    'skills' => 'Skills',
+    'language'=>'Language',
+    'languages'=>'Languages',
+    'language_level'=>'Language level',
+
+    'beginner' => 'Beginner',
+    'intermediate' => 'Intermediate',
+    'advanced' => 'Advanced',
+    'native' => 'Native',
+
+    'socials' => 'Socials',
+    'social_id' => 'Platform',
+    'link' => 'Link',
 
     'photo' => 'Photo',
     'bio' => 'Bio',

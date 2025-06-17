@@ -13,6 +13,7 @@ use App\Http\Resources\SubCategoryResource;
 use App\Models\Category;
 use App\Models\Country;
 use App\Models\EducationLevel;
+use App\Models\Language;
 use App\Models\Skills;
 use App\Models\SocialMedia;
 use App\Models\SubCategory;
@@ -21,7 +22,16 @@ class GeneralController extends Controller
 {
     use ApiResponseTrait;
 
-    public function languages_levels()
+    public function languages()
+    {
+        $langs = Language::all();
+        return $this->apiResponse(
+            $langs,
+            __('messages.success'),
+            true,
+            200,
+        );
+    }  public function languages_levels()
     {
         $langs = languages_levels();
         return $this->apiResponse(

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Front;
+namespace App\Http\Requests\Front\Freelancer;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class FreelancerProfileRequest extends FormRequest
+class SaveDataRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,6 +27,7 @@ class FreelancerProfileRequest extends FormRequest
             'bio' => 'nullable|string|max:1000',
             'birth_date' => 'required|date',
             'available_hire' => 'nullable|boolean',
+            'hourly_rate' => 'nullable|numeric|min:0',
             'category_id' => 'required|exists:categories,id',
             'sub_category_id' => 'required|exists:sub_categories,id',
             'country_id' => 'required|exists:countries,id',
@@ -61,6 +62,9 @@ class FreelancerProfileRequest extends FormRequest
             'mobile.required' => __('validation.required', ['attribute' => __('messages.mobile')]),
             'mobile.digits_between' => __('validation.digits_between', ['attribute' => __('messages.mobile'), 'min' => 7, 'max' => 15]),
             'mobile.regex' => __('validation.regex', ['attribute' => __('messages.mobile')]),
+
+            'hourly_rate.numeric' => __('validation.numeric', ['attribute' => __('messages.hourly_rate')]),
+            'hourly_rate.min' => __('validation.min.numeric', ['attribute' => __('messages.hourly_rate'), 'min' => 0]),
 
 
         ];

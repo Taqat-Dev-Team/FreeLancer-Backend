@@ -61,97 +61,100 @@
                 </div>
                 <!--end::Card-->
             </div>
-            </div>
-            </div>
+        </div>
+    </div>
 
 
-            @push('js')
+    @push('js')
 
-                <link href="{{url('admin/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet"
-                      type="text/css"/>
-                <script src="{{url('admin/plugins/custom/datatables/datatables.bundle.js')}}"></script>
+        @include('admin.management.social_media.edit')
+        @include('admin.management.social_media.add')
 
-
-                {{--            datatable--}}
-                <script>
-                    $(document).ready(function () {
-                        const table = $('#socials_table').DataTable({
-                            processing: true,
-                            serverSide: true,
-                            order: [[0, 'desc']],
-
-                            ajax: {
-                                url: '{{ route('admin.management.socials.data') }}',
-                                data: function (d) {
-                                    d.search = $('#SocialSearchInput').val();
-                                }
-                            },
-
-                            columns: [
-
-                                {data: 'DT_RowIndex', name: 'id'},
-
-                                {data: 'name.en', name: 'name', orderable: true, searchable: true},
-                                {data: 'name.ar', name: 'name', orderable: true, searchable: true},
-                                {data: 'icon', name: 'icon', orderable: false, searchable: false},
-
-                                {data: 'actions', name: 'actions', orderable: false, searchable: false},
-                            ],
-                            drawCallback: function () {
-                                // Re-init dropdowns after DataTable redraw
-                                KTMenu.createInstances();
-                                bindActionButtons();
-                            }
-
-                        });
+        <link href="{{url('admin/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet"
+              type="text/css"/>
+        <script src="{{url('admin/plugins/custom/datatables/datatables.bundle.js')}}"></script>
 
 
-                        // Search input event
-                        $('#SocialSearchInput').on('keyup', function () {
-                            table.search(this.value).draw();
-                        });
+        {{--            datatable--}}
+        <script>
+            $(document).ready(function () {
+                const table = $('#socials_table').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    order: [[0, 'desc']],
+
+                    ajax: {
+                        url: '{{ route('admin.management.socials.data') }}',
+                        data: function (d) {
+                            d.search = $('#SocialSearchInput').val();
+                        }
+                    },
+
+                    columns: [
+
+                        {data: 'DT_RowIndex', name: 'id'},
+
+                        {data: 'name.en', name: 'name', orderable: true, searchable: true},
+                        {data: 'name.ar', name: 'name', orderable: true, searchable: true},
+                        {data: 'icon', name: 'icon', orderable: false, searchable: false},
+
+                        {data: 'actions', name: 'actions', orderable: false, searchable: false},
+                    ],
+                    drawCallback: function () {
+                        // Re-init dropdowns after DataTable redraw
+                        KTMenu.createInstances();
+                        bindActionButtons();
+                    }
+
+                });
 
 
-                        function bindActionButtons() {
-                            $('.delete-social').off('click').on('click', function (e) {
-                                e.preventDefault();
-                                const id = $(this).data('id');
-                                Swal.fire({
-                                    title: 'Are you sure?',
-                                    text: "You won't be able to revert this!",
-                                    icon: 'warning',
-                                    showCancelButton: true,
-                                    confirmButtonColor: '#3085d6',
-                                    cancelButtonColor: '#d33',
-                                    confirmButtonText: 'Yes, delete it!'
-                                }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        $.ajax({
-                                            url: '/admin/socials/' + id,
-                                            type: 'DELETE',
-                                            data: {
-                                                _token: '{{ csrf_token() }}'
-                                            },
-                                            success: function (response) {
-                                                toastr.success('Social Media deleted successfully');
-                                                $('#socials_table').DataTable().ajax.reload();
-                                            },
-                                            error: function (xhr) {
-                                                toastr.error('Error deleting Social Media', xhr.responseJSON.message || 'An error occurred');
-                                            }
-                                        });
+                // Search input event
+                $('#SocialSearchInput').on('keyup', function () {
+                    table.search(this.value).draw();
+                });
+
+
+                function bindActionButtons() {
+                    $('.delete-social').off('click').on('click', function (e) {
+                        e.preventDefault();
+                        const id = $(this).data('id');
+                        Swal.fire({
+                            title: 'Are you sure?',
+                            text: "You won't be able to revert this!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes, delete it!'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    url: '/admin/socials/' + id,
+                                    type: 'DELETE',
+                                    data: {
+                                        _token: '{{ csrf_token() }}'
+                                    },
+                                    success: function (response) {
+                                        toastr.success('Social Media deleted successfully');
+                                        $('#socials_table').DataTable().ajax.reload();
+                                    },
+                                    error: function (xhr) {
+                                        toastr.error('Error deleting Social Media', xhr.responseJSON.message || 'An error occurred');
                                     }
                                 });
-                            });
-                        }
+                            }
+                        });
                     });
+                }
+            });
 
 
-                </script>
-
-
+        </script>
 
     @endpush
+
+
 
 @stop
 

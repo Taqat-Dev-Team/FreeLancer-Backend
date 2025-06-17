@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Front;
+namespace App\Http\Requests\Front\Client;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ClientProfileRequest extends FormRequest
+class SaveDataRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

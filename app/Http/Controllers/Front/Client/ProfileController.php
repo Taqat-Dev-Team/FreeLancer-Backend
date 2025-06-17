@@ -4,15 +4,10 @@ namespace App\Http\Controllers\Front\Client;
 
 use App\ApiResponseTrait;
 use App\Http\Controllers\Controller;
-
-use App\Http\Requests\Front\ClientProfileRequest;
+use App\Http\Requests\Front\Client\SaveDataRequest;
 use App\Http\Resources\UserResource;
-use App\Mail\OtpMail;
-
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
@@ -22,7 +17,7 @@ class ProfileController extends Controller
     use ApiResponseTrait;
 
 
-    public function saveData(ClientProfileRequest $request)
+    public function saveData(SaveDataRequest $request)
     {
 
         $user = Auth::user();
@@ -80,14 +75,7 @@ class ProfileController extends Controller
         }
     }
 
-    private function extractBearerToken(Request $request): ?string
-    {
-        $authHeader = $request->header('Authorization');
 
-        return $authHeader && str_starts_with($authHeader, 'Bearer ')
-            ? substr($authHeader, 7)
-            : null;
-    }
 
 
 }

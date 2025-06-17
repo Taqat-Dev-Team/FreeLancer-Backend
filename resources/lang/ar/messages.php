@@ -26,8 +26,23 @@ return [
     'upload-contract' => 'ارفق العقد',
     'required-contract' => 'العقد مطلوب',
     'required-payment' => 'وصل الدفع مطلوب',
-    'data_save_failed'=> 'فشل حفظ البيانات',
+    'data_save_failed' => 'فشل حفظ البيانات',
     'data_saved_successfully' => 'تم حفظ البيانات بنجاح',
+    'hourly_rate' => 'الأجر بالساعة',
+    'skills' => 'المهارات',
+    'experience' => 'الخبرة',
+
+    'language' => 'اللغة',
+    'languages' => 'اللغات',
+    'language_level' => 'مستوى اللغة',
+    'beginner' => 'مبتدئ',
+    'intermediate' => 'متوسط',
+    'advanced' => 'متقدم',
+    'native' => 'اللغة الام',
+
+   'socials' => 'روابط التواصل الاجتماعي',
+   'social_id' => 'المنصة',
+   'link' => 'الرابط',
 
     'cancel' => 'الغاء',
     'delete-success' => 'تم الحذف بنجاح',
@@ -146,6 +161,7 @@ return [
         503 => 'الخدمة غير متوفرة',
     ],
 
+
     'account_inactive' => 'حسابك غير نشط. يرجى الاتصال بالدعم الفني.',
     'account_type_success' => 'تم تحديث نوع الحساب بنجاح',
     'user_already_has_type' => 'المستخدم لديه بالفعل نوع حساب محدد',
@@ -157,14 +173,13 @@ return [
     'category_id.required' => 'التصنيف مطلوب.',
     'sub_category_id.required' => 'التصنيف الفرعي مطلوب.',
     'country_id.exists' => 'الدولة المحددة غير موجودة.',
-    'Access Denied'=>'تم رفض الوصول',
-    'Access Denied, already saved data'=>'تم رفض الوصل، تم حفظ البيانات مسبقاً',
-    'user_already_save_data'=> 'المستخدم لديه بيانات محفوظة بالفعل. لا يمكن حفظ البيانات مرة أخرى.',
+    'Access Denied' => 'تم رفض الوصول',
+    'Access Denied, already saved data' => 'تم رفض الوصل، تم حفظ البيانات مسبقاً',
+    'user_already_save_data' => 'المستخدم لديه بيانات محفوظة بالفعل. لا يمكن حفظ البيانات مرة أخرى.',
     'data_saved_already' => 'البيانات محفوظة بالفعل.',
     'mobile.required' => 'رقم الجوال مطلوب.',
     'mobile.digits_between' => 'رقم الجوال يجب أن يحتوي على ما بين 7 و15 رقمًا.',
     'mobile.regex' => 'رقم الجوال يجب أن يحتوي على أرقام فقط بدون رموز أو مسافات.',
-
 
 
 ];

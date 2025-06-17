@@ -62,6 +62,7 @@ class ContactController extends Controller
     public function show($id)
     {
         $contact = Contact::findOrFail($id);
+        $contact->update(['status'=>1]);
         return view('admin.contacts.show',['contact'=>$contact]);
     }
 

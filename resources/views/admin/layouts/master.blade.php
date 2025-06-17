@@ -116,11 +116,7 @@ License: For each use you must have a valid license purchased only from above li
 <script src="{{url('admin/js/scripts.bundle.js')}}"></script>
 
 @stack('js')
-<!--end::Global Javascript Bundle-->
 
-
-<!--end::Custom Javascript-->
-<!--end::Javascript-->
 </body>
 <!--end::Body-->
 </html>

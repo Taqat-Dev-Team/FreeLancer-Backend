@@ -49,6 +49,7 @@ class UserResource extends JsonResource
         }
 
         if ($this->freelancer) {
+
             return array_merge($baseData, [
                 'id_verified' => $this->freelancer->idVerified(),
                 'cv_view_count' => $this->freelancer->cv_view_count,
@@ -57,6 +58,8 @@ class UserResource extends JsonResource
 
                 'hourly_rate' => $this->freelancer->hourly_rate,
                 'available_hire' => $this->freelancer->available_hire,
+                'experience' => $this->freelancer->experience,
+
 
                 'skills' => $this->freelancer->skills->map(function ($skill) {
                     return [
@@ -76,12 +79,15 @@ class UserResource extends JsonResource
                 }),
 
                 'languages' => $this->freelancer->languages->map(function ($language) {
+                    $levels = languages_levels();
+
                     return [
                         'id' => $language->id,
                         'name' => $language->name,
-                        'level' => $language->pivot->level,
+                        'level' => $levels[$language->pivot->level]['label'] ?? null,
                     ];
                 }),
+
 
                 'badges' => $this->freelancer->badges->map(function ($badge) {
                     return [

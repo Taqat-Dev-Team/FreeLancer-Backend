@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Freelancer extends Model
 {
     protected $fillable = [
-        'user_id', 'cv', 'cv_view_count', 'category_id', 'sub_category_id', 'hourly_rate',
+        'user_id', 'cv', 'cv_view_count', 'category_id', 'sub_category_id', 'hourly_rate','available_hire','experience'
     ];
 
 

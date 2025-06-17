@@ -9,14 +9,14 @@ function otp(): int
 
 function languages_levels()
 {
-    return (object)[
-        'Beginner',
-        'Intermediate',
-        'Advanced',
-        'Native',
-    ];
-
+    return collect([
+        ['key' => 0, 'label' => __('messages.beginner')],
+        ['key' => 1, 'label' => __('messages.intermediate')],
+        ['key' => 2, 'label' => __('messages.advanced')],
+        ['key' => 3, 'label' => __('messages.native')],
+    ]);
 }
+
 
 
 function unreadContactsCount()

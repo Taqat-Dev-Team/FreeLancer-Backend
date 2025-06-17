@@ -27,7 +27,7 @@ class SocialMediaResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'icon' => 'fa-brands '.$this->icon,
+            'icon' => $this->icon,
             ];
     }
 

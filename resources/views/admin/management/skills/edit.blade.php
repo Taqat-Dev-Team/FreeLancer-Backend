@@ -51,6 +51,7 @@
                         </div>
 
                     </div>
+                    </div>
 
 
                     <div class=" modal-footer">
@@ -65,12 +66,12 @@
 
 
                 </div>
+
         </form>
     </div>
 </div>
 <script>
     $(document).ready(function () {
-        // ... (previous JavaScript code for hidden.bs.modal and icon preview remains the same) ...
 
         // Event listener for opening the edit modal and populating data
         $(document).on('click', '.edit-skill', function (e) {
