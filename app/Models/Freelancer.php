@@ -3,100 +3,140 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Freelancer extends Model
+class Freelancer extends Model implements HasMedia
+
 {
+
+    use InteractsWithMedia;
+
     protected $fillable = [
-        'user_id', 'cv', 'cv_view_count', 'category_id', 'sub_category_id', 'hourly_rate','available_hire','experience'
+        'user_id', 'cv', 'cv_view_count', 'category_id', 'sub_category_id', 'hourly_rate', 'available_hire',
     ];
+
+
+    public function experience()
+    {
+        return 5;
+    }
+
+    public function getImagesUrls()
+    {
+        return $this->getMedia('images')->map(function ($media) {
+            return [
+                'id' => $media->id,
+                'url' => $media->getFullUrl(),
+//                 'name' => $media->name,
+//                 'mime_type' => $media->mime_type,
+//                 'size' => $media->size,
+            ];
+        })->toArray();
+    }
 
 
     public function getProfileCompletionStatusAttribute()
     {
-        // الأوزان لكل عنصر
         $weights = [
-            'summary'            => 10,
-            'skills'             => 10,
-            'languages'          => 5,
-            'social'             => 5,
-            'video_introduction' => 10,
-            'profile_picture'    => 15,
-            'work_field'         => 10,
+            'summary' => 20,
+            'skills' => 20,
+            'employment_history' => 10,
+            'languages' => 10,
+            'portfolio' => 15,
+            'social' => 5,
+            'video_introduction' => 5,
+            'profile_picture' => 10,
+            'work_field' => 5,
         ];
 
-        // وصف ونقاط كل عنصر
+
         $details = [
-            'summary' => 'Tell us more about your skills, work experience, and what makes you stand out.',
-            'skills' => 'Select key skills to help us recommend the right projects.',
-            'languages' => 'Add the languages you speak and your level.',
-            'social' => 'Connect your social profiles like LinkedIn, GitHub, or Behance.',
-            'video_introduction' => 'Upload a short video to introduce yourself and stand out.',
-            'profile_picture' => 'Show your clients who they\'re working with.',
-            'work_field' => 'Choose your main work category and a relevant subcategory.',
+            'summary' => __('profile_completion.summary_description'),
+            'skills' => __('profile_completion.skills_description'),
+            'employment_history'=> __('profile_completion.employment_history_description'),
+            'languages' => __('profile_completion.languages_description'),
+            'social' => __('profile_completion.social_description'),
+            'portfolio'=> __('profile_completion.portfolio_description'),
+            'video_introduction' => __('profile_completion.video_description'),
+            'profile_picture' => __('profile_completion.picture_description'),
+            'work_field' => __('profile_completion.work_field_description'),
+
         ];
 
-        // شروط التحقق من الاكتمال
         $checks = [
-            'summary'            => !empty($this->user->bio),
-            'skills'             => $this->hasSkills(),
-            'languages'          => $this->hasLanguages(),
-            'social'             => $this->hasSocial(),
-            'video_introduction' => !empty($this->video_introduction_url),
-            'profile_picture'    => !empty($this->user->photo),
-            'work_field'         => !empty($this->category_id),
+
+            'summary' => filled($this->user->bio)
+                && filled($this->user->video)
+                && $this->user->freelancer->hasMedia('images'),
+            'skills' => $this->hasSkills(),
+            'employment_history' => $this->hasEmployment(),
+            'languages' => $this->hasLanguages(),
+            'social' => $this->hasSocial(),
+            'portfolio' => $this->hasPortfolio(),
+            'video_introduction' => filled($this->video_introduction_url),
+            'profile_picture' => filled($this->user->photo),
+            'work_field' => filled($this->category_id),
         ];
 
         $earnedPoints = 0;
         $detailedStatus = [];
-        $totalPoints = array_sum($weights);
-        $completedItems = 0;
 
-        foreach ($weights as $key => $point) {
+        foreach ($weights as $key => $weight) {
             $isCompleted = $checks[$key] ?? false;
 
             if ($isCompleted) {
-                $earnedPoints += $point;
-                $completedItems++;
+                $earnedPoints += $weight;
             }
 
             $detailedStatus[] = [
-                'id'           => count($detailedStatus) + 1,
-                'name'         => ucwords(str_replace('_', ' ', $key)),
+                'id' => count($detailedStatus) + 1,
+                'name' => __('profile_completion.' . $key),
                 'is_completed' => $isCompleted,
-                'description'  => $details[$key] ?? '',
-                'percentage'   => "{$point}%",
+                'description' => $details[$key] ?? '',
+                'percentage' => $weight . '%',
             ];
         }
 
+        $totalItems = count($weights);
+        $completedItems = collect($checks)->filter()->count();
+        $totalPoints = array_sum($weights);
+        $percentage = $totalPoints ? round(($earnedPoints / $totalPoints) * 100) : 0;
+
+
         return [
             'completed_items' => $completedItems,
-            'total_items'     => count($weights),
-            'percentage'      => $totalPoints > 0 ? round(($earnedPoints / $totalPoints) * 100) : 0,
-            'status'          => $detailedStatus,
+            'total_items' => $totalItems,
+            'percentage' => $percentage,
+            'completion_text' => __('profile_completion.text'),
+            'status' => $detailedStatus,
         ];
     }
+
     public function hasSkills()
     {
         return $this->skills()->exists();
 
     }
 
-//    public function hasEmployment()
-//    {
-//        // For example, if employment entries are in a separate table:
+    public function hasEmployment()
+    {
+        // For example, if employment entries are in a separate table:
 //        return $this->employment()->exists();
-//    }
+        return false;
+    }
 
     public function hasLanguages()
     {
         return $this->languages()->exists();
     }
 
-//    public function hasPortfolio()
-//    {
-//        // For example, if portfolio items are in a separate table:
+    public function hasPortfolio()
+    {
+        // For example, if portfolio items are in a separate table:
 //        return $this->portfolio()->exists();
-//    }
+        return true;
+    }
 
     public function hasSocial()
     {
@@ -154,17 +194,6 @@ class Freelancer extends Model
     }
 
 
-    public function images()
-    {
-        return $this->hasMany(FreelancerImages::class);
-    }
-
-    public function videos()
-    {
-        return $this->hasMany(FreelancerVideos::class);
-    }
-
-
     public function proposals()
     {
         return $this->hasMany(Proposal::class);
@@ -174,13 +203,15 @@ class Freelancer extends Model
     {
         return $this->hasMany(Project::class);
     }
+
     public function idVerified()
     {
         return true;
     }
+
     public function languages()
     {
-        return $this->belongsToMany(Language::class, 'free_lancer_languages','freelancer_id','language_id')
+        return $this->belongsToMany(Language::class, 'free_lancer_languages', 'freelancer_id', 'language_id')
             ->withPivot('level');
 
     }

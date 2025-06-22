@@ -12,6 +12,10 @@ Route::controller(ProfileController::class)->group(function () {
         Route::post('/skills', 'updateSkills');
         Route::post('/languages', 'updateLanguages');
         Route::post('/socials', 'updateSocials');
+        Route::post('/summary', 'updateSummary');
+        Route::get('/summary', 'summary');
+        Route::delete('/summary/image/{id}', 'deleteImageSummary');
+        Route::get('/profile-complete', 'profileComplete');
     });
 
 });

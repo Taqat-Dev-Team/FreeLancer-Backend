@@ -130,6 +130,13 @@ return [
     */
 
     'custom' => [
+        'video' => [
+            'youtube_url' => 'Video URL must be a valid YouTube link.',
+        ],
+        'images.*' => [
+            'image' => 'Each image must be a valid image file.',
+            'mimes' => 'Image must be of type jpeg, png, jpg, gif, or svg.',
+        ],
         'name' => [
             'required' => 'The name is required.',
         ],

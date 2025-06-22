@@ -39,7 +39,6 @@ class UserResource extends JsonResource
 //            'lang' => $this->lang,
 //            'status' => $this->status,
 
-            'bio' => $this->bio,
             'joined_date' => $this->created_at->format('d M, Y') . ' - ' . $this->created_at->diffForHumans(),
             'type' => $this->client ? 'client' : ($this->freelancer ? 'freelancer' : null),
         ];
@@ -52,13 +51,12 @@ class UserResource extends JsonResource
 
             return array_merge($baseData, [
                 'id_verified' => $this->freelancer->idVerified(),
-                'cv_view_count' => $this->freelancer->cv_view_count,
                 'category' => new CategoryResource($this->freelancer->category),
                 'subCategory' => $this->freelancer->subCategory?->name,
 
                 'hourly_rate' => $this->freelancer->hourly_rate,
                 'available_hire' => $this->freelancer->available_hire,
-                'experience' => $this->freelancer->experience,
+                'experience' => $this->freelancer->experience(),
 
 
                 'skills' => $this->freelancer->skills->map(function ($skill) {
@@ -98,7 +96,6 @@ class UserResource extends JsonResource
                     ];
                 }),
 
-                'profile_complete' => $this->freelancer->profile_completion_status,
 
 
             ]);

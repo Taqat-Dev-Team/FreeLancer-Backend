@@ -9,16 +9,44 @@ use App\Http\Requests\Front\Freelancer\LanguagesRequest;
 use App\Http\Requests\Front\Freelancer\SaveDataRequest;
 use App\Http\Requests\Front\Freelancer\SkillsRequest;
 use App\Http\Requests\Front\Freelancer\SocialsRequest;
+use App\Http\Requests\Front\Freelancer\SummaryRequest;
+use App\Http\Resources\ProfileCompleteResource;
+use App\Http\Resources\SummaryResource;
 use App\Http\Resources\UserResource;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 
 class ProfileController extends Controller
 {
     use ApiResponseTrait;
+
+    public function profileComplete()
+    {
+        try {
+            $user = Auth::user();
+            return $this->apiResponse(
+                new ProfileCompleteResource($user),
+                __('messages.success'),
+                true,
+                200
+            );
+        } catch (Exception $e) {
+            Log::error('Error get user data.', [
+                'user_id' => $user->id,
+                'error' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
+            ]);
+
+            return $this->apiResponse([], __('messages.failed'), false, 500);
+
+
+        }
+    }
 
     public function saveData(SaveDataRequest $request)
     {
@@ -65,7 +93,12 @@ class ProfileController extends Controller
             ]);
 
             if ($request->has('skills')) {
-                $freelancer->skills()->sync($request->skills);
+                $skills = $request->input('skills');
+                if (is_string($skills)) {
+                    $skills = json_decode($skills, true);
+                }
+
+                $freelancer->skills()->sync($skills);
             }
 
             $user->save();
@@ -109,7 +142,6 @@ class ProfileController extends Controller
                 'sub_category_id' => $request->sub_category_id,
                 'available_hire' => $request->available_hire ?? false,
                 'hourly_rate' => $request->hourly_rate ?? null,
-                'experience' => $request->experience,
 
             ]);
 
@@ -141,12 +173,15 @@ class ProfileController extends Controller
             $token = $this->extractBearerToken($request);
 
             $freelancer = $user->freelancer;
+            $skills = $request->input('skills');
 
+            if (is_string($skills)) {
+                $skills = json_decode($skills, true);
+            }
 
-            $freelancer->skills()->sync($request->skills);
-
-
-
+            if (is_array($skills)) {
+                $freelancer->skills()->sync($skills);
+            }
 
 
             return $this->apiResponse(
@@ -165,7 +200,8 @@ class ProfileController extends Controller
 
             return $this->apiResponse([], __('messages.data_save_failed'), false, 500);
 
-        }}
+        }
+    }
 
 
     public function updateLanguages(LanguagesRequest $request)
@@ -200,7 +236,8 @@ class ProfileController extends Controller
 
             return $this->apiResponse([], __('messages.data_save_failed'), false, 500);
 
-        }}
+        }
+    }
 
     public function updateSocials(SocialsRequest $request)
     {
@@ -216,7 +253,6 @@ class ProfileController extends Controller
             }
 
             $freelancer->socials()->sync($Data);
-
 
 
             return $this->apiResponse(
@@ -235,7 +271,108 @@ class ProfileController extends Controller
 
             return $this->apiResponse([], __('messages.data_save_failed'), false, 500);
 
-        }}
+        }
+    }
 
+
+    public function Summary()
+    {
+        try {
+            $user = Auth::user();
+            return $this->apiResponse(
+                new SummaryResource($user),
+                __('messages.success'),
+                true,
+                200
+            );
+        } catch (Exception $e) {
+            Log::error('Error get user data.', [
+                'user_id' => $user->id,
+                'error' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
+            ]);
+
+            return $this->apiResponse([], __('messages.failed'), false, 500);
+
+
+        }
+    }
+
+    public function updateSummary(SummaryRequest $request)
+    {
+        try {
+            $user = Auth::user();
+            $token = $this->extractBearerToken($request);
+            $freelancer = $user->freelancer;
+
+            $user->update([
+                'bio' => $request->bio,
+                'video' => $request->video,
+                'video_title' => $request->video_title,
+                'images_title' => $request->images_title,
+            ]);
+
+            // معالجة الصور
+            if ($request->hasFile('images')) {
+                // احذف الصور السابقة إن وجدت
+                $freelancer->clearMediaCollection('images');
+
+                foreach ($request->file('images') as $image) {
+                    $freelancer->addMedia($image)
+                        ->usingFileName(Str::random(20) . '.' . $image->getClientOriginalExtension())
+                        ->toMediaCollection('images', 'freelancersImages'); // استخدم disk الصحيح
+                }
+            }
+
+
+            return $this->apiResponse(
+                new SummaryResource($user),
+                __('messages.data_saved_successfully'),
+                true,
+                200
+            );
+        } catch (Exception $e) {
+            Log::error('Error saving user data.', [
+                'user_id' => $user->id,
+                'error' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
+            ]);
+
+            return $this->apiResponse([], __('messages.data_save_failed'), false, 500);
+
+
+        }
+    }
+
+
+    public function deleteImageSummary($id)
+    {
+        try {
+            $user = Auth::user();
+            $freelancer = $user->freelancer;
+
+            $media = Media::findOrFail($id);
+
+            // التأكد أن الوسيط يخص الفريلانسر الحالي
+            if ($media->model_type === get_class($freelancer) && $media->model_id === $freelancer->id) {
+                $media->delete();
+
+                return $this->apiResponse([], __('messages.Image deleted successfully'), true, 200);
+            } else {
+                return $this->apiResponse([], __('messages.Unauthorized'), false, 403);
+            }
+
+        } catch (\Exception $e) {
+            Log::error('Error deleting image', [
+                'user_id' => Auth::id(),
+                'image_id' => $id,
+                'error' => $e->getMessage(),
+            ]);
+
+            return $this->apiResponse([], __('messages.Image delete failed'), false, 500);
+        }
 
     }
+}

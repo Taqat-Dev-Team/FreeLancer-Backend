@@ -33,6 +33,11 @@ return [
     'gender' => 'Gender',
     'data_save_failed'=> 'Data save failed',
     'data_saved_successfully' => 'Data saved successfully',
+    'failed' => 'Failed',
+
+'Image deleted successfully' => 'Image deleted successfully',
+'Unauthorized' => 'You are not authorized to delete this image',
+'Image delete failed' => 'Image deletion failed',
 
     'updated' => 'Updated',
     'success-update' => 'Updated successfully',
@@ -153,6 +158,26 @@ return [
     'social_login_success' => 'Logged in successfully via Google.',
     'social_login_failed' => 'Google login failed. Please try again or contact support.',
 
+      'Bio is required' => 'Bio is required',
+      'Bio must be a string' => 'Bio must be a string',
+      'Bio must not exceed 4000 characters' => 'Bio must not exceed 4000 characters',
+
+      'Images must be an array' => 'Images must be an array',
+      'Each image must be a valid image file' => 'Each image must be a valid image file',
+      'Image must be of type jpeg, png, jpg, gif, or svg' => 'Image must be of type jpeg, png, jpg, gif, or svg',
+      'Image size must not exceed 2MB' => 'Image size must not exceed 2MB',
+
+      'Image title must be a string' => 'Image title must be a string',
+      'Image title must not exceed 255 characters' => 'Image title must not exceed 255 characters',
+
+      'Video URL must be a string' => 'Video URL must be a string',
+      'Video URL must not exceed 255 characters' => 'Video URL must not exceed 255 characters',
+      'Video URL must be a valid YouTube link' => 'Video URL must be a valid YouTube link',
+
+      'Video title must be a string' => 'Video title must be a string',
+      'Video title must not exceed 255 characters' => 'Video title must not exceed 255 characters',
+
+
     'password_reset_subject' => 'Your Password Reset Link',
     'password_reset_link_sent' => 'We have emailed your password reset link!',
     'password_reset_link_failed' => 'Unable to send password reset link. Please try again.',
@@ -179,7 +204,6 @@ return [
 
     'name.required' => 'The name is required.',
     'photo.required' => 'The photo is required.',
-    'bio.max' => 'The bio must not exceed 2000 characters.',
     'birth_date.required' => 'The birth date is required.',
     'available_hire.boolean' => 'The available for hire field must be true or false.',
     'category_id.required' => 'The category is required.',

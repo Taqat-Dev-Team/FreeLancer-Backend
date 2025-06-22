@@ -40,9 +40,9 @@ return [
     'advanced' => 'متقدم',
     'native' => 'اللغة الام',
 
-   'socials' => 'روابط التواصل الاجتماعي',
-   'social_id' => 'المنصة',
-   'link' => 'الرابط',
+    'socials' => 'روابط التواصل الاجتماعي',
+    'social_id' => 'المنصة',
+    'link' => 'الرابط',
 
     'cancel' => 'الغاء',
     'delete-success' => 'تم الحذف بنجاح',
@@ -149,6 +149,37 @@ return [
     'password_reset_failed' => 'فشلت إعادة تعيين كلمة المرور. هذا الرمز غير صالح أو انتهت صلاحيته.',
     'email_not_registered' => 'البريد الإلكتروني المدخل غير مسجل.',
 
+
+        // ...
+        'Image deleted successfully' => 'تم حذف الصورة بنجاح',
+        'Unauthorized' => 'غير مصرح لك بحذف هذه الصورة',
+        'Image delete failed' => 'فشل حذف الصورة',
+
+
+
+         'failed'=>'فشلت العملية.',
+
+        'Bio is required' => 'النبذة مطلوبة',
+        'Bio must be a string' => 'النبذة يجب أن تكون نصاً',
+        'Bio must not exceed 4000 characters' => 'يجب ألا تتجاوز النبذة 4000 حرف',
+
+        'Images must be an array' => 'الصور يجب أن تكون على شكل مصفوفة',
+        'Each image must be a valid image file' => 'كل صورة يجب أن تكون ملف صورة صالح',
+        'Image must be of type jpeg, png, jpg, gif, or svg' => 'يجب أن تكون الصورة من نوع jpeg أو png أو jpg أو gif أو svg',
+        'Image size must not exceed 2MB' => 'حجم الصورة يجب ألا يتجاوز 2 ميجابايت',
+
+        'Image title must be a string' => 'عنوان الصور يجب أن يكون نصاً',
+        'Image title must not exceed 255 characters' => 'عنوان الصور يجب ألا يتجاوز 255 حرفًا',
+
+        'Video URL must be a string' => 'رابط الفيديو يجب أن يكون نصاً',
+        'Video URL must not exceed 255 characters' => 'رابط الفيديو يجب ألا يتجاوز 255 حرفًا',
+        'Video URL must be a valid YouTube link' => 'رابط الفيديو يجب أن يكون رابط يوتيوب صالحًا',
+
+        'Video title must be a string' => 'عنوان الفيديو يجب أن يكون نصاً',
+        'Video title must not exceed 255 characters' => 'عنوان الفيديو يجب ألا يتجاوز 255 حرفًا',
+
+
+
     'http_errors' => [
         400 => 'طلب غير صالح',
         401 => 'غير مصرح',
@@ -167,7 +198,6 @@ return [
     'user_already_has_type' => 'المستخدم لديه بالفعل نوع حساب محدد',
     'name.required' => 'الاسم مطلوب.',
     'photo.required' => 'الصورة مطلوبة.',
-    'bio.max' => 'السيرة الذاتية يجب ألا تتجاوز 2000 حرف.',
     'birth_date.required' => 'تاريخ الميلاد مطلوب.',
     'available_hire.boolean' => 'قيمة التوفر للتوظيف غير صحيحة.',
     'category_id.required' => 'التصنيف مطلوب.',
