@@ -44,12 +44,20 @@ return [
             'url' => env('APP_URL') . '/storage/uploads/freelancers',
             'visibility' => 'public',
         ],
+        'freelancersIds' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/uploads/freelancersIds'),
+            'url' => env('APP_URL') . '/storage/uploads/freelancersIds',
+            'visibility' => 'public',
+        ],
+
         'freelancersImages' => [
             'driver' => 'local',
             'root' => storage_path('app/public/uploads/freelancersImages'),
             'url' => env('APP_URL') . '/storage/uploads/freelancersImages',
             'visibility' => 'public',
         ],
+
 
 
         'clients' => [

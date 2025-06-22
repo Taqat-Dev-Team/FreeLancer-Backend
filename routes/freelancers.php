@@ -1,12 +1,12 @@
 <?php
 
 use App\Http\Controllers\Front\FreeLancer\ProfileController;
+use App\Http\Controllers\Front\FreeLancer\IdentityController;
 use Illuminate\Support\Facades\Route;
 
-Route::controller(ProfileController::class)->group(function () {
+Route::middleware(['auth:sanctum', 'verified.email', 'freelancer'])->prefix('freelancer')->group(function () {
 
-    Route::middleware(['auth:sanctum', 'verified.email','freelancer'])->prefix('freelancer')->group(function () {
-
+    Route::controller(ProfileController::class)->group(function () {
         Route::post('/save-data', 'saveData');
         Route::post('/about', 'updateAbout');
         Route::post('/skills', 'updateSkills');
@@ -18,5 +18,14 @@ Route::controller(ProfileController::class)->group(function () {
         Route::get('/profile-complete', 'profileComplete');
     });
 
+
+    Route::middleware('notVerification')->group(function () {
+        Route::controller(IdentityController::class)->group(function () {
+            Route::post('send-otp', 'sendOtp');
+            Route::post('verify-otp', 'verifyOtp');
+            Route::post('update-identity', 'updateIdentity');
+        });
+
+    });
 });
 

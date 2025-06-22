@@ -26,6 +26,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'verified.email' => \App\Http\Middleware\EnsureEmailIsVerified::class,
             'client' => \App\Http\Middleware\ClientMiddleware::class,
             'freelancer' => \App\Http\Middleware\FreeLancerMiddleware::class,
+            'notVerification' => \App\Http\Middleware\NotVerificationMiddleware::class,
 
         ]);
 

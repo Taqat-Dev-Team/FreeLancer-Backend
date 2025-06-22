@@ -10,9 +10,9 @@ return [
     'hourly_rate' => 'Hourly rate',
     'experience' => 'Experience',
     'skills' => 'Skills',
-    'language'=>'Language',
-    'languages'=>'Languages',
-    'language_level'=>'Language level',
+    'language' => 'Language',
+    'languages' => 'Languages',
+    'language_level' => 'Language level',
 
     'beginner' => 'Beginner',
     'intermediate' => 'Intermediate',
@@ -31,13 +31,13 @@ return [
     'sub_category' => 'Sub Category',
     'country' => 'Country',
     'gender' => 'Gender',
-    'data_save_failed'=> 'Data save failed',
+    'data_save_failed' => 'Data save failed',
     'data_saved_successfully' => 'Data saved successfully',
     'failed' => 'Failed',
 
-'Image deleted successfully' => 'Image deleted successfully',
-'Unauthorized' => 'You are not authorized to delete this image',
-'Image delete failed' => 'Image deletion failed',
+    'Image deleted successfully' => 'Image deleted successfully',
+    'Unauthorized' => 'You are not authorized to delete this image',
+    'Image delete failed' => 'Image deletion failed',
 
     'updated' => 'Updated',
     'success-update' => 'Updated successfully',
@@ -158,24 +158,24 @@ return [
     'social_login_success' => 'Logged in successfully via Google.',
     'social_login_failed' => 'Google login failed. Please try again or contact support.',
 
-      'Bio is required' => 'Bio is required',
-      'Bio must be a string' => 'Bio must be a string',
-      'Bio must not exceed 4000 characters' => 'Bio must not exceed 4000 characters',
+    'Bio is required' => 'Bio is required',
+    'Bio must be a string' => 'Bio must be a string',
+    'Bio must not exceed 4000 characters' => 'Bio must not exceed 4000 characters',
 
-      'Images must be an array' => 'Images must be an array',
-      'Each image must be a valid image file' => 'Each image must be a valid image file',
-      'Image must be of type jpeg, png, jpg, gif, or svg' => 'Image must be of type jpeg, png, jpg, gif, or svg',
-      'Image size must not exceed 2MB' => 'Image size must not exceed 2MB',
+    'Images must be an array' => 'Images must be an array',
+    'Each image must be a valid image file' => 'Each image must be a valid image file',
+    'Image must be of type jpeg, png, jpg, gif, or svg' => 'Image must be of type jpeg, png, jpg, gif, or svg',
+    'Image size must not exceed 2MB' => 'Image size must not exceed 2MB',
 
-      'Image title must be a string' => 'Image title must be a string',
-      'Image title must not exceed 255 characters' => 'Image title must not exceed 255 characters',
+    'Image title must be a string' => 'Image title must be a string',
+    'Image title must not exceed 255 characters' => 'Image title must not exceed 255 characters',
 
-      'Video URL must be a string' => 'Video URL must be a string',
-      'Video URL must not exceed 255 characters' => 'Video URL must not exceed 255 characters',
-      'Video URL must be a valid YouTube link' => 'Video URL must be a valid YouTube link',
+    'Video URL must be a string' => 'Video URL must be a string',
+    'Video URL must not exceed 255 characters' => 'Video URL must not exceed 255 characters',
+    'Video URL must be a valid YouTube link' => 'Video URL must be a valid YouTube link',
 
-      'Video title must be a string' => 'Video title must be a string',
-      'Video title must not exceed 255 characters' => 'Video title must not exceed 255 characters',
+    'Video title must be a string' => 'Video title must be a string',
+    'Video title must not exceed 255 characters' => 'Video title must not exceed 255 characters',
 
 
     'password_reset_subject' => 'Your Password Reset Link',
@@ -210,14 +210,38 @@ return [
     'sub_category_id.required' => 'The sub-category is required.',
     'country_id.exists' => 'The selected country does not exist.',
     'Access Denied' => 'Access Denied',
-    'user_already_save_data'=> 'User already has saved data. Cannot save data again.',
+    'user_already_save_data' => 'User already has saved data. Cannot save data again.',
 
     'data_saved_already' => 'Data already saved.',
 
-    'Access Denied, already saved data'=>'Access Denied, already saved data',
+    'Access Denied, already saved data' => 'Access Denied, already saved data',
     'mobile.required' => 'The mobile number is required.',
     'mobile.digits_between' => 'The mobile number must be between 7 and 15 digits.',
     'mobile.regex' => 'The mobile number must contain digits only, with no symbols or spaces.',
+    'otp_mobile_success' => 'Otp sent successfully to your mobile number.',
+    'invalid_otp'=> 'Invalid OTP. Please try again.',
+    'verified'=>'Verified successfully',
+
+
+        'first_name'        => 'First name',
+        'father_name'       => 'Father\'s name',
+        'grandfather_name'  => 'Grandfather\'s name',
+        'family_name'       => 'Family name',
+        'id_number'         => 'ID number',
+        'full_address'      => 'Full address',
+        'image'             => 'ID image',
+    'phone_not_verified'=>'Your phone number is not verified. Please verify your phone number to proceed.',
+    'identity_update_failed'=>'Identity update failed. Please try again later.',
+    'identity_update_success'=>'Identity updated successfully.',
+
+    'pending'=> 'pending',
+    'verified_id'=>'verified',
+    'rejected'=>'rejected',
+    'unknown'=>'unknown'
+
+
+
+
 
 
 

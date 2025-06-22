@@ -17,6 +17,11 @@ class Freelancer extends Model implements HasMedia
     ];
 
 
+    public function identityVerification()
+    {
+        return $this->hasOne(IdentityVerification::class, 'freelancer_id')->orderBy('created_at', 'desc');
+    }
+
     public function experience()
     {
         return 5;
@@ -54,10 +59,10 @@ class Freelancer extends Model implements HasMedia
         $details = [
             'summary' => __('profile_completion.summary_description'),
             'skills' => __('profile_completion.skills_description'),
-            'employment_history'=> __('profile_completion.employment_history_description'),
+            'employment_history' => __('profile_completion.employment_history_description'),
             'languages' => __('profile_completion.languages_description'),
             'social' => __('profile_completion.social_description'),
-            'portfolio'=> __('profile_completion.portfolio_description'),
+            'portfolio' => __('profile_completion.portfolio_description'),
             'video_introduction' => __('profile_completion.video_description'),
             'profile_picture' => __('profile_completion.picture_description'),
             'work_field' => __('profile_completion.work_field_description'),
@@ -206,7 +211,17 @@ class Freelancer extends Model implements HasMedia
 
     public function idVerified()
     {
-        return true;
+        switch ($this->identityVerification->status ?? null) {
+            case 0:
+                return __('messages.pending');
+            case 1:
+                return __('messages.verified_id');
+            case 2:
+                return __('messages.rejected');
+            default:
+                return __('messages.unknown');
+        }
+
     }
 
     public function languages()

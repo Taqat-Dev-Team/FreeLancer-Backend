@@ -150,34 +150,33 @@ return [
     'email_not_registered' => 'البريد الإلكتروني المدخل غير مسجل.',
 
 
-        // ...
-        'Image deleted successfully' => 'تم حذف الصورة بنجاح',
-        'Unauthorized' => 'غير مصرح لك بحذف هذه الصورة',
-        'Image delete failed' => 'فشل حذف الصورة',
+    // ...
+    'Image deleted successfully' => 'تم حذف الصورة بنجاح',
+    'Unauthorized' => 'غير مصرح لك بحذف هذه الصورة',
+    'Image delete failed' => 'فشل حذف الصورة',
 
 
+    'otp_mobile_success' => 'تم ارسال رمز التحقق الى الجوال بنجاح',
+    'failed' => 'فشلت العملية.',
 
-         'failed'=>'فشلت العملية.',
+    'Bio is required' => 'النبذة مطلوبة',
+    'Bio must be a string' => 'النبذة يجب أن تكون نصاً',
+    'Bio must not exceed 4000 characters' => 'يجب ألا تتجاوز النبذة 4000 حرف',
 
-        'Bio is required' => 'النبذة مطلوبة',
-        'Bio must be a string' => 'النبذة يجب أن تكون نصاً',
-        'Bio must not exceed 4000 characters' => 'يجب ألا تتجاوز النبذة 4000 حرف',
+    'Images must be an array' => 'الصور يجب أن تكون على شكل مصفوفة',
+    'Each image must be a valid image file' => 'كل صورة يجب أن تكون ملف صورة صالح',
+    'Image must be of type jpeg, png, jpg, gif, or svg' => 'يجب أن تكون الصورة من نوع jpeg أو png أو jpg أو gif أو svg',
+    'Image size must not exceed 2MB' => 'حجم الصورة يجب ألا يتجاوز 2 ميجابايت',
 
-        'Images must be an array' => 'الصور يجب أن تكون على شكل مصفوفة',
-        'Each image must be a valid image file' => 'كل صورة يجب أن تكون ملف صورة صالح',
-        'Image must be of type jpeg, png, jpg, gif, or svg' => 'يجب أن تكون الصورة من نوع jpeg أو png أو jpg أو gif أو svg',
-        'Image size must not exceed 2MB' => 'حجم الصورة يجب ألا يتجاوز 2 ميجابايت',
+    'Image title must be a string' => 'عنوان الصور يجب أن يكون نصاً',
+    'Image title must not exceed 255 characters' => 'عنوان الصور يجب ألا يتجاوز 255 حرفًا',
 
-        'Image title must be a string' => 'عنوان الصور يجب أن يكون نصاً',
-        'Image title must not exceed 255 characters' => 'عنوان الصور يجب ألا يتجاوز 255 حرفًا',
+    'Video URL must be a string' => 'رابط الفيديو يجب أن يكون نصاً',
+    'Video URL must not exceed 255 characters' => 'رابط الفيديو يجب ألا يتجاوز 255 حرفًا',
+    'Video URL must be a valid YouTube link' => 'رابط الفيديو يجب أن يكون رابط يوتيوب صالحًا',
 
-        'Video URL must be a string' => 'رابط الفيديو يجب أن يكون نصاً',
-        'Video URL must not exceed 255 characters' => 'رابط الفيديو يجب ألا يتجاوز 255 حرفًا',
-        'Video URL must be a valid YouTube link' => 'رابط الفيديو يجب أن يكون رابط يوتيوب صالحًا',
-
-        'Video title must be a string' => 'عنوان الفيديو يجب أن يكون نصاً',
-        'Video title must not exceed 255 characters' => 'عنوان الفيديو يجب ألا يتجاوز 255 حرفًا',
-
+    'Video title must be a string' => 'عنوان الفيديو يجب أن يكون نصاً',
+    'Video title must not exceed 255 characters' => 'عنوان الفيديو يجب ألا يتجاوز 255 حرفًا',
 
 
     'http_errors' => [
@@ -210,6 +209,27 @@ return [
     'mobile.required' => 'رقم الجوال مطلوب.',
     'mobile.digits_between' => 'رقم الجوال يجب أن يحتوي على ما بين 7 و15 رقمًا.',
     'mobile.regex' => 'رقم الجوال يجب أن يحتوي على أرقام فقط بدون رموز أو مسافات.',
+    'invalid_otp'=>'رمز التحقق غير صالح أو منتهي الصلاحية',
+    'verified'=>'تم التحقق بنجاح',
+
+        'first_name'        => 'الاسم الأول',
+        'father_name'       => 'اسم الأب',
+        'grandfather_name'  => 'اسم الجد',
+        'family_name'       => 'اسم العائلة',
+        'id_number'         => 'رقم الهوية',
+        'full_address'      => 'العنوان الكامل',
+        'image'             => 'صورة الهوية',
+    'phone_not_verified'=> 'رقم الجوال غير موثق. يرجى التحقق من رقم الجوال قبل تحديث الهوية.',
+    'identity_update_success'=>'تم تحديث الهوية بنجاح',
+    'identity_update_failed'=>'فشل تحديث الهوية',
+
+  'pending'=> 'قيد الانتظار',
+  'verified_id'=>'تم التحقق',
+  'rejected'=>'مرفوض',
+  'unknown'=>'غير معروف'
+
+
+
 
 
 ];
