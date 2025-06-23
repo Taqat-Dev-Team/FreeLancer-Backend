@@ -237,9 +237,34 @@ return [
     'pending'=> 'pending',
     'verified_id'=>'verified',
     'rejected'=>'rejected',
-    'unknown'=>'unknown'
+    'unknown'=>'unknown',
+    'Present'=>'Present',
+
+    'company_name_required' => 'The company name is required.',
+    'company_name_string' => 'The company name must be a string.',
+    'company_name_max_length' => 'The company name may not be greater than :max characters.',
+
+    'title_required' => 'The job title is required.',
+    'title_string' => 'The job title must be a string.',
+    'title_max_length' => 'The job title may not be greater than :max characters.',
+
+    'location_string' => 'The location must be a string.',
+    'location_max_length' => 'The location may not be greater than :max characters.',
+
+    'type_required' => 'The job type is required.',
+    'type_invalid' => 'The job type is invalid. Accepted types: :valid_types.',
+
+    'start_date_required' => 'The start date is required.',
+
+    'end_date_after_start_date' => 'The end date must be after or equal to the start date.',
+
+    'description_string' => 'The description must be a string.',
+    'description_max_length' => 'The description may not be greater than :max characters.',
 
 
+
+    'start_date_format' => 'The start date must be in the format: month-year (e.g. 03-2025).',
+    'end_date_format' => 'The end date must be in the format: month-year (e.g. 06-2026).',
 
 
 

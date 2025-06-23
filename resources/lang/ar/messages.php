@@ -226,7 +226,36 @@ return [
   'pending'=> 'قيد الانتظار',
   'verified_id'=>'تم التحقق',
   'rejected'=>'مرفوض',
-  'unknown'=>'غير معروف'
+  'unknown'=>'غير معروف',
+    'Present' => 'الحالي',
+
+    'company_name_required' => 'اسم الشركة مطلوب.',
+    'company_name_string' => 'اسم الشركة يجب أن يكون نصًا.',
+    'company_name_max_length' => 'اسم الشركة يجب ألا يتجاوز :max حرفًا.',
+
+    'title_required' => 'المسمى الوظيفي مطلوب.',
+    'title_string' => 'المسمى الوظيفي يجب أن يكون نصًا.',
+    'title_max_length' => 'المسمى الوظيفي يجب ألا يتجاوز :max حرفًا.',
+
+    'location_string' => 'الموقع يجب أن يكون نصًا.',
+    'location_max_length' => 'الموقع يجب ألا يتجاوز :max حرفًا.',
+
+    'type_required' => 'نوع الوظيفة مطلوب.',
+    'type_invalid' => 'نوع الوظيفة غير صالح. الأنواع المقبولة: :valid_types.',
+
+    'start_date_required' => 'تاريخ البداية مطلوب.',
+
+
+    'end_date_after_start_date' => 'تاريخ الانتهاء يجب أن يكون بعد أو يساوي تاريخ البداية.',
+
+    'description_string' => 'الوصف يجب أن يكون نصًا.',
+    'description_max_length' => 'الوصف يجب ألا يتجاوز :max حرفًا.',
+
+
+    'start_date_format' => 'يجب أن يكون تنسيق تاريخ البداية على الشكل: شهر-سنة (مثال: 03-2025).',
+    'end_date_format' => 'يجب أن يكون تنسيق تاريخ الانتهاء على الشكل: شهر-سنة (مثال: 06-2026).',
+
+
 
 
 

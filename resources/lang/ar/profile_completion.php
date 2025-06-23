@@ -6,7 +6,8 @@ return [
     'languages' => 'اللغات',
     'social' => 'الملفات الاجتماعية',
     'video_introduction' => 'فيديو تعريفي',
-    'profile_picture' => 'الصورة الشخصية',
+    'profile_picture' => 'إضافة صورة شخصية احترافية',
+
     'work_field' => 'مجال العمل',
 
     'summary_description' => 'أخبرنا أكثر عن مهاراتك وخبراتك العملية وما يميزك.',
@@ -23,5 +24,6 @@ return [
     'portfolio' => 'معرض الاعمال',
     'portfolio_description' => 'عرض عينات العمل أو دراسات الحالة أو روابط المشاريع',
 
+    'employment_history' => 'تاريخ العمل',
 
 ];

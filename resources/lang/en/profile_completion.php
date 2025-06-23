@@ -4,9 +4,9 @@ return [
     'summary' => 'Summary',
     'skills' => 'Skills',
     'languages' => 'Languages',
-    'social' => 'Social Profiles',
+    'social' => 'Social',
     'video_introduction' => 'Video Introduction',
-    'profile_picture' => 'Profile Picture',
+    'profile_picture' => 'Add a professional profile picture',
     'work_field' => 'Work Field',
 
     'summary_description' => 'Tell us more about your skills, work experience, and what makes you stand out.',
@@ -20,4 +20,5 @@ return [
     'employment_history_description' => 'List your previous jobs, roles, or freelance projects',
     'portfolio' => 'Portfolio',
     'portfolio_description' => 'Showcase work samples, case studies, or project links',
+    'employment_history'=>'Employment History',
 ];

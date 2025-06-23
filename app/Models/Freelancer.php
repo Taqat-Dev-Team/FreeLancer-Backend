@@ -17,7 +17,6 @@ class Freelancer extends Model implements HasMedia
     ];
 
 
-
     protected $casts = [
         'available_hire' => 'boolean',
     ];
@@ -30,6 +29,12 @@ class Freelancer extends Model implements HasMedia
     public function experience()
     {
         return 5;
+    }
+
+    public function workExperiences()
+    {
+
+        return $this->hasMany(FreelancerWorkExperience::class, 'freelancer_id');
     }
 
     public function getImagesUrls()
@@ -80,7 +85,7 @@ class Freelancer extends Model implements HasMedia
                 && filled($this->user->video)
                 && $this->user->freelancer->hasMedia('images'),
             'skills' => $this->hasSkills(),
-            'employment_history' => $this->hasEmployment(),
+            'employment_history' => $this->hasWorkExperiences(),
             'languages' => $this->hasLanguages(),
             'social' => $this->hasSocial(),
             'portfolio' => $this->hasPortfolio(),
@@ -129,11 +134,10 @@ class Freelancer extends Model implements HasMedia
 
     }
 
-    public function hasEmployment()
+    public function hasWorkExperiences()
     {
-        // For example, if employment entries are in a separate table:
-//        return $this->employment()->exists();
-        return false;
+        return $this->workExperiences()->exists();
+
     }
 
     public function hasLanguages()
