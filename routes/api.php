@@ -57,6 +57,7 @@ Route::controller(GeneralController::class)->group(function () {
     Route::get('/social', 'social');
     Route::get('/languages', 'languages');
     Route::get('/languages_levels', 'languages_levels');
+    Route::get('/work_type', 'work_type');
 });
 
 

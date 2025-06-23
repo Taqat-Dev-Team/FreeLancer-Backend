@@ -268,6 +268,9 @@ return [
 
 
 
+    'remote'=> 'Remote',
+    'on-site'=> 'On-site',
+    'hybrid'=> 'Hybrid',
 
 
 ];

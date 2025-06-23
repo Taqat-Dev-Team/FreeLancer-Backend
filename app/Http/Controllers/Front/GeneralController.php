@@ -31,7 +31,9 @@ class GeneralController extends Controller
             true,
             200,
         );
-    }  public function languages_levels()
+    }
+
+    public function languages_levels()
     {
         $langs = languages_levels();
         return $this->apiResponse(
@@ -183,6 +185,17 @@ class GeneralController extends Controller
             200,
         );
 
+    }
+
+    public function work_type()
+    {
+        $type = work_type();
+        return $this->apiResponse(
+            $type,
+            __('messages.success'),
+            true,
+            200,
+        );
     }
 
     public function social()

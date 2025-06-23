@@ -53,7 +53,7 @@ class UserResource extends JsonResource
 
                 'hourly_rate' => $this->freelancer->hourly_rate,
                 'available_hire' => $this->freelancer->available_hire,
-                'experience' => $this->freelancer->experience(),
+                'experience' => $this->freelancer->experience,
 
 
                 'skills' => $this->freelancer->skills->map(function ($skill) {

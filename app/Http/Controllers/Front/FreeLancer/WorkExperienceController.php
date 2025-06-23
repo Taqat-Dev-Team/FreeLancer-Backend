@@ -17,11 +17,7 @@ class WorkExperienceController extends Controller
     public function index()
     {
         try {
-            $workExperiences = Auth::user()
-                ->freelancer
-                ->workExperiences()
-                ->latest()
-                ->get();
+            $workExperiences = Auth::user()->freelancer->workExperiences()->latest()->get();
 
             return $this->apiResponse(
                 WorkExperienceResource::collection($workExperiences),
@@ -40,10 +36,7 @@ class WorkExperienceController extends Controller
         try {
             $data = $this->formatDates($request->validated());
 
-            $workExperience = Auth::user()
-                ->freelancer
-                ->workExperiences()
-                ->create($data);
+            $workExperience = Auth::user()->freelancer->workExperiences()->create($data);
 
             return $this->apiResponse(
                 new WorkExperienceResource($workExperience),
@@ -60,10 +53,7 @@ class WorkExperienceController extends Controller
     public function show($id)
     {
         try {
-            $workExperience = Auth::user()
-                ->freelancer
-                ->workExperiences()
-                ->find($id);
+            $workExperience = Auth::user()->freelancer->workExperiences()->find($id);
 
             if (!$workExperience) {
                 return $this->apiResponse([], __('messages.not_found'), false, 404);
@@ -84,10 +74,7 @@ class WorkExperienceController extends Controller
     public function update(WorkExperienceRequest $request, $id)
     {
         try {
-            $workExperience = Auth::user()
-                ->freelancer
-                ->workExperiences()
-                ->find($id);
+            $workExperience = Auth::user()->freelancer->workExperiences()->find($id);
 
             if (!$workExperience) {
                 return $this->apiResponse([], __('messages.not_found'), false, 404);
@@ -111,10 +98,7 @@ class WorkExperienceController extends Controller
     public function destroy($id)
     {
         try {
-            $workExperience = Auth::user()
-                ->freelancer
-                ->workExperiences()
-                ->find($id);
+            $workExperience = Auth::user()->freelancer->workExperiences()->find($id);
 
             if (!$workExperience) {
                 return $this->apiResponse([], __('messages.not_found'), false, 404);

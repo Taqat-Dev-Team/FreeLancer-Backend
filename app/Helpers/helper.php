@@ -17,9 +17,17 @@ function languages_levels()
     ]);
 }
 
+function work_type()
+{
+    return collect([
+        ['label' => __('messages.on-site')],
+        ['label' => __('messages.remote')],
+        ['label' => __('messages.hybrid')],
+    ]);
+}
 
 
 function unreadContactsCount()
 {
-    return \App\Models\Contact::where('status',0)->count();
+    return \App\Models\Contact::where('status', 0)->count();
 }
