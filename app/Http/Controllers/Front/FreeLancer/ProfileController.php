@@ -13,6 +13,7 @@ use App\Http\Requests\Front\Freelancer\SummaryRequest;
 use App\Http\Resources\ProfileCompleteResource;
 use App\Http\Resources\SummaryResource;
 use App\Http\Resources\UserResource;
+use App\Models\FreeLancerSocialMedia;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -75,7 +76,6 @@ class ProfileController extends Controller
                 'mobile' => $request->mobile,
             ]);
 
-            // معالجة الصورة
             if ($request->hasFile('photo')) {
                 $user->clearMediaCollection('photo');
                 $user->addMediaFromRequest('photo')
@@ -126,7 +126,6 @@ class ProfileController extends Controller
             return $this->apiResponse([], __('messages.data_save_failed'), false, 500);
         }
     }
-
 
     public function updateAbout(AbouteRequest $request)
     {
@@ -254,6 +253,15 @@ class ProfileController extends Controller
 
             $freelancer->socials()->sync($Data);
 
+            if ($request->has('custom')) {
+                foreach ($request->custom as $custom) {
+                    FreeLancerSocialMedia::create([
+                        'freelancer_id' => $freelancer->id,
+                        'link' => $custom['link'],
+                        'title' => $custom['title'] ?? null,
+                    ]);
+                }
+            }
 
             return $this->apiResponse(
                 new UserResource($user, $token),

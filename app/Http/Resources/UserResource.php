@@ -36,9 +36,6 @@ class UserResource extends JsonResource
             'country' => $this->country?->name,
             'birth_date' => $this->birth_date,
             'save_data' => $this->save_data,
-//            'lang' => $this->lang,
-//            'status' => $this->status,
-
             'joined_date' => $this->created_at->format('d M, Y') . ' - ' . $this->created_at->diffForHumans(),
             'type' => $this->client ? 'client' : ($this->freelancer ? 'freelancer' : null),
         ];
@@ -52,7 +49,7 @@ class UserResource extends JsonResource
             return array_merge($baseData, [
                 'id_verified' => $this->freelancer->idVerified(),
                 'category' => new CategoryResource($this->freelancer->category),
-                'subCategory' => $this->freelancer->subCategory?->name,
+                'sub_category' => new SubCategoryResource($this->freelancer->subCategory),
 
                 'hourly_rate' => $this->freelancer->hourly_rate,
                 'available_hire' => $this->freelancer->available_hire,
@@ -67,12 +64,12 @@ class UserResource extends JsonResource
                     ];
                 }),
 
-                'socials' => $this->freelancer->socials->map(function ($social) {
+                'socials' => $this->freelancer->socialLinks()->with('social')->get()->map(function ($item) {
                     return [
-                        'id' => $social->id,
-                        'name' => $social->name,
-                        'icon' => $social->icon,
-                        'link' => $social->pivot->link,
+                        'id' => $item->social_media_id,
+                        'name' => $item->social?->name ?? $item->title,
+                        'icon' => $item->social?->icon,
+                        'link' => $item->link,
                     ];
                 }),
 
@@ -95,7 +92,6 @@ class UserResource extends JsonResource
                         'description' => $badge->description,
                     ];
                 }),
-
 
 
             ]);

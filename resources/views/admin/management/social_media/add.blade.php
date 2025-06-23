@@ -6,7 +6,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Add Social Medial</h5>
-                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                         aria-label="Close">
                         <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
                     </div>
                 </div>
@@ -23,31 +24,23 @@
                     </div>
 
 
+                    {{--                    //icon preview--}}
                     <div class="mb-3">
-                        <label class="form-label">Social Media Icon</label>
-                        <input type="hidden" name="icon" id="icon">
-                        <div id="iconPreview" class="fs-1 mb-2 text-primary"></div>
+                        <div id="icon-show" class="my-2"></div>
+                    </div>
 
-                        <div class="icon-picker border rounded p-3 bg-light" style="max-height: 500px; overflow-y: auto;">
-                            @php
-                                $icons = [
-          'fa-brands fa-facebook', 'fa-brands fa-twitter', 'fa-brands fa-instagram', 'fa-brands fa-linkedin', 'fa-brands fa-tiktok', 'fa-brands fa-youtube', 'fa-brands fa-telegram', 'fa-brands fa-whatsapp',
-          'fa-brands fa-snapchat','fa fa-link',  'fa-brands fa-pinterest', 'fa-brands fa-reddit', 'fa-brands fa-discord', 'fa-brands fa-twitch',
+                    <div class="mb-3">
+                        <label for="icon" class="form-label">Social Media Icon (SVG Code)</label>
+                        <textarea id="icon" name="icon" class="form-control" rows="5" placeholder="Paste SVG code here..."></textarea>
+                        <div class="form-text">
+                            You can paste full SVG code directly (e.g., <code>&lt;svg&gt;...&lt;/svg&gt;</code>
 
-          'fa-brands fa-github', 'fa-brands fa-dribbble', 'fa-brands fa-behance', 'fa-brands fa-vimeo', 'fa-brands fa-slack', 'fa-brands fa-stack-overflow', 'fa-brands fa-medium', 'fa-brands fa-codepen',
-
-          'fa-brands fa-google', 'fa-brands fa-facebook-f', 'fa-brands fa-twitter-square', 'fa-brands fa-linkedin-in', 'fa-brands fa-youtube-square', 'fa-brands fa-spotify',
-          'fa-brands fa-stack-exchange', 'fa-brands fa-wordpress', 'fa-brands fa-shopify', 'fa-brands fa-etsy', 'fa-brands fa-fiverr', 'fa-brands fa-upwork'
-      ];
-
-                            @endphp
-                            @foreach ($icons as $icon)
-                                <i class=" {{ $icon }} m-2 p-2  rounded text-center"
-                                  title="{{ str_replace(['fa-brands ', 'fa-'], '', $icon) }}" style="font-size: 24px; cursor: pointer;"
-                                   data-icon="{{ $icon }}"></i>
-                            @endforeach
                         </div>
                     </div>
+
+
+
+
 
                     <div class=" modal-footer">
                         <button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
@@ -68,37 +61,9 @@
 </div>
 
 
-
 <script>
 
-        $(document).ready(function () {
-            const icons = document.querySelectorAll('.icon-picker i');
-            const preview = document.getElementById('iconPreview');
-            const input = document.getElementById('icon');
-
-            icons.forEach(icon => {
-                icon.addEventListener('click', function () {
-                    // إزالة التحديد السابق
-                    icons.forEach(i => i.classList.remove('border-primary', 'bg-primary-subtle'));
-
-                    // تحديد العنصر الحالي
-                    this.classList.add('border-primary', 'bg-primary-subtle');
-
-                    // تعيين القيمة في hidden input
-                    const selected = this.dataset.icon;
-                    input.value = selected;
-
-                    // عرض الأيقونة
-                    preview.innerHTML = `<i class=" ${selected}"></i>`;
-                });
-            });
-
-            // Reset on modal close
-            $('#addSocialModal').on('hidden.bs.modal', function () {
-                $('#iconPreview').html('');
-                $('.icon-picker i').removeClass('border-primary bg-primary-subtle');
-            });
-        });
+    $(document).ready(function () {
         // Handle form submission
         $('#addSocialForm').on('submit', function (e) {
             e.preventDefault(); // Prevent default form submission
@@ -149,4 +114,21 @@
                 }
             });
         });
+
+        // Handle icon preview
+
+        $('#icon').on('input', function () {
+            const svgCode = $(this).val().trim();
+            const iconPreview = $('#icon-show');
+
+            // التحقق أن الكود يحتوي على <svg
+            if (svgCode.startsWith('<svg')) {
+                iconPreview.html(svgCode);
+            } else {
+                iconPreview.empty();
+            }
+        });
+
+
+});
 </script>

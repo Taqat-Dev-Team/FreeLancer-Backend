@@ -21,7 +21,7 @@ class StoreSocialRequest extends FormRequest
         return [
             'name_ar' => ['required', 'string', 'max:255', Rule::unique('social_media', 'name->ar')],
             'name_en' => ['required', 'string', 'max:255', Rule::unique('social_media', 'name->en')],
-            'icon' => ['required', 'string', Rule::unique('social_media', 'icon')],
+            'icon' => ['required', 'string', 'regex:/<svg[\s\S]*<\/svg>/i', Rule::unique('social_media', 'icon')],
         ];
     }
 

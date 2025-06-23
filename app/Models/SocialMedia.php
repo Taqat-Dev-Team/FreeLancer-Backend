@@ -17,7 +17,7 @@ class SocialMedia extends Model
     public function freeLancer()
     {
         return $this->belongsToMany(Freelancer::class, 'free_lancer_social_media')
-            ->withPivot('link')
+            ->withPivot(['link','title'])
             ->withTimestamps();
     }
 }

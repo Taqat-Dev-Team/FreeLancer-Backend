@@ -31,9 +31,7 @@ class SocialMediaController extends Controller
         }
 
         return DataTables::of($socials)
-            ->editColumn('icon', function ($row) {
-                return '<i class="' . $row->icon . ' fs-2 text-primary"></i>';
-            })
+
             ->addColumn('actions', function ($row) {
 
                 return '<div class="dropdown">
@@ -51,7 +49,7 @@ class SocialMediaController extends Controller
                     </div>';
             })
             ->addIndexColumn()
-            ->rawColumns(['icon', 'actions'])
+            ->rawColumns(['icon','actions'])
             ->make(true);
     }
 

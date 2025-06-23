@@ -13,9 +13,14 @@ class Freelancer extends Model implements HasMedia
     use InteractsWithMedia;
 
     protected $fillable = [
-        'user_id', 'cv', 'cv_view_count', 'category_id', 'sub_category_id', 'hourly_rate', 'available_hire',
+        'user_id', 'category_id', 'sub_category_id', 'hourly_rate', 'available_hire',
     ];
 
+
+
+    protected $casts = [
+        'available_hire' => 'boolean',
+    ];
 
     public function identityVerification()
     {
@@ -146,7 +151,7 @@ class Freelancer extends Model implements HasMedia
     public function hasSocial()
     {
         // For example, if social links are stored as JSON in 'social_links' column:
-        return $this->socials()->exists();
+        return $this->socialLinks()->exists();
     }
 
     public function user()
@@ -187,11 +192,17 @@ class Freelancer extends Model implements HasMedia
 
     }
 
-    public function socials()
+//    public function socials()
+//    {
+//        return $this->belongsToMany(SocialMedia::class, 'free_lancer_social_media', 'freelancer_id', 'social_media_id')
+//            ->withPivot('link');
+//    }
+
+    public function socialLinks()
     {
-        return $this->belongsToMany(SocialMedia::class, 'free_lancer_social_media', 'freelancer_id', 'social_media_id')
-            ->withPivot('link');
+        return $this->hasMany(FreelancerSocial::class, 'freelancer_id');
     }
+
 
     public function badges()
     {
