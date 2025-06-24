@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Management;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreBadgeRequest;
@@ -124,7 +124,14 @@ class BadgesController extends Controller
 
     public function destroy($id)
     {
-        $badge = Badge::findOrFail($id);
+        $badge = Badge::withCount('freelancers')->findOrFail($id);
+
+        if ($badge->freelancers_count > 0) {
+            return response()->json([
+                'message' => 'Cannot delete badge: It is assigned to one or more freelancers.'
+            ], 400);
+        }
+
         $badge->clearMediaCollection('icon');
         $badge->delete();
 

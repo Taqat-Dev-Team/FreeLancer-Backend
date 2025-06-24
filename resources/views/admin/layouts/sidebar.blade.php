@@ -44,6 +44,34 @@
                         </div>
                     </div>
                 </div>
+
+                <div data-kt-menu-trigger="click"
+                     class="menu-item {{ request()->routeIs('admin.freelancers*') ? 'here show' : '' }} menu-accordion">
+    <span class="menu-link">
+        <span class="menu-icon">
+            <i class="ki-outline ki-profile-user fs-2"></i>
+        </span>
+        <span class="menu-title">FreeLancers</span>
+        <span class="menu-arrow"></span>
+    </span>
+                    <div class="menu-sub menu-sub-accordion">
+                        <div class="menu-item">
+                            <a class="menu-link {{ request()->routeIs('admin.freelancers.request.index') ? 'active' : '' }}"
+                               href="{{ route('admin.freelancers.request.index') }}">
+                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                                <span class="menu-title ">Identity Checks</span>
+{{--                                @if(IdentityRequestsCount() > 0)--}}
+{{--                                    <span class="menu-badge  justify-content-end">--}}
+{{--                                        <span class="badge badge-light-primary ms-2">--}}
+{{--                                            {{ IdentityRequestsCount() }}--}}
+{{--                                        </span>--}}
+{{--                                    </span>--}}
+{{--                                @endif--}}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
                 <div data-kt-menu-trigger="click"
                      class="menu-item {{ request()->routeIs('admin.management*') ? 'here show' : '' }} menu-accordion">
                     <span class="menu-link">
@@ -135,7 +163,8 @@
                             <i class="ki-outline ki-message-text-2 fs-2 {{ request()->routeIs('admin.contacts.*')? 'text-white':'' }}"></i>
                         </span>
 
-                        <span class="menu-title {{ request()->routeIs('admin.contacts.*')? 'text-white':'' }}">Contacts</span>
+                        <span
+                            class="menu-title {{ request()->routeIs('admin.contacts.*')? 'text-white':'' }}">Contacts</span>
                         @if(unreadContactsCount()>0)
                             <span class="menu-badge">
                                 <span class="badge badge-light-danger ms-2">

@@ -31,3 +31,8 @@ function unreadContactsCount()
 {
     return \App\Models\Contact::where('status', 0)->count();
 }
+
+function IdentityRequestsCount()
+{
+    return \App\Models\IdentityVerification::where('status', '0')->count();
+}

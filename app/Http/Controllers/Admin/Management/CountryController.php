@@ -1,18 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Management;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\StoreCategoryRequest;
 use App\Http\Requests\Admin\StoreCountryRequest;
-use App\Http\Requests\Admin\UpdateCategoryRequest;
 use App\Http\Requests\Admin\UpdateCountryRequest;
-use App\Models\Category;
 use App\Models\Country;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Log;
+use Yajra\DataTables\DataTables;
 
 class CountryController extends Controller
 {

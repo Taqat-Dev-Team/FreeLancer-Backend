@@ -36,7 +36,7 @@ class UserResource extends JsonResource
             'country' => $this->country?->name,
             'birth_date' => $this->birth_date,
             'save_data' => $this->save_data,
-            'joined_date' => $this->created_at->format('d M, Y') . ' - ' . $this->created_at->diffForHumans(),
+            'joined_date' => $this->created_at->format('d M, Y') . ' , ' . $this->created_at->diffForHumans(),
             'type' => $this->client ? 'client' : ($this->freelancer ? 'freelancer' : null),
         ];
 

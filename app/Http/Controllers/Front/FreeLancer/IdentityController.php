@@ -74,9 +74,14 @@ class IdentityController extends Controller
 
     public function updateIdentity(IdentityRequest $request)
     {
-        $user= Auth::user();
+        $user = Auth::user();
         if ($user->mobile_verified_at === null) {
             return $this->apiResponse([], __('messages.phone_not_verified'), false, 500);
+        }
+
+
+        if ($user->mobile_verified_at < now()->subMinutes(5)) {
+            return $this->apiResponse([], __('messages.otp_expired'), false, 500);
         }
 
         try {

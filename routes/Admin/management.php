@@ -1,14 +1,14 @@
 <?php
 
+use App\Http\Controllers\Admin\Management\BadgesController;
+use App\Http\Controllers\Admin\Management\CategoryController;
+use App\Http\Controllers\Admin\Management\CountryController;
+use App\Http\Controllers\Admin\Management\EducationLevelController;
+use App\Http\Controllers\Admin\Management\languageController;
+use App\Http\Controllers\Admin\Management\SkillsController;
+use App\Http\Controllers\Admin\Management\SocialMediaController;
+use App\Http\Controllers\Admin\Management\SubCategoryController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\SubCategoryController;
-use App\Http\Controllers\Admin\CountryController;
-use App\Http\Controllers\Admin\SkillsController;
-use App\Http\Controllers\Admin\EducationLevelController;
-use App\Http\Controllers\Admin\SocialMediaController;
-use App\Http\Controllers\Admin\BadgesController;
-use App\Http\Controllers\Admin\languageController;
 
 
 Route::prefix('admin')->name('admin.')->group(function () {

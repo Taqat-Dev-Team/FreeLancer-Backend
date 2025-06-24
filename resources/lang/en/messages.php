@@ -233,6 +233,7 @@ return [
     'phone_not_verified'=>'Your phone number is not verified. Please verify your phone number to proceed.',
     'identity_update_failed'=>'Identity update failed. Please try again later.',
     'identity_update_success'=>'Identity updated successfully.',
+    'otp_expired'=>'Your OTP has expired. Please request a new one.',
 
     'pending'=> 'pending',
     'verified_id'=>'verified',
