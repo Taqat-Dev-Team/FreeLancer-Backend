@@ -21,9 +21,12 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             SubCategorySeeder::class,
             CountrySeeder::class,
+            SkillsSeeder::class,
             UserSeeder::class,
             FreeLancerSeeder::class,
+            ClinetSeeder::class,
             EducationLevelSeeder::class,
+            SocialMediaSeeder::class,
             LaratrustSeeder::class,
 
 

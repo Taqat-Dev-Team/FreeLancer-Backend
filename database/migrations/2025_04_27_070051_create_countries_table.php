@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('code');         // e.g., "PS"
             $table->string('number_code');  // e.g., "+970"
+            $table->boolean('status')->default(true);
+            $table->timestamps();
         });
     }
 

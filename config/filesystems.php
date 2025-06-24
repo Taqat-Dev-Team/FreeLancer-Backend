@@ -30,6 +30,64 @@ return [
 
     'disks' => [
 
+        'categories' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/uploads/categories'),
+            'url' => env('APP_URL') . '/storage/uploads/categories',
+            'visibility' => 'public',
+        ],
+
+
+        'freelancers' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/uploads/freelancers'),
+            'url' => env('APP_URL') . '/storage/uploads/freelancers',
+            'visibility' => 'public',
+        ],
+        'freelancersIds' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/uploads/freelancersIds'),
+            'url' => env('APP_URL') . '/storage/uploads/freelancersIds',
+            'visibility' => 'public',
+        ],
+
+        'freelancersImages' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/uploads/freelancersImages'),
+            'url' => env('APP_URL') . '/storage/uploads/freelancersImages',
+            'visibility' => 'public',
+        ],
+
+
+
+        'clients' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/uploads/clients'),
+            'url' => env('APP_URL') . '/storage/uploads/clients',
+            'visibility' => 'public',
+        ],
+
+        'admins' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/uploads/admins'),
+            'url' => env('APP_URL') . '/storage/uploads/admins',
+            'visibility' => 'public',
+        ],
+
+
+        'skills' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/uploads/skills'),
+            'url' => env('APP_URL') . '/storage/uploads/skills',
+            'visibility' => 'public',
+        ],
+        'badges' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/uploads/badges'),
+            'url' => env('APP_URL') . '/storage/uploads/badges',
+            'visibility' => 'public',
+        ],
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),
@@ -41,7 +99,7 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
             'throw' => false,
             'report' => false,

@@ -5,8 +5,7 @@ namespace App\Http\Controllers\Front\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\ApiResponseTrait;
-use App\Http\Resources\UserResource;
-use Illuminate\Support\Facades\Auth;
+
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -42,6 +41,7 @@ class SocialAuthController extends Controller
                     Log::info('Existing user linked with Google account.', ['user_id' => $user->id, 'email' => $user->email]);
                 } else {
                     $user = User::create([
+                        'name' => $googleUser->name,
                         'email' => $googleUser->email,
                         'google_id' => $googleUser->id,
                         'provider' => 'google',
@@ -56,7 +56,13 @@ class SocialAuthController extends Controller
             // إنشاء Sanctum Token
             $token = $user->createToken('auth-token')->plainTextToken;
 
-            return redirect(env('FRONTEND_URL') . '/auth/callback#token=' . $token . '&user_id=' . $user->id);
+            return redirect(env('FRONTEND_URL') . '/callback?' . http_build_query([
+                    'token'     => $token,
+                    'user_id'   => $user->id,
+                    'user_type' => $user->freelancer? 'freelancer':'client',
+                    'save_data' => $user->save_data,
+                ]));
+
 
         } catch (Exception $e) {
             Log::error('Google social login failed.', [
@@ -69,6 +75,8 @@ class SocialAuthController extends Controller
             return redirect(env('FRONTEND_URL') . '/auth/callback#error=social_login_failed');
         }
     }
+
+
 
 }
 

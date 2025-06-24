@@ -3,28 +3,44 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\HasMedia;
 use Spatie\Translatable\HasTranslations;
 
-class Category extends Model
+class Category extends Model implements HasMedia
 {
-    use HasTranslations;
-    public $translatable = ['name'];
+    use HasTranslations, InteractsWithMedia;
+
+    public $translatable = ['name', 'slug'];
     protected $fillable = ['name', 'icon'];
 
-    public function subCategories() {
+
+    public function getImageUrl()
+    {
+        return $this->getFirstMediaUrl('icon','thumb') ?: url('logos/favicon.png');
+    }
+
+
+    public function subCategories()
+    {
         return $this->hasMany(SubCategory::class);
     }
 
-    public function freelancers() {
+    public function freelancers()
+    {
         return $this->hasMany(Freelancer::class);
     }
 
-    public function skills() {
+    public function skills()
+    {
         return $this->hasMany(Skills::class);
     }
 
-    public function projects() {
+    public function projects()
+    {
         return $this->hasMany(Project::class);
     }
+
+
 }
 

@@ -1,10 +1,13 @@
-<!DOCTYPE html>
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <title>لوحة تحكم المشرف</title>
-</head>
-<body>
-<h1>مرحباً بك في لوحة تحكم المشرف</h1>
-</body>
-</html>
+@extends('admin.layouts.master',['title' => 'Dashboard'])
+
+@section('content')
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Dashboard</h1>
+                <p>Welcome to your dashboard!</p>
+            </div>
+        </div>
+    </div>
+
+@stop

@@ -1,12 +1,43 @@
 <?php
 
 return [
-    'name' => 'Name is required',
-    'email' => 'Email is required',
+    'name' => 'Name',
+    'email' => 'Email',
+    'mobile' => 'Mobile',
     'email-email' => 'Invalid email format',
     'about' => 'About Us is required',
     'error' => 'An error occurred',
+    'hourly_rate' => 'Hourly rate',
+    'experience' => 'Experience',
+    'skills' => 'Skills',
+    'language' => 'Language',
+    'languages' => 'Languages',
+    'language_level' => 'Language level',
 
+    'beginner' => 'Beginner',
+    'intermediate' => 'Intermediate',
+    'advanced' => 'Advanced',
+    'native' => 'Native',
+
+    'socials' => 'Socials',
+    'social_id' => 'Platform',
+    'link' => 'Link',
+
+    'photo' => 'Photo',
+    'bio' => 'Bio',
+    'birth_date' => 'Birth Date',
+    'available_hire' => 'Available for Hire',
+    'category' => 'Category',
+    'sub_category' => 'Sub Category',
+    'country' => 'Country',
+    'gender' => 'Gender',
+    'data_save_failed' => 'Data save failed',
+    'data_saved_successfully' => 'Data saved successfully',
+    'failed' => 'Failed',
+
+    'Image deleted successfully' => 'Image deleted successfully',
+    'Unauthorized' => 'You are not authorized to delete this image',
+    'Image delete failed' => 'Image deletion failed',
 
     'updated' => 'Updated',
     'success-update' => 'Updated successfully',
@@ -93,7 +124,7 @@ return [
     'login_success' => 'Login successful.',
     'logout_success' => 'Logout successful.',
     'profile_success' => 'User profile retrieved successfully.',
-    'invalid_credentials' => 'Invalid credentials.',
+    'invalid_credentials' => ' Invalid email or password.',
     'not_authenticated' => 'User not authenticated.',
     'language_updated' => 'Language updated successfully.',
     'success' => 'Operation completed successfully.',
@@ -122,10 +153,30 @@ return [
 
     'otp_subject' => 'Your Taqat Verification Code',
 
-    'registration_success_verify_email'=> 'Registration successful. Please verify your email to complete the process.',
+    'registration_success_verify_email' => 'Registration successful. Please verify your email to complete the process.',
 
     'social_login_success' => 'Logged in successfully via Google.',
     'social_login_failed' => 'Google login failed. Please try again or contact support.',
+
+    'Bio is required' => 'Bio is required',
+    'Bio must be a string' => 'Bio must be a string',
+    'Bio must not exceed 4000 characters' => 'Bio must not exceed 4000 characters',
+
+    'Images must be an array' => 'Images must be an array',
+    'Each image must be a valid image file' => 'Each image must be a valid image file',
+    'Image must be of type jpeg, png, jpg, gif, or svg' => 'Image must be of type jpeg, png, jpg, gif, or svg',
+    'Image size must not exceed 2MB' => 'Image size must not exceed 2MB',
+
+    'Image title must be a string' => 'Image title must be a string',
+    'Image title must not exceed 255 characters' => 'Image title must not exceed 255 characters',
+
+    'Video URL must be a string' => 'Video URL must be a string',
+    'Video URL must not exceed 255 characters' => 'Video URL must not exceed 255 characters',
+    'Video URL must be a valid YouTube link' => 'Video URL must be a valid YouTube link',
+
+    'Video title must be a string' => 'Video title must be a string',
+    'Video title must not exceed 255 characters' => 'Video title must not exceed 255 characters',
+
 
     'password_reset_subject' => 'Your Password Reset Link',
     'password_reset_link_sent' => 'We have emailed your password reset link!',
@@ -145,6 +196,82 @@ return [
         502 => 'Bad Gateway',
         503 => 'Service Unavailable',
     ],
+
+    'account_inactive' => 'Your account is inactive. Please contact support.',
+    'account_type_success' => 'Account type updated successfully',
+    'user_already_has_type' => 'User already has  account type',
+
+
+    'name.required' => 'The name is required.',
+    'photo.required' => 'The photo is required.',
+    'birth_date.required' => 'The birth date is required.',
+    'available_hire.boolean' => 'The available for hire field must be true or false.',
+    'category_id.required' => 'The category is required.',
+    'sub_category_id.required' => 'The sub-category is required.',
+    'country_id.exists' => 'The selected country does not exist.',
+    'Access Denied' => 'Access Denied',
+    'user_already_save_data' => 'User already has saved data. Cannot save data again.',
+
+    'data_saved_already' => 'Data already saved.',
+
+    'Access Denied, already saved data' => 'Access Denied, already saved data',
+    'mobile.required' => 'The mobile number is required.',
+    'mobile.digits_between' => 'The mobile number must be between 7 and 15 digits.',
+    'mobile.regex' => 'The mobile number must contain digits only, with no symbols or spaces.',
+    'otp_mobile_success' => 'Otp sent successfully to your mobile number.',
+    'invalid_otp'=> 'Invalid OTP. Please try again.',
+    'verified'=>'Verified successfully',
+
+
+        'first_name'        => 'First name',
+        'father_name'       => 'Father\'s name',
+        'grandfather_name'  => 'Grandfather\'s name',
+        'family_name'       => 'Family name',
+        'id_number'         => 'ID number',
+        'full_address'      => 'Full address',
+        'image'             => 'ID image',
+    'phone_not_verified'=>'Your phone number is not verified. Please verify your phone number to proceed.',
+    'identity_update_failed'=>'Identity update failed. Please try again later.',
+    'identity_update_success'=>'Identity updated successfully.',
+    'otp_expired'=>'Your OTP has expired. Please request a new one.',
+
+    'pending'=> 'pending',
+    'verified_id'=>'verified',
+    'rejected'=>'rejected',
+    'unknown'=>'unknown',
+    'Present'=>'Present',
+
+    'company_name_required' => 'The company name is required.',
+    'company_name_string' => 'The company name must be a string.',
+    'company_name_max_length' => 'The company name may not be greater than :max characters.',
+
+    'title_required' => 'The job title is required.',
+    'title_string' => 'The job title must be a string.',
+    'title_max_length' => 'The job title may not be greater than :max characters.',
+
+    'location_string' => 'The location must be a string.',
+    'location_max_length' => 'The location may not be greater than :max characters.',
+
+    'type_required' => 'The job type is required.',
+    'type_invalid' => 'The job type is invalid. Accepted types: :valid_types.',
+
+    'start_date_required' => 'The start date is required.',
+
+    'end_date_after_start_date' => 'The end date must be after or equal to the start date.',
+
+    'description_string' => 'The description must be a string.',
+    'description_max_length' => 'The description may not be greater than :max characters.',
+
+
+
+    'start_date_format' => 'The start date must be in the format: month-year (e.g. 03-2025).',
+    'end_date_format' => 'The end date must be in the format: month-year (e.g. 06-2026).',
+
+
+
+    'remote'=> 'Remote',
+    'on-site'=> 'On-site',
+    'hybrid'=> 'Hybrid',
 
 
 ];

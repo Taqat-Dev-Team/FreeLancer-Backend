@@ -14,14 +14,19 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->string('lang')->default('en');
+            $table->boolean('save_data')->nullable();
 
             $table->string('email')->unique();
             $table->string('password');
             $table->string('mobile')->nullable();
+            $table->string('hourly_rate')->nullable();
             $table->integer('status')->default(1); // 0 -> inactive, 1 -> active
             $table->foreignId('country_id')->nullable()->constrained('countries');
             $table->string('photo')->nullable();
             $table->text('bio')->nullable();
+            $table->date('birth_date')->nullable();
+            $table->boolean('available_hire')->nullable();
+            $table->enum('gender', ['male', 'female'])->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();
 
