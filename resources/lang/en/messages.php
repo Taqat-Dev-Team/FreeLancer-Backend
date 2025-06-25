@@ -274,6 +274,19 @@ return [
     'hybrid'=> 'Hybrid',
 
 
+
+
+    'university' => 'University Name',
+    'degree' => 'Degree',
+    'field_of_study' => 'Field of Study',
+    'grade' => 'Grade',
+    'start_date' => 'Start Date',
+    'end_date' => 'End Date',
+
+    'education_level' => 'Education Level',
+
+
+
 ];
 
 

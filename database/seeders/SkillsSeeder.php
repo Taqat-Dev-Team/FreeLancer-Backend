@@ -15,40 +15,51 @@ class SkillsSeeder extends Seeder
     {
 
         Skills::firstOrCreate([
-            'name' => ['en' => 'Digital Marketing', 'ar' => 'التسويق الرقمي','category_id' => 1],
+            'name' => ['en' => 'Digital Marketing', 'ar' => 'التسويق الرقمي'],
+            'category_id' => 1
         ]);
 
         Skills::firstOrCreate([
-            'name' => ['en' => 'Web Development', 'ar' => 'تطوير الويب','category_id' => 2],
+            'name' => ['en' => 'Web Development', 'ar' => 'تطوير الويب'],
+            'category_id' => 2
         ]);
 
         Skills::firstOrCreate([
-            'name' => ['en' => 'Graphic Design', 'ar' => 'تصميم الجرافيك','category_id' => 3],
+            'name' => ['en' => 'Graphic Design', 'ar' => 'تصميم الجرافيك'],
+            'category_id' => 3
         ]);
         Skills::firstOrCreate([
-            'name' => ['en' => 'Content Writing', 'ar' => 'كتابة المحتوى','category_id' => 1],
+            'name' => ['en' => 'Content Writing', 'ar' => 'كتابة المحتوى'],
+            'category_id' => 1
         ]);
 
         Skills::firstOrCreate([
-            'name' => ['en' => 'Data Analysis', 'ar' => 'تحليل البيانات','category_id' => 2],
+            'name' => ['en' => 'Data Analysis', 'ar' => 'تحليل البيانات'],
+            'category_id' => 2
         ]);
         Skills::firstOrCreate([
-            'name' => ['en' => 'SEO Optimization', 'ar' => 'تحسين محركات البحث','category_id' => 1],
+            'name' => ['en' => 'SEO Optimization', 'ar' => 'تحسين محركات البحث'],
+            'category_id' => 1
         ]);
         Skills::firstOrCreate([
-            'name' => ['en' => 'Mobile App Development', 'ar' => 'تطوير تطبيقات الهواتف المحمولة','category_id' => 1],
+            'name' => ['en' => 'Mobile App Development', 'ar' => 'تطوير تطبيقات الهواتف المحمولة'],
+            'category_id' => 1
         ]);
         Skills::firstOrCreate([
-            'name' => ['en' => 'Social Media Management', 'ar' => 'إدارة وسائل التواصل الاجتماعي','category_id' => 1],
+            'name' => ['en' => 'Social Media Management', 'ar' => 'إدارة وسائل التواصل الاجتماعي'],
+            'category_id' => 1
         ]);
         Skills::firstOrCreate([
-            'name' => ['en' => 'Video Editing', 'ar' => 'تحرير الفيديو','category_id' => 5],
+            'name' => ['en' => 'Video Editing', 'ar' => 'تحرير الفيديو'],
+            'category_id' => 5
         ]);
         Skills::firstOrCreate([
-            'name' => ['en' => 'UI/UX Design', 'ar' => 'تصميم واجهة المستخدم وتجربة المستخدم','category_id' => 1],
+            'name' => ['en' => 'UI/UX Design', 'ar' => 'تصميم واجهة المستخدم وتجربة المستخدم']
+            , 'category_id' => 1
         ]);
         Skills::firstOrCreate([
-            'name' => ['en' => 'Project Management', 'ar' => 'إدارة المشاريع','category_id' => 1],
+            'name' => ['en' => 'Project Management', 'ar' => 'إدارة المشاريع']
+            , 'category_id' => 1
         ]);
 
     }

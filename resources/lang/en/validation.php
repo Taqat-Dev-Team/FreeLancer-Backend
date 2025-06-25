@@ -14,7 +14,6 @@ return [
     */
 
 
-
     'accepted' => 'The :attribute must be accepted.',
     'active_url' => 'The :attribute is not a valid URL.',
     'after' => 'The :attribute must be a date after :date.',
@@ -166,8 +165,11 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'education_level_id' => [
+            'required' => 'Please select your education level.',
+            'exists' => 'The selected education level is invalid.',
+        ],
     ],
-
 
 
     /*
@@ -182,22 +184,29 @@ return [
     */
 
     'attributes' => [
-        'whatsapp'              =>  'whatsapp'   ,
-        'message'               =>  'message',
-        'current_city'               =>  'current city',
-        'old_city'               =>  'old city',
-        'job'               =>  'job',
-        'image'               =>  'image',
-        'skills'               =>  'skills',
-        'know_some'               =>  'know some',
-        'title_en ' =>'title english ',
-        'title_ar ' =>'title arabic ',
-        'photo'=>'photo',
-        'original place'=>'original place',
-        'lang'=>'language',
+        'whatsapp' => 'whatsapp',
+        'message' => 'message',
+        'current_city' => 'current city',
+        'old_city' => 'old city',
+        'job' => 'job',
+        'image' => 'image',
+        'skills' => 'skills',
+        'know_some' => 'know some',
+        'title_en ' => 'title english ',
+        'title_ar ' => 'title arabic ',
+        'photo' => 'photo',
+        'original place' => 'original place',
+        'lang' => 'language',
 
-        'displacement place'=>'displacement place',
+        'displacement place' => 'displacement place',
         'socials.*.link' => 'social account link',
+
+        'university' => 'University Name',
+        'degree' => 'Degree',
+        'field_of_study' => 'Field of Study',
+        'grade' => 'Grade',
+        'start_date' => 'Start Date',
+        'end_date' => 'End Date',
 
     ],
 

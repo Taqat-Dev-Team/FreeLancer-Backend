@@ -145,7 +145,7 @@
 
         </script>
 
-        @include('admin.Freelancer.VerificationRequests.view')
+        @include('admin.FreeLancer.VerificationRequests.view')
 
     @endpush
 

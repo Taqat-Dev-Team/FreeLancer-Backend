@@ -322,6 +322,8 @@ class ProfileController extends Controller
                 'images_title' => $request->images_title,
             ]);
 
+
+
             // معالجة الصور
             if ($request->hasFile('images')) {
                 // احذف الصور السابقة إن وجدت
