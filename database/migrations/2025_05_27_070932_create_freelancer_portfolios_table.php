@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -13,12 +12,10 @@ return new class extends Migration
     {
         Schema::create('freelancer_portfolios', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('description')->nullable();
-            $table->string('main_image')->nullable();
-            $table->string('link')->nullable();
-            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
-            $table->foreignId('freelancer_id')->constrained('freelancers')->onDelete('cascade');
+            $table->unsignedBigInteger('freelancer_id')->index();
+            $table->foreign('freelancer_id')->references('id')->on('freelancers')->onDelete('cascade');
+            $table->string('title')->nullable();
+            $table->json('content');
             $table->timestamps();
         });
     }

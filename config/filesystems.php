@@ -37,6 +37,12 @@ return [
             'visibility' => 'public',
         ],
 
+        'Portfolio' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/uploads/portfolio'),
+            'url' => env('APP_URL') . '/storage/uploads/portfolio',
+            'visibility' => 'public',
+        ],
 
         'freelancers' => [
             'driver' => 'local',

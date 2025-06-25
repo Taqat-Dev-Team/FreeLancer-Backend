@@ -287,6 +287,24 @@ return [
     'pass' => 'Pass',
 
 
+    'block_deleted' => 'Content block deleted successfully.',
+    'image_required' => 'Image is required for this block.',
+    'text_required' => 'Text content block cannot be empty.',
+
+    // Portfolio
+    'portfolio_added' => 'Project added successfully.',
+    'portfolio_updated' => 'Project updated successfully.',
+    'portfolio_deleted' => 'Project deleted successfully.',
+    'portfolio_not_found' => 'Portfolio not found.',
+    'portfolio_retrieved' => 'Portfolio retrieved successfully.',
+    'portfolios_retrieved' => 'Portfolios retrieved successfully.',
+
+    // Content Block
+    'content_block_not_found' => 'Content block not found.',
+
+
+
+
 ];
 
 
