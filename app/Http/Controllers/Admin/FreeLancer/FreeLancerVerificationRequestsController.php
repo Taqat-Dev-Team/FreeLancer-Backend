@@ -19,7 +19,7 @@ class FreeLancerVerificationRequestsController extends Controller
 
     public function index()
     {
-        return view('admin.FreeLancer.VerificationRequests.index');
+        return view('admin.FreeLancer.verificationrequests.index');
     }
 
 
