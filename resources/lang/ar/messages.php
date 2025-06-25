@@ -270,6 +270,11 @@ return [
 
     'education_level' => 'المستوى التعليمي',
 
+    'excellent'=> 'ممتاز',
+    'very_good' => 'جيد جداً',
+    'good' => 'جيد',
+    'pass'=>'مقبول',
+
 
 
 

@@ -187,6 +187,26 @@ class GeneralController extends Controller
 
     }
 
+    public function grade()
+    {
+        $levels =AcademicGrade();
+        if ($levels->isEmpty()) {
+            return $this->apiResponse(
+                null,
+                __('messages.success'),
+                true,
+                200,
+            );
+        }
+        return $this->apiResponse(
+            $levels,
+            __('messages.success'),
+            true,
+            200,
+        );
+
+    }
+
     public function work_type()
     {
         $type = work_type();

@@ -219,27 +219,27 @@ return [
     'mobile.digits_between' => 'The mobile number must be between 7 and 15 digits.',
     'mobile.regex' => 'The mobile number must contain digits only, with no symbols or spaces.',
     'otp_mobile_success' => 'Otp sent successfully to your mobile number.',
-    'invalid_otp'=> 'Invalid OTP. Please try again.',
-    'verified'=>'Verified successfully',
+    'invalid_otp' => 'Invalid OTP. Please try again.',
+    'verified' => 'Verified successfully',
 
 
-        'first_name'        => 'First name',
-        'father_name'       => 'Father\'s name',
-        'grandfather_name'  => 'Grandfather\'s name',
-        'family_name'       => 'Family name',
-        'id_number'         => 'ID number',
-        'full_address'      => 'Full address',
-        'image'             => 'ID image',
-    'phone_not_verified'=>'Your phone number is not verified. Please verify your phone number to proceed.',
-    'identity_update_failed'=>'Identity update failed. Please try again later.',
-    'identity_update_success'=>'Identity updated successfully.',
-    'otp_expired'=>'Your OTP has expired. Please request a new one.',
+    'first_name' => 'First name',
+    'father_name' => 'Father\'s name',
+    'grandfather_name' => 'Grandfather\'s name',
+    'family_name' => 'Family name',
+    'id_number' => 'ID number',
+    'full_address' => 'Full address',
+    'image' => 'ID image',
+    'phone_not_verified' => 'Your phone number is not verified. Please verify your phone number to proceed.',
+    'identity_update_failed' => 'Identity update failed. Please try again later.',
+    'identity_update_success' => 'Identity updated successfully.',
+    'otp_expired' => 'Your OTP has expired. Please request a new one.',
 
-    'pending'=> 'pending',
-    'verified_id'=>'verified',
-    'rejected'=>'rejected',
-    'unknown'=>'unknown',
-    'Present'=>'Present',
+    'pending' => 'pending',
+    'verified_id' => 'verified',
+    'rejected' => 'rejected',
+    'unknown' => 'unknown',
+    'Present' => 'Present',
 
     'company_name_required' => 'The company name is required.',
     'company_name_string' => 'The company name must be a string.',
@@ -263,17 +263,13 @@ return [
     'description_max_length' => 'The description may not be greater than :max characters.',
 
 
-
     'start_date_format' => 'The start date must be in the format: month-year (e.g. 03-2025).',
     'end_date_format' => 'The end date must be in the format: month-year (e.g. 06-2026).',
 
 
-
-    'remote'=> 'Remote',
-    'on-site'=> 'On-site',
-    'hybrid'=> 'Hybrid',
-
-
+    'remote' => 'Remote',
+    'on-site' => 'On-site',
+    'hybrid' => 'Hybrid',
 
 
     'university' => 'University Name',
@@ -285,6 +281,10 @@ return [
 
     'education_level' => 'Education Level',
 
+    'excellent' => 'Excellent',
+    'very_good' => 'Very Good',
+    'good' => 'Good',
+    'pass' => 'Pass',
 
 
 ];

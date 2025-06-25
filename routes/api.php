@@ -58,6 +58,7 @@ Route::controller(GeneralController::class)->group(function () {
     Route::get('/languages', 'languages');
     Route::get('/languages_levels', 'languages_levels');
     Route::get('/work_type', 'work_type');
+    Route::get('/grade', 'grade');
 });
 
 

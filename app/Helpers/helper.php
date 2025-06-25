@@ -26,6 +26,18 @@ function work_type()
     ]);
 }
 
+function AcademicGrade()
+{
+    return collect([
+        ['label' => __('messages.excellent')],
+        ['label' => __('messages.very_good')],
+        ['label' => __('messages.good')],
+        ['label' => __('messages.pass')],
+
+    ]);
+}
+
+
 
 function unreadContactsCount()
 {
