@@ -20,23 +20,23 @@ function languages_levels()
 function work_type()
 {
     return collect([
-        ['label' => __('messages.on-site')],
-        ['label' => __('messages.remote')],
-        ['label' => __('messages.hybrid')],
+        ['key' => 'on-site', 'label' => __('messages.on-site')],
+        ['key' => 'remote', 'label' => __('messages.remote')],
+        ['key' => 'hybrid', 'label' => __('messages.hybrid')],
     ]);
 }
 
 function AcademicGrade()
 {
     return collect([
-        ['label' => __('messages.excellent')],
-        ['label' => __('messages.very_good')],
-        ['label' => __('messages.good')],
-        ['label' => __('messages.pass')],
+        ['key' => 'excellent', 'label' => __('messages.excellent')],
+        ['key' => 'very_good', 'label' => __('messages.very_good')],
+        ['key' => 'good', 'label' => __('messages.good')],
+        ['key' => 'pass', 'label' => __('messages.pass')]
 
     ]);
-}
 
+}
 
 
 function unreadContactsCount()
