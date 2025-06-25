@@ -33,7 +33,7 @@ class UserResource extends JsonResource
             'photo' => $this->getImageUrl(),
             'email' => $this->email,
             'mobile' => $this->mobile,
-            'country' => $this->country?->name,
+            'country' => new CountryResource($this->country),
             'birth_date' => $this->birth_date,
             'save_data' => $this->save_data,
             'joined_date' => $this->created_at->format('d M, Y') . ' , ' . $this->created_at->diffForHumans(),

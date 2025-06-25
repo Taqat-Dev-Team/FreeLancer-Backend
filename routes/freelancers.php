@@ -17,6 +17,7 @@ Route::middleware(['auth:sanctum', 'verified.email', 'freelancer'])->prefix('fre
         Route::get('/summary', 'summary');
         Route::delete('/summary/image/{id}', 'deleteImageSummary');
         Route::get('/profile-complete', 'profileComplete');
+        Route::post('/update-photo', 'updatePhoto');
     });
 
 
