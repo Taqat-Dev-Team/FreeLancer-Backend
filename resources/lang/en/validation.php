@@ -13,6 +13,7 @@ return [
     |
     */
 
+
     'accepted' => 'The :attribute must be accepted.',
     'active_url' => 'The :attribute is not a valid URL.',
     'after' => 'The :attribute must be a date after :date.',
@@ -130,10 +131,46 @@ return [
     */
 
     'custom' => [
+        'video' => [
+            'youtube_url' => 'Video URL must be a valid YouTube link.',
+        ],
+        'images.*' => [
+            'image' => 'Each image must be a valid image file.',
+            'mimes' => 'Image must be of type jpeg, png, jpg, gif, or svg.',
+        ],
+        'name' => [
+            'required' => 'The name is required.',
+        ],
+        'photo' => [
+            'required' => 'The photo is required.',
+        ],
+        'bio' => [
+            'max' => 'The bio must not exceed 2000 characters.',
+        ],
+        'birth_date' => [
+            'required' => 'The birth date is required.',
+        ],
+        'available_hire' => [
+            'boolean' => 'The available for hire field must be true or false.',
+        ],
+        'category_id' => [
+            'required' => 'The category is required.',
+        ],
+        'sub_category_id' => [
+            'required' => 'The sub-category is required.',
+        ],
+        'country_id' => [
+            'exists' => 'The selected country does not exist.',
+        ],
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'education_level_id' => [
+            'required' => 'Please select your education level.',
+            'exists' => 'The selected education level is invalid.',
+        ],
     ],
+
 
     /*
     |--------------------------------------------------------------------------
@@ -147,21 +184,29 @@ return [
     */
 
     'attributes' => [
-        'whatsapp'              =>  'whatsapp'   ,
-        'message'               =>  'message',
-        'current_city'               =>  'current city',
-        'old_city'               =>  'old city',
-        'job'               =>  'job',
-        'image'               =>  'image',
-        'skills'               =>  'skills',
-        'know_some'               =>  'know some',
-        'title_en ' =>'title english ',
-        'title_ar ' =>'title arabic ',
-        'photo'=>'photo',
-        'original place'=>'original place',
-        'lang'=>'language',
+        'whatsapp' => 'whatsapp',
+        'message' => 'message',
+        'current_city' => 'current city',
+        'old_city' => 'old city',
+        'job' => 'job',
+        'image' => 'image',
+        'skills' => 'skills',
+        'know_some' => 'know some',
+        'title_en ' => 'title english ',
+        'title_ar ' => 'title arabic ',
+        'photo' => 'photo',
+        'original place' => 'original place',
+        'lang' => 'language',
 
-        'displacement place'=>'displacement place'
+        'displacement place' => 'displacement place',
+        'socials.*.link' => 'social account link',
+
+        'university' => 'University Name',
+        'degree' => 'Degree',
+        'field_of_study' => 'Field of Study',
+        'grade' => 'Grade',
+        'start_date' => 'Start Date',
+        'end_date' => 'End Date',
 
     ],
 

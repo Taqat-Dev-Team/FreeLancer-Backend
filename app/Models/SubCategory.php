@@ -10,8 +10,8 @@ class SubCategory extends Model
 
     use HasTranslations;
 
-    public $translatable = ['name'];
-    protected $fillable = ['category_id', 'name'];
+    public $translatable = ['name','slug'];
+    protected $fillable = ['category_id', 'name','slug'];
 
     public function category()
     {

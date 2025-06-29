@@ -1,11 +1,20 @@
 <?php
 
 return [
-    'name' => 'الاسم مطلوب',
+    'name' => 'الاسم',
     'email' => 'البريد مطلوب',
     'email-email' => 'البريد غير صحيح',
     'about' => 'من نحن مطلوب',
     'error' => 'يوجد خطأ',
+    'photo' => 'الصورة',
+    'mobile' => 'رقم الجوال',
+    'bio' => 'نبذة',
+    'birth_date' => 'تاريخ الميلاد',
+    'available_hire' => 'متاح للعمل',
+    'category' => 'التصنيف',
+    'sub_category' => 'التصنيف الفرعي',
+    'country' => 'الدولة',
+    'gender' => 'النوع',
     'success-update' => 'تم التحديث بنجاح',
     'success-created' => 'تم الاضافة بنجاح',
     'sure?' => 'هل انت متأكد',
@@ -17,6 +26,23 @@ return [
     'upload-contract' => 'ارفق العقد',
     'required-contract' => 'العقد مطلوب',
     'required-payment' => 'وصل الدفع مطلوب',
+    'data_save_failed' => 'فشل حفظ البيانات',
+    'data_saved_successfully' => 'تم حفظ البيانات بنجاح',
+    'hourly_rate' => 'الأجر بالساعة',
+    'skills' => 'المهارات',
+    'experience' => 'الخبرة',
+
+    'language' => 'اللغة',
+    'languages' => 'اللغات',
+    'language_level' => 'مستوى اللغة',
+    'beginner' => 'مبتدئ',
+    'intermediate' => 'متوسط',
+    'advanced' => 'متقدم',
+    'native' => 'اللغة الام',
+
+    'socials' => 'روابط التواصل الاجتماعي',
+    'social_id' => 'المنصة',
+    'link' => 'الرابط',
 
     'cancel' => 'الغاء',
     'delete-success' => 'تم الحذف بنجاح',
@@ -82,7 +108,7 @@ return [
     'login_success' => 'تم تسجيل الدخول بنجاح.',
     'logout_success' => 'تم تسجيل الخروج بنجاح.',
     'profile_success' => 'تم استرجاع ملف المستخدم بنجاح.',
-    'invalid_credentials' => 'بيانات الاعتماد غير صحيحة.',
+    'invalid_credentials' => 'خطأ في كلمة البريد او كلمة المرور',
     'not_authenticated' => 'المستخدم غير مصادق.',
     'language_updated' => 'تم تحديث اللغة بنجاح.',
     'success' => 'تمت العملية بنجاح.',
@@ -123,6 +149,36 @@ return [
     'password_reset_failed' => 'فشلت إعادة تعيين كلمة المرور. هذا الرمز غير صالح أو انتهت صلاحيته.',
     'email_not_registered' => 'البريد الإلكتروني المدخل غير مسجل.',
 
+
+    // ...
+    'Image deleted successfully' => 'تم حذف الصورة بنجاح',
+    'Unauthorized' => 'غير مصرح لك بحذف هذه الصورة',
+    'Image delete failed' => 'فشل حذف الصورة',
+
+
+    'otp_mobile_success' => 'تم ارسال رمز التحقق الى الجوال بنجاح',
+    'failed' => 'فشلت العملية.',
+
+    'Bio is required' => 'النبذة مطلوبة',
+    'Bio must be a string' => 'النبذة يجب أن تكون نصاً',
+    'Bio must not exceed 4000 characters' => 'يجب ألا تتجاوز النبذة 4000 حرف',
+
+    'Images must be an array' => 'الصور يجب أن تكون على شكل مصفوفة',
+    'Each image must be a valid image file' => 'كل صورة يجب أن تكون ملف صورة صالح',
+    'Image must be of type jpeg, png, jpg, gif, or svg' => 'يجب أن تكون الصورة من نوع jpeg أو png أو jpg أو gif أو svg',
+    'Image size must not exceed 2MB' => 'حجم الصورة يجب ألا يتجاوز 2 ميجابايت',
+
+    'Image title must be a string' => 'عنوان الصور يجب أن يكون نصاً',
+    'Image title must not exceed 255 characters' => 'عنوان الصور يجب ألا يتجاوز 255 حرفًا',
+
+    'Video URL must be a string' => 'رابط الفيديو يجب أن يكون نصاً',
+    'Video URL must not exceed 255 characters' => 'رابط الفيديو يجب ألا يتجاوز 255 حرفًا',
+    'Video URL must be a valid YouTube link' => 'رابط الفيديو يجب أن يكون رابط يوتيوب صالحًا',
+
+    'Video title must be a string' => 'عنوان الفيديو يجب أن يكون نصاً',
+    'Video title must not exceed 255 characters' => 'عنوان الفيديو يجب ألا يتجاوز 255 حرفًا',
+
+
     'http_errors' => [
         400 => 'طلب غير صالح',
         401 => 'غير مصرح',
@@ -133,6 +189,112 @@ return [
         500 => 'خطأ في الخادم الداخلي',
         502 => 'بوابة غير صالحة',
         503 => 'الخدمة غير متوفرة',
-    ]
+    ],
+
+
+    'account_inactive' => 'حسابك غير نشط. يرجى الاتصال بالدعم الفني.',
+    'account_type_success' => 'تم تحديث نوع الحساب بنجاح',
+    'user_already_has_type' => 'المستخدم لديه بالفعل نوع حساب محدد',
+    'name.required' => 'الاسم مطلوب.',
+    'photo.required' => 'الصورة مطلوبة.',
+    'birth_date.required' => 'تاريخ الميلاد مطلوب.',
+    'available_hire.boolean' => 'قيمة التوفر للتوظيف غير صحيحة.',
+    'category_id.required' => 'التصنيف مطلوب.',
+    'sub_category_id.required' => 'التصنيف الفرعي مطلوب.',
+    'country_id.exists' => 'الدولة المحددة غير موجودة.',
+    'Access Denied' => 'تم رفض الوصول',
+    'Access Denied, already saved data' => 'تم رفض الوصل، تم حفظ البيانات مسبقاً',
+    'user_already_save_data' => 'المستخدم لديه بيانات محفوظة بالفعل. لا يمكن حفظ البيانات مرة أخرى.',
+    'data_saved_already' => 'البيانات محفوظة بالفعل.',
+    'mobile.required' => 'رقم الجوال مطلوب.',
+    'mobile.digits_between' => 'رقم الجوال يجب أن يحتوي على ما بين 7 و15 رقمًا.',
+    'mobile.regex' => 'رقم الجوال يجب أن يحتوي على أرقام فقط بدون رموز أو مسافات.',
+    'invalid_otp'=>'رمز التحقق غير صالح أو منتهي الصلاحية',
+    'verified'=>'تم التحقق بنجاح',
+
+        'first_name'        => 'الاسم الأول',
+        'father_name'       => 'اسم الأب',
+        'grandfather_name'  => 'اسم الجد',
+        'family_name'       => 'اسم العائلة',
+        'id_number'         => 'رقم الهوية',
+        'full_address'      => 'العنوان الكامل',
+        'image'             => 'صورة الهوية',
+    'phone_not_verified'=> 'رقم الجوال غير موثق. يرجى التحقق من رقم الجوال قبل تحديث الهوية.',
+    'identity_update_success'=>'تم تحديث الهوية بنجاح',
+    'identity_update_failed'=>'فشل تحديث الهوية',
+
+  'pending'=> 'قيد الانتظار',
+  'verified_id'=>'تم التحقق',
+  'rejected'=>'مرفوض',
+  'unknown'=>'غير معروف',
+    'Present' => 'الحالي',
+
+    'company_name_required' => 'اسم الشركة مطلوب.',
+    'company_name_string' => 'اسم الشركة يجب أن يكون نصًا.',
+    'company_name_max_length' => 'اسم الشركة يجب ألا يتجاوز :max حرفًا.',
+
+    'title_required' => 'المسمى الوظيفي مطلوب.',
+    'title_string' => 'المسمى الوظيفي يجب أن يكون نصًا.',
+    'title_max_length' => 'المسمى الوظيفي يجب ألا يتجاوز :max حرفًا.',
+
+    'location_string' => 'الموقع يجب أن يكون نصًا.',
+    'location_max_length' => 'الموقع يجب ألا يتجاوز :max حرفًا.',
+
+    'type_required' => 'نوع الوظيفة مطلوب.',
+    'type_invalid' => 'نوع الوظيفة غير صالح. الأنواع المقبولة: :valid_types.',
+
+    'start_date_required' => 'تاريخ البداية مطلوب.',
+
+
+    'end_date_after_start_date' => 'تاريخ الانتهاء يجب أن يكون بعد أو يساوي تاريخ البداية.',
+
+    'description_string' => 'الوصف يجب أن يكون نصًا.',
+    'description_max_length' => 'الوصف يجب ألا يتجاوز :max حرفًا.',
+
+
+    'start_date_format' => 'يجب أن يكون تنسيق تاريخ البداية على الشكل: شهر-سنة (مثال: 03-2025).',
+    'end_date_format' => 'يجب أن يكون تنسيق تاريخ الانتهاء على الشكل: شهر-سنة (مثال: 06-2026).',
+
+    'remote'=> 'عن بعد',
+    'on-site'=> 'في الموقع',
+    'hybrid' => 'هجين',
+    'otp_expired'=> 'رمز التحقق منتهي الصلاحية. يرجى طلب رمز جديد.',
+
+
+    'university' => 'اسم الجامعة',
+    'degree' => 'الدرجة العلمية',
+    'field_of_study' => 'التخصص',
+    'grade' => 'التقدير',
+    'start_date' => 'تاريخ البداية',
+    'end_date' => 'تاريخ الانتهاء',
+
+    'education_level' => 'المستوى التعليمي',
+
+    'excellent'=> 'ممتاز',
+    'very_good' => 'جيد جداً',
+    'good' => 'جيد',
+    'pass'=>'مقبول',
+
+
+
+    // Portfolio
+    'portfolio_added' => 'تم إضافة المشروع بنجاح.',
+    'portfolio_updated' => 'تم تحديث المشروع بنجاح.',
+    'portfolio_deleted' => 'تم حذف المشروع بنجاح.',
+    'portfolio_not_found' => 'المشروع غير موجود.',
+    'portfolio_retrieved' => 'تم جلب بيانات المشروع بنجاح.',
+    'portfolios_retrieved' => 'تم جلب المشاريع بنجاح.',
+
+    // Content Block
+    'block_deleted' => 'تم حذف محتوى البلوك بنجاح.',
+    'content_block_not_found' => 'بلوك المحتوى غير موجود.',
+
+    // Validation
+    'image_required' => 'الصورة مطلوبة لهذا البلوك.',
+    'text_required' => 'محتوى النص مطلوب.',
+
+
+
 
 ];
+

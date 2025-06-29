@@ -50,7 +50,7 @@ class AuthController extends Controller
             DB::commit();
 
             return $this->apiResponse(
-                ['user_id' => $user->id, 'message' => __('messages.registration_success_verify_email')],
+                ['email' => $user->email, 'otp' => $user->otpCodes->last()->code],
                 __('messages.register_success'),
                 true,
                 201
@@ -76,6 +76,11 @@ class AuthController extends Controller
         }
 
         $user = Auth::user();
+
+        if ($user->status == 0) {
+            Auth::logout();
+            return $this->apiResponse([], __('messages.account_inactive'), false, 403);
+        }
         if (is_null($user->email_verified_at)) {
             try {
                 $otpSentSuccessfully = $this->sendOtp($user);
@@ -88,7 +93,7 @@ class AuthController extends Controller
                     return $this->apiResponse([], __('messages.email_not_verified_otp_send_failed'), false, 500);
                 }
                 Auth::logout(); // تسجيل الخروج من المستخدم الذي لم يتم التحقق منه
-                return $this->apiResponse([], __('messages.email_not_verified_send_otp'), false, 403);
+                return $this->apiResponse(['is_verified' => false], __('messages.email_not_verified_send_otp'), false, 403);
             } catch (Exception $e) { // هذا الكاتش ربما لن يتم الوصول إليه إذا sendOtp تتعامل مع الـ Exception داخلياً
                 Log::error('Unexpected error during OTP re-send in login.', [
                     'user_id' => $user->id,
@@ -224,9 +229,6 @@ class AuthController extends Controller
     public function profile(Request $request)
     {
         $user = Auth::user();
-        if (!$user) {
-            return $this->apiResponse([], __('messages.not_authenticated'), false, 401);
-        }
 
         $token = $this->extractBearerToken($request);
 
@@ -279,12 +281,42 @@ class AuthController extends Controller
         );
     }
 
-    private function extractBearerToken(Request $request): ?string
+    public function type(Request $request)
     {
-        $authHeader = $request->header('Authorization');
+        $request->validate([
+            'type' => 'required|in:1,2', // 1 for freelancer, 2 for client
+        ]);
 
-        return $authHeader && str_starts_with($authHeader, 'Bearer ')
-            ? substr($authHeader, 7)
-            : null;
+        $user = Auth::user('sanctum');
+
+        if ($user->client || $user->freelancer) {
+            return $this->apiResponse(['is_select_tye'=>1], __('messages.user_already_has_type'), false, 400);
+        }
+        $token = $this->extractBearerToken($request);
+
+        if ($request->type == 2) {
+            $user->client()->delete();
+            $user->freelancer()->updateOrCreate(
+                ['user_id' => $user->id],
+                ['status' => 'active']
+            );
+        } else {
+            $user->freelancer()->delete();
+            $user->client()->updateOrCreate(
+                ['user_id' => $user->id],
+                ['status' => 'active']
+            );
+        }
+
+        $user->load(['client', 'freelancer']);
+        return $this->apiResponse(
+            new UserResource($user, $token),
+            __('messages.account_type_success'),
+            true,
+            200
+        );
     }
+
+
+
 }
