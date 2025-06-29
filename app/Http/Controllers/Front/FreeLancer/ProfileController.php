@@ -206,19 +206,22 @@ class ProfileController extends Controller
 
     public function updateLanguages(LanguagesRequest $request)
     {
-
         try {
             $user = Auth::user();
             $token = $this->extractBearerToken($request);
 
             $freelancer = $user->freelancer;
 
+            // حذف اللغات القديمة
+            $freelancer->languages()->delete();
+
+            // إنشاء اللغات الجديدة
             foreach ($request->languages as $lang) {
-                $languageData[$lang['language_id']] = ['level' => $lang['level']];
+                $freelancer->languages()->create([
+                    'language_id' => $lang['language_id'],
+                    'level' => $lang['level'],
+                ]);
             }
-
-            $freelancer->languages()->sync($languageData);
-
 
             return $this->apiResponse(
                 new UserResource($user, $token),
@@ -228,32 +231,35 @@ class ProfileController extends Controller
             );
         } catch (Exception $e) {
             Log::error('Error saving user data.', [
-                'user_id' => $user->id,
+                'user_id' => $user->id ?? null,
                 'error' => $e->getMessage(),
                 'file' => $e->getFile(),
                 'line' => $e->getLine()
             ]);
 
             return $this->apiResponse([], __('messages.data_save_failed'), false, 500);
-
         }
     }
 
     public function updateSocials(SocialsRequest $request)
     {
-
         try {
             $user = Auth::user();
             $token = $this->extractBearerToken($request);
             $freelancer = $user->freelancer;
 
+            // حذف السوشالز القديمة
+            $freelancer->socialLinks()->delete();
 
+            // إضافة السوشالز الجديدة
             foreach ($request->socials as $social) {
-                $Data[$social['social_id']] = ['link' => $social['link']];
+                $freelancer->socialLinks()->create([
+                    'social_media_id' => $social['social_id'],
+                    'link' => $social['link'],
+                ]);
             }
 
-            $freelancer->socials()->sync($Data);
-
+            // إضافة روابط مخصصة إن وُجدت
             if ($request->has('custom')) {
                 foreach ($request->custom as $custom) {
                     FreeLancerSocialMedia::create([
@@ -272,14 +278,13 @@ class ProfileController extends Controller
             );
         } catch (Exception $e) {
             Log::error('Error saving user data.', [
-                'user_id' => $user->id,
+                'user_id' => $user->id ?? null,
                 'error' => $e->getMessage(),
                 'file' => $e->getFile(),
                 'line' => $e->getLine()
             ]);
 
             return $this->apiResponse([], __('messages.data_save_failed'), false, 500);
-
         }
     }
 

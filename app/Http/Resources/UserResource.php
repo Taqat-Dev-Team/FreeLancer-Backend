@@ -73,13 +73,13 @@ class UserResource extends JsonResource
                     ];
                 }),
 
-                'languages' => $this->freelancer->languages->map(function ($language) {
-                    $levels = languages_levels();
-
+                'languages' => $this->freelancer->languages()->with('lang')->get()->map(function ($item) {
+                    $level = languages_levels()->firstWhere('key', $item->level);
                     return [
-                        'id' => $language->id,
-                        'name' => $language->name,
-                        'level' => $levels[$language->pivot->level]['label'] ?? null,
+                        'id' => $item->language_id,
+                        'name' => $item->lang?->name,
+                        'level' => $item->level,
+                        'level_name' => $level ? $level['label'] : null,
                     ];
                 }),
 

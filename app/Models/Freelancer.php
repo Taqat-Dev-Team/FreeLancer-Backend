@@ -58,11 +58,6 @@ class Freelancer extends Model implements HasMedia
             ->withTimestamps();
     }
 
-    public function languages()
-    {
-        return $this->belongsToMany(Language::class, 'free_lancer_languages', 'freelancer_id', 'language_id')
-            ->withPivot('level');
-    }
 
     public function educations()
     {
@@ -83,6 +78,12 @@ class Freelancer extends Model implements HasMedia
     {
         return $this->hasMany(FreelancerSocial::class, 'freelancer_id');
     }
+
+    public function languages()
+    {
+        return $this->hasMany(FreeLancerLanguage::class, 'freelancer_id');
+    }
+
 
     public function badges()
     {
