@@ -82,7 +82,7 @@ class AdminAuthController extends Controller
      */
     public function logout(Request $request)
     {
-        Auth::guard('web')->logout(); // Use the appropriate guard
+        Auth::guard('admin')->logout(); // Use the appropriate guard
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

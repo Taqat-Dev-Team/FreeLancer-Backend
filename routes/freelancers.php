@@ -3,6 +3,8 @@
 use App\Http\Controllers\Front\FreeLancer\ProfileController;
 use App\Http\Controllers\Front\FreeLancer\IdentityController;
 use App\Http\Controllers\Front\FreeLancer\WorkExperienceController;
+use App\Http\Controllers\Front\FreeLancer\EducationController;
+use App\Http\Controllers\Front\FreeLancer\PortfolioController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:sanctum', 'verified.email', 'freelancer'])->prefix('freelancer')->group(function () {
@@ -17,6 +19,7 @@ Route::middleware(['auth:sanctum', 'verified.email', 'freelancer'])->prefix('fre
         Route::get('/summary', 'summary');
         Route::delete('/summary/image/{id}', 'deleteImageSummary');
         Route::get('/profile-complete', 'profileComplete');
+        Route::post('/update-photo', 'updatePhoto');
     });
 
 
@@ -31,6 +34,9 @@ Route::middleware(['auth:sanctum', 'verified.email', 'freelancer'])->prefix('fre
 
 
     Route::apiResource('work-experiences', WorkExperienceController::class);
+    Route::apiResource('educations', EducationController::class);
+    Route::apiResource('portfolio', PortfolioController::class);
+    Route::post('/portfolio/{id}/content-block', [PortfolioController::class, 'deleteContentBlock']);
 
 
 });

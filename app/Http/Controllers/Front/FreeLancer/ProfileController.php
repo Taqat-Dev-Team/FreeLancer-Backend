@@ -15,6 +15,7 @@ use App\Http\Resources\SummaryResource;
 use App\Http\Resources\UserResource;
 use App\Models\FreeLancerSocialMedia;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -321,6 +322,8 @@ class ProfileController extends Controller
                 'images_title' => $request->images_title,
             ]);
 
+
+
             // معالجة الصور
             if ($request->hasFile('images')) {
                 // احذف الصور السابقة إن وجدت
@@ -354,6 +357,42 @@ class ProfileController extends Controller
         }
     }
 
+    public function updatePhoto(Request $request)
+    {
+        $request->validate([
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        try {
+            $user = Auth::user();
+            $token = $this->extractBearerToken($request);
+
+
+            if ($request->hasFile('photo')) {
+                $user->clearMediaCollection('photo');
+                $user->addMediaFromRequest('photo')
+                    ->usingFileName(Str::random(20) . '.' . $request->file('photo')->getClientOriginalExtension())
+                    ->toMediaCollection('photo', 'freelancers');
+            }
+
+            return $this->apiResponse(
+                new UserResource($user, $token),
+                __('messages.data_saved_successfully'),
+                true,
+                200
+            );
+        } catch (Exception $e) {
+            Log::error('Error saving user image.', [
+                'user_id' => $user->id,
+                'error' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
+            ]);
+
+            return $this->apiResponse([], __('messages.data_save_failed'), false, 500);
+        }
+
+    }
 
     public function deleteImageSummary($id)
     {

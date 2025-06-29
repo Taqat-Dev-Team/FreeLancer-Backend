@@ -261,8 +261,37 @@ return [
     'otp_expired'=> 'رمز التحقق منتهي الصلاحية. يرجى طلب رمز جديد.',
 
 
+    'university' => 'اسم الجامعة',
+    'degree' => 'الدرجة العلمية',
+    'field_of_study' => 'التخصص',
+    'grade' => 'التقدير',
+    'start_date' => 'تاريخ البداية',
+    'end_date' => 'تاريخ الانتهاء',
+
+    'education_level' => 'المستوى التعليمي',
+
+    'excellent'=> 'ممتاز',
+    'very_good' => 'جيد جداً',
+    'good' => 'جيد',
+    'pass'=>'مقبول',
 
 
+
+    // Portfolio
+    'portfolio_added' => 'تم إضافة المشروع بنجاح.',
+    'portfolio_updated' => 'تم تحديث المشروع بنجاح.',
+    'portfolio_deleted' => 'تم حذف المشروع بنجاح.',
+    'portfolio_not_found' => 'المشروع غير موجود.',
+    'portfolio_retrieved' => 'تم جلب بيانات المشروع بنجاح.',
+    'portfolios_retrieved' => 'تم جلب المشاريع بنجاح.',
+
+    // Content Block
+    'block_deleted' => 'تم حذف محتوى البلوك بنجاح.',
+    'content_block_not_found' => 'بلوك المحتوى غير موجود.',
+
+    // Validation
+    'image_required' => 'الصورة مطلوبة لهذا البلوك.',
+    'text_required' => 'محتوى النص مطلوب.',
 
 
 
