@@ -76,7 +76,7 @@ class UserResource extends JsonResource
                 }),
 
                 'languages' => $this->freelancer->languages()->with('lang')->get()->map(function ($item) {
-                    $level = languages_levels()->firstWhere('key', $item->level);
+                    $level = languages_levels()->firstWhere('id', $item->level);
                     return [
                         'id' => $item->language_id,
                         'name' => $item->lang?->name,

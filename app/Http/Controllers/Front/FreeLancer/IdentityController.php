@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front\FreeLancer;
 
 use App\ApiResponseTrait;
+use App\Events\NewIdentityVerification;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Front\Freelancer\IdentityRequest;
 use App\Http\Resources\UserResource;
@@ -24,7 +25,7 @@ class IdentityController extends Controller
             'mobile' => ['required', 'digits_between:7,15', 'regex:/^[0-9]+$/'],
         ]);
 
-        $otp = otp();
+        $otp = Mobileotp();
 
         Cache::put('otp_' . $request->mobile, $otp, now()->addMinutes(5));
 

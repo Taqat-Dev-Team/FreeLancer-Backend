@@ -8,6 +8,7 @@ use Laratrust\Traits\HasRolesAndPermissions;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
+
 class Admin extends Authenticatable implements HasMedia
 {
     use Notifiable,InteractsWithMedia;

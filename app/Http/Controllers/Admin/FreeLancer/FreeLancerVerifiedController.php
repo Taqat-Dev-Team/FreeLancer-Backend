@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\FreeLancer;
 use App\Http\Controllers\Controller;
 use App\Models\Freelancer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\DataTables;
 
 class FreeLancerVerifiedController extends Controller
@@ -17,7 +18,7 @@ class FreeLancerVerifiedController extends Controller
 
     public function data(Request $request)
     {
-        $freelancers = Freelancer::with(['user.country'])
+        $freelancers = Freelancer::with(['user'])
             ->whereHas('identityVerification', function ($query) {
                 $query->where('status', '1');
             });
@@ -66,12 +67,49 @@ class FreeLancerVerifiedController extends Controller
                             <div class="menu-item px-3">
                                 <a href="#" class="menu-link px-3 delete-freelancer btn btn-active-light-danger" data-id="' . $row->id . '">Delete</a>
                             </div>
+
+
+                             <div class="menu-item px-3">
+                                <a href="#" class="menu-link px-3 status-freelancer btn btn-active-light-warning"   data-id="' . $row->id . '"  data-status="' . $row->user->status. '">Change Status</a>
+                            </div>
                         </div>
                     </div>';
             })
+            ->editColumn('status', function ($row) {
+                return $row->user->status == 1
+                    ? '<span class="badge badge-light-success">Active</span>'
+                    : '<span class="badge badge-light-danger">Not Active</span>';
+            })
             ->addIndexColumn()
-            ->rawColumns(['actions', 'photo', 'mobile', 'times'])
+            ->rawColumns(['actions', 'photo', 'mobile', 'status'])
             ->make(true);
+    }
+
+
+    public function status(Request $request, $id)
+    {
+        $freelancer = Freelancer::find($id);
+
+        if (!$freelancer) {
+            return response()->json(['message' => 'Freelancer not found.'], 404);
+        }
+
+        $user = $freelancer->user;
+        $previousStatus = $user->status;
+        $user->status = !$user->status;
+        $user->save();
+
+        // إرسال الإيميل حسب الحالة الجديدة
+        if ($user->status) {
+            // تم التفعيل
+            Mail::to($user->email)->send(new \App\Mail\FreelancerActivated($user));
+        } else {
+            // تم التعطيل مع سبب
+            $reason = $request->input('reason');
+            Mail::to($user->email)->send(new \App\Mail\FreelancerDeactivated($user, $reason));
+        }
+
+        return response()->json(['message' => 'Freelancer status updated successfully.']);
     }
 
 

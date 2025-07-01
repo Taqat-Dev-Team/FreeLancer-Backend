@@ -42,6 +42,7 @@
                                 <th class="min-w-125px">email</th>
                                 <th class="min-w-125px">mobile</th>
                                 <th class="">Joined Date</th>
+                                <th class="">status</th>
                                 <th class="min-w-125px">Options</th>
                             </tr>
                             </thead>
@@ -91,6 +92,7 @@
                         {data: 'email', name: 'user.email', orderable: true, searchable: true},
                         {data: 'mobile', name: 'user.mobile', orderable: true, searchable: true},
                         {data: 'date', name: 'user.created_at', orderable: true, searchable: false},
+                        {data: 'status', name: 'user.status', orderable: true, searchable: false},
                         {data: 'actions', name: 'user.actions', orderable: false, searchable: false},
                     ],
                     drawCallback: function () {
@@ -139,13 +141,113 @@
                             }
                         });
                     });
+
+                    $('.status-freelancer').off('click').on('click', function (e) {
+                        e.preventDefault();
+                        const id = $(this).data('id');
+                        const currentStatus = $(this).data('status'); // current status: 1 = active, 0 = inactive
+
+                        const isCurrentlyActive = currentStatus === 1 || currentStatus === '1';
+
+                        if (isCurrentlyActive) {
+                            // Show reason input when deactivating
+                            Swal.fire({
+                                title: 'Are you sure?',
+                                text: "This freelancer's account will be deactivated. Please provide a reason.",
+                                input: 'textarea',
+                                inputLabel: 'Reason for deactivation',
+                                inputPlaceholder: 'Enter reason here...',
+                                inputAttributes: {
+                                    'aria-label': 'Reason for deactivation'
+                                },
+                                showCancelButton: true,
+                                confirmButtonColor: '#d33',
+                                cancelButtonColor: '#3085d6',
+                                confirmButtonText: 'Yes, deactivate'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    const reason = result.value;
+
+                                    // ⏳ Show loading
+                                    Swal.fire({
+                                        title: 'Processing...',
+                                        text: 'Please wait while we process your request.',
+                                        allowOutsideClick: false,
+                                        didOpen: () => {
+                                            Swal.showLoading();
+                                        }
+                                    });
+
+                                    $.ajax({
+                                        url: '/admin/freelancer/verified/status/' + id,
+                                        type: 'POST',
+                                        data: {
+                                            _token: '{{ csrf_token() }}',
+                                            reason: reason
+                                        },
+                                        success: function (response) {
+                                            Swal.close();
+                                            toastr.success('Status changed successfully');
+                                            $('#freelancers_table').DataTable().ajax.reload();
+                                        },
+                                        error: function (xhr) {
+                                            Swal.close();
+                                            toastr.error('Error changing status', xhr.responseJSON.message || 'Unknown error');
+                                        }
+                                    });
+                                }
+                            });
+
+                        } else {
+                            // Just confirm activation
+                            Swal.fire({
+                                title: 'Are you sure?',
+                                text: "This will activate the freelancer's account.",
+                                icon: 'question',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Yes, activate'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+
+                                    // ⏳ Show loading
+                                    Swal.fire({
+                                        title: 'Processing...',
+                                        allowOutsideClick: false,
+                                        didOpen: () => {
+                                            Swal.showLoading();
+                                        }
+                                    });
+
+                                    $.ajax({
+                                        url: '/admin/freelancer/verified/status/' + id,
+                                        type: 'POST',
+                                        data: {
+                                            _token: '{{ csrf_token() }}',
+                                            reason: ''
+                                        },
+                                        success: function (response) {
+                                            Swal.close();
+                                            toastr.success('Freelancer activated successfully');
+                                            $('#freelancers_table').DataTable().ajax.reload();
+                                        },
+                                        error: function (xhr) {
+                                            Swal.close();
+                                            toastr.error('Error activating freelancer', xhr.responseJSON.message || 'Unknown error');
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+
                 }
             });
 
 
         </script>
 
-        {{--        @include('admin.FreeLancer.VerificationRequests.view')--}}
 
     @endpush
 

@@ -29,7 +29,7 @@ Route::prefix('admin/freelancer/')->name('admin.')->group(function () {
                     Route::get('/data', 'data')->name('data');
                     Route::get('/{id}/show', 'show')->name('show');
                     Route::delete('/{id}', 'destroy')->name('delete');
-
+                    Route::post('/status/{id}', 'status')->name('status');
                 });
             });
 

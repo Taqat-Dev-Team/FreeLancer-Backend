@@ -77,7 +77,7 @@ class FreeLancerVerificationRequestsController extends Controller
     </div>';
             })
             ->addIndexColumn()
-            ->rawColumns(['actions', 'photo', 'mobile', 'times'])
+            ->rawColumns(['actions', 'photo', 'mobile'])
             ->make(true);
     }
 
