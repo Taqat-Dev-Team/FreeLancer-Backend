@@ -22,7 +22,7 @@ class FreelancerActivated extends Mailable
         $this->user = $user;
         $this->locale = $locale ?? ($user->lang ?? 'ar');
 
-    }
+    } 
 
     public function build()
     {
