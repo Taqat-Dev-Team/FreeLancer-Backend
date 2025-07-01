@@ -68,14 +68,12 @@ class SkillsController extends Controller
 
     public function destroy($id)
     {
-        $skill = Skills::findOrFail($id);
+        $skill = Skills::withCount('freelancers')->findOrFail($id);
 
-        if ($skill->users()->count() > 0) {
+        if ($skill->freelancers_count > 0) {
             return response()->json(['message' => 'Cannot delete Skills associated with users.'], 400);
         }
 
-        $skill->clearMediaCollection('icon');
-        $skill->delete();
         $skill->delete();
         return response()->json(['success' => true, 'message' => 'Skill deleted successfully.']);
 
@@ -120,22 +118,22 @@ class SkillsController extends Controller
 
         try {
 
-        $skill = Skills::findOrFail($id);
-        $skill->setTranslation('name', 'en', $request->name_en);
-        $skill->setTranslation('name', 'ar', $request->name_ar);
-        $skill->category_id = $request->category_id;
-        $skill->save();
+            $skill = Skills::findOrFail($id);
+            $skill->setTranslation('name', 'en', $request->name_en);
+            $skill->setTranslation('name', 'ar', $request->name_ar);
+            $skill->category_id = $request->category_id;
+            $skill->save();
 
-        if ($request->hasFile('icon')) {
-            $skill->clearMediaCollection('icon');
-            $skill->addMediaFromRequest('icon')
-                ->usingFileName(Str::random(20) . '.' . $request->file('icon')->getClientOriginalExtension())
-                ->toMediaCollection('icon', 'skills');
-        }
-        return response()->json(['message' => 'Skill updated successfully.']);
+            if ($request->hasFile('icon')) {
+                $skill->clearMediaCollection('icon');
+                $skill->addMediaFromRequest('icon')
+                    ->usingFileName(Str::random(20) . '.' . $request->file('icon')->getClientOriginalExtension())
+                    ->toMediaCollection('icon', 'skills');
+            }
+            return response()->json(['message' => 'Skill updated successfully.']);
 
 
-    }catch (\Exception $e) {
+        } catch (\Exception $e) {
             return response()->json(['message' => 'Unexpected error.'], 500);
         }
     }

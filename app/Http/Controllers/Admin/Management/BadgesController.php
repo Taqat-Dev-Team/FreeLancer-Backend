@@ -132,7 +132,6 @@ class BadgesController extends Controller
             ], 400);
         }
 
-        $badge->clearMediaCollection('icon');
         $badge->delete();
 
         return response()->json(['message' => 'Badge deleted successfully.']);

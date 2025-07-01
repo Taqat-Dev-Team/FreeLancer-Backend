@@ -68,7 +68,7 @@ class GeneralController extends Controller
 
     public function countries()
     {
-        $countries = Country::all();
+        $countries = Country::where('status',1)->get();
         if ($countries->isEmpty()) {
             return $this->apiResponse(
                 null,

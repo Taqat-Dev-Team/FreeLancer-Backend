@@ -14,12 +14,15 @@ class EducationResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+
+
         return [
             'id' => $this->id,
             'university' => $this->university,
-            'degree' => $this->educationLevel ? $this->educationLevel->name : null,
+            'degree' => new EducationLevlesResource($this->educationLevel),
             'field_of_study' => $this->field_of_study,
-            'grade' => $this->grade,
+            'grade' => AcademicGrade()->firstWhere('id', $this->grade),
+
             'start_date' => $this->start_date ? $this->start_date->format('m-Y') : null,
             'end_date' => $this->end_date ? $this->end_date->format('m-Y') : null,
             'still_studying' => $this->end_date ? false : true,

@@ -48,7 +48,7 @@ class CategoryController extends Controller
                         </div>
                     </div>';
             })
-                ->addIndexColumn()
+            ->addIndexColumn()
             ->rawColumns(['icon', 'actions', 'sub_categories_count'])
             ->make(true);
     }
@@ -125,10 +125,7 @@ class CategoryController extends Controller
         if ($category->subCategories()->count() > 0) {
             return response()->json(['message' => 'Cannot delete category with subcategories.'], 400);
         }
-
-        $category->clearMediaCollection('icon');
         $category->delete();
-
         return response()->json(['message' => 'Category deleted successfully.']);
     }
 }

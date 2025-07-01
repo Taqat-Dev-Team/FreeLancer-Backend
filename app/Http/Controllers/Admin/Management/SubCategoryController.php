@@ -103,7 +103,13 @@ class SubCategoryController extends Controller
 
     public function destroy($id)
     {
-        $subcategory = SubCategory::findOrFail($id);
+
+        $subcategory = SubCategory::withCount('freelancers')->findOrFail($id);
+        if ($subcategory->freelancers_count > 0) {
+            return response()->json(['message' => 'Cannot delete SubCategory associated with users.'], 400);
+
+        }
+
         $subcategory->delete();
 
         return response()->json(['success' => true, 'message' => 'SubCategory deleted successfully']);

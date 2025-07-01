@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Auth;
 
 class IdentityRequest extends FormRequest
 {
+
+    protected $stopOnFirstFailure = true;
+
+
     /**
      * Determine if the user is authorized to make this request.
      */
