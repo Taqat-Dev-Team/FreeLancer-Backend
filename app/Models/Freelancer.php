@@ -17,6 +17,7 @@ class Freelancer extends Model implements HasMedia
         'sub_category_id',
         'hourly_rate',
         'available_hire',
+        'admin_available_hire'
     ];
 
     protected $casts = [
@@ -26,6 +27,57 @@ class Freelancer extends Model implements HasMedia
     // ----------------------------
     // Relationships
     // ----------------------------
+
+    public function availability()
+    {
+        // أولًا تحقق من وجود الهوية
+        if (!$this->identityVerification) {
+            return false;
+        }
+
+        // تحقق من حالة الهوية عبر خاصية label داخل دالة idVerified
+        if (!$this->available_hire
+            || $this->idVerified()->status !== '1'
+            || !$this->user->status
+            || !$this->admin_available_hire
+            || $this->getProfileCompletionStatusAttribute()['percentage'] < 60
+        ) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function availabilityDetails()
+    {
+        $reasons = [];
+
+        if (!$this->available_hire) {
+            $reasons[] = 'Freelancer has disabled hiring.';
+        }
+
+        if (!$this->identityVerification || $this->idVerified()->status !== '1') {
+            $reasons[] = 'Identity not verified.';
+        }
+
+        if (!$this->user || !$this->user->status) {
+            $reasons[] = 'User account is inactive.';
+        }
+
+
+        $status = $this->getProfileCompletionStatusAttribute();
+        if ($status['percentage'] < 60) {
+            $reasons[] = 'Profile completion is below 60%.';
+        }
+
+        if (!$this->admin_available_hire) {
+            $reasons[] = 'Admin disabled hiring for this freelancer.';
+        }
+
+        return $reasons;
+    }
+
+
 
     public function user()
     {
@@ -120,12 +172,15 @@ class Freelancer extends Model implements HasMedia
 
     public function idVerified()
     {
-        return match ($this->identityVerification->status ?? null) {
-            0 => __('messages.pending'),
-            1 => __('messages.verified_id'),
-            2 => __('messages.rejected'),
-            default => __('messages.unknown'),
-        };
+        return (object)[
+            'status' => $this->identityVerification->status ?? null,
+            'label' => match ($this->identityVerification->status ?? null) {
+                '0' => __('messages.pending'),
+                '1' => __('messages.verified_id'),
+                '2' => __('messages.rejected'),
+                default => __('messages.unknown'),
+            },
+        ];
     }
 
     // ----------------------------

@@ -58,7 +58,7 @@
         }
 
         .header .logo {
-            max-width: 200px;
+            width: 230px;
             height: auto;
             /*margin-bottom: 15px;*/
         }
@@ -103,7 +103,7 @@
         }
 
         .footer .logo-footer {
-            max-width: 150px;
+            width: 180px;
             height: auto;
             /*margin-top: 15px;*/
             opacity: 0.7;

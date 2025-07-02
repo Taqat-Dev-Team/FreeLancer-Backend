@@ -31,7 +31,7 @@ class ReplyMail extends Mailable
      */
     public function envelope(): Envelope
     {
-        $subject = Lang::get('messages.otp_subject', [], $this->locale);
+        $subject = Lang::get('messages.reply_subject', [], $this->locale);
 
         return new Envelope(
             subject: $subject,

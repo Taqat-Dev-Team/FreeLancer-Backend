@@ -120,6 +120,9 @@ return [
     'method_not_allowed' => 'الطريقة غير مسموح بها.',
     'internal_server_error' => 'خطأ في الخادم الداخلي.',
 
+
+    'admin_message_subject' => 'رسالة من إدارة طاقات',
+
     'otp_subject' => 'رمز التحقق الخاص بك في طاقات',
 
     'email_already_verified' => 'تم التحقق من بريدك الإلكتروني بالفعل.',
@@ -209,24 +212,24 @@ return [
     'mobile.required' => 'رقم الجوال مطلوب.',
     'mobile.digits_between' => 'رقم الجوال يجب أن يحتوي على ما بين 7 و15 رقمًا.',
     'mobile.regex' => 'رقم الجوال يجب أن يحتوي على أرقام فقط بدون رموز أو مسافات.',
-    'invalid_otp'=>'رمز التحقق غير صالح أو منتهي الصلاحية',
-    'verified'=>'تم التحقق بنجاح',
+    'invalid_otp' => 'رمز التحقق غير صالح أو منتهي الصلاحية',
+    'verified' => 'تم التحقق بنجاح',
 
-        'first_name'        => 'الاسم الأول',
-        'father_name'       => 'اسم الأب',
-        'grandfather_name'  => 'اسم الجد',
-        'family_name'       => 'اسم العائلة',
-        'id_number'         => 'رقم الهوية',
-        'full_address'      => 'العنوان الكامل',
-        'image'             => 'صورة الهوية',
-    'phone_not_verified'=> 'رقم الجوال غير موثق. يرجى التحقق من رقم الجوال قبل تحديث الهوية.',
-    'identity_update_success'=>'تم تحديث الهوية بنجاح',
-    'identity_update_failed'=>'فشل تحديث الهوية',
+    'first_name' => 'الاسم الأول',
+    'father_name' => 'اسم الأب',
+    'grandfather_name' => 'اسم الجد',
+    'family_name' => 'اسم العائلة',
+    'id_number' => 'رقم الهوية',
+    'full_address' => 'العنوان الكامل',
+    'image' => 'صورة الهوية',
+    'phone_not_verified' => 'رقم الجوال غير موثق. يرجى التحقق من رقم الجوال قبل تحديث الهوية.',
+    'identity_update_success' => 'تم تحديث الهوية بنجاح',
+    'identity_update_failed' => 'فشل تحديث الهوية',
 
-  'pending'=> 'قيد الانتظار',
-  'verified_id'=>'تم التحقق',
-  'rejected'=>'مرفوض',
-  'unknown'=>'غير معروف',
+    'pending' => 'قيد الانتظار',
+    'verified_id' => 'تم التحقق',
+    'rejected' => 'مرفوض',
+    'unknown' => 'غير معروف',
     'Present' => 'الحالي',
 
     'company_name_required' => 'اسم الشركة مطلوب.',
@@ -255,10 +258,10 @@ return [
     'start_date_format' => 'يجب أن يكون تنسيق تاريخ البداية على الشكل: شهر-سنة (مثال: 03-2025).',
     'end_date_format' => 'يجب أن يكون تنسيق تاريخ الانتهاء على الشكل: شهر-سنة (مثال: 06-2026).',
 
-    'remote'=> 'عن بعد',
-    'on-site'=> 'في الموقع',
+    'remote' => 'عن بعد',
+    'on-site' => 'في الموقع',
     'hybrid' => 'هجين',
-    'otp_expired'=> 'رمز التحقق منتهي الصلاحية. يرجى طلب رمز جديد.',
+    'otp_expired' => 'رمز التحقق منتهي الصلاحية. يرجى طلب رمز جديد.',
 
 
     'university' => 'اسم الجامعة',
@@ -270,11 +273,10 @@ return [
 
     'education_level' => 'المستوى التعليمي',
 
-    'excellent'=> 'ممتاز',
+    'excellent' => 'ممتاز',
     'very_good' => 'جيد جداً',
     'good' => 'جيد',
-    'pass'=>'مقبول',
-
+    'pass' => 'مقبول',
 
 
     // Portfolio
@@ -292,8 +294,7 @@ return [
     // Validation
     'image_required' => 'الصورة مطلوبة لهذا البلوك.',
     'text_required' => 'محتوى النص مطلوب.',
-
-
+    'reply_subject' => 'رد على رسالتك',
 
 
 ];

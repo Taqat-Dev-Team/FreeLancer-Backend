@@ -184,7 +184,9 @@
                         @csrf
                     </form>
 
-                    <div id="kt_docs_quill_autosave" style="height: 200px;"></div>
+                    <div id="kt_docs_quill_autosave" dir="ltr"
+                         style=" height:200px;direction: ltr; text-align: left;"></div>
+
 
                     <div class="modal-footer p-2">
                         <button type="button" id="sendReplyBtn" class="btn btn-primary">
@@ -227,6 +229,16 @@
 
                 btn.find('.indicator-progress').show();
 
+
+                Swal.fire({
+                    title: 'Processing...',
+                    text: 'Please wait while we process your request.',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
                 $.ajax({
                     type: 'POST',
                     url: url,
@@ -236,7 +248,9 @@
                     },
                     success: function (response) {
                         Swal.fire('Sent', 'Reply sent successfully', 'success');
-        setTimeout(function() { location.reload(); }, 1000);
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 1000);
                     },
                     error: function (xhr) {
                         Swal.fire('Error', 'An error occurred while sending', 'error');
@@ -259,7 +273,7 @@
                     toolbar: [
                         [{'size': ['small', false, 'large', 'huge']}],
                         [{'header': [1, 2, 3, false]}],
-                        [{'color': []}, {'background': []}], //
+                        [{'color': []}, {'background': []}],
                         ['bold', 'italic', 'underline', 'strike'],
                         [{'list': 'ordered'}, {'list': 'bullet'}],
                         [{'align': []}],
@@ -271,7 +285,12 @@
                 theme: 'snow',
             });
 
+            // ✳️ تأكد أن النص يكتب من اليسار لليمين
+            quill.root.setAttribute('dir', 'ltr');
+            quill.root.style.textAlign = 'left';
+            quill.root.style.direction = 'ltr';
 
+            var change = new Delta();
             quill.on('text-change', function (delta) {
                 change = change.compose(delta);
             });
@@ -280,7 +299,7 @@
                     console.log('Saving changes', change);
                     change = new Delta();
                 }
-            }, 5 * 1000);
+            }, 5000);
             window.onbeforeunload = function () {
                 if (change.length() > 0) {
                     return 'There are unsaved changes. Are you sure you want to leave?';

@@ -19,7 +19,8 @@ class VerificationRejected extends Mailable
     {
         $this->user = $user;
         // If no locale specified, use user's locale or fallback to 'ar'
-        $this->locale = $locale ?? ($user->lang ?? 'ar');
+        $this->locale = $user->lang ?? 'ar';
+
         $this->reason = $reason ?? 'No specific reason provided';
     }
 

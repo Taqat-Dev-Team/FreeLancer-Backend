@@ -29,6 +29,18 @@
             width: 100%;
         }
 
+        .reason-box {
+
+            background-color: #ffe6e6;
+            color: #cc0000;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+
         td {
             padding: 0;
         }
@@ -58,7 +70,7 @@
         }
 
         .header .logo {
-            max-width: 200px;
+            width: 230px;
             height: auto;
             /*margin-bottom: 15px;*/
         }
@@ -103,7 +115,7 @@
         }
 
         .footer .logo-footer {
-            max-width: 150px;
+            width: 180px;
             height: auto;
             /*margin-top: 15px;*/
             opacity: 0.7;
@@ -148,11 +160,13 @@
                         @if(($locale ?? 'ar') == 'en')
                             @if($status == 'active')
                                 <p>Hello {{ $user->name }},</p>
-                                <p>Your account on <strong>Taqat Platform</strong> has been <strong>activated</strong> successfully.</p>
+                                <p>Your account on <strong>Taqat Platform</strong> has been <strong>activated</strong>
+                                    successfully.</p>
                                 <p>You can now log in and use all available services.</p>
                             @else
                                 <p>Hello {{ $user->name }},</p>
-                                <p>Your account on <strong>Taqat Platform</strong> has been <strong>deactivated</strong>.</p>
+                                <p>Your account on <strong>Taqat Platform</strong> has been <strong>deactivated</strong>.
+                                </p>
                                 @if(!empty($reason))
                                     <div class="reason-box">
                                         Reason: {{ $reason }}

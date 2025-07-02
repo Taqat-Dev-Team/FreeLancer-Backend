@@ -26,7 +26,7 @@ class ResetPasswordMail extends Mailable
     {
         $this->token = $token;
         $this->userEmail = $userEmail;
-        $this->locale = $locale ?? ($user->lang ?? 'ar');
+        $this->locale = $user->lang ?? 'ar';
 
     }
 

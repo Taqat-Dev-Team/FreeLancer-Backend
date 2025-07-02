@@ -50,7 +50,7 @@ class AuthController extends Controller
             DB::commit();
 
             return $this->apiResponse(
-                ['email' => $user->email, 'otp' => $user->otpCodes->last()->code],
+                ['email' => $user->email],
                 __('messages.register_success'),
                 true,
                 201
@@ -290,7 +290,7 @@ class AuthController extends Controller
         $user = Auth::user('sanctum');
 
         if ($user->client || $user->freelancer) {
-            return $this->apiResponse(['is_select_tye'=>1], __('messages.user_already_has_type'), false, 400);
+            return $this->apiResponse(['is_select_tye' => 1], __('messages.user_already_has_type'), false, 400);
         }
         $token = $this->extractBearerToken($request);
 
@@ -316,7 +316,6 @@ class AuthController extends Controller
             200
         );
     }
-
 
 
 }

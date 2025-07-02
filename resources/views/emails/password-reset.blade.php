@@ -58,7 +58,7 @@
         }
 
         .header .logo {
-            max-width: 200px;
+            width: 230px;
             height: auto;
             /*margin-bottom: 15px;*/
         }
@@ -103,7 +103,7 @@
         }
 
         .footer .logo-footer {
-            max-width: 150px;
+            width: 180px;
             height: auto;
             /*margin-top: 15px;*/
             opacity: 0.7;
@@ -132,6 +132,7 @@
             direction: ltr;
         }
     </style>
+
 </head>
 <body>
 <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">

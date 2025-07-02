@@ -302,7 +302,9 @@ return [
     // Content Block
     'content_block_not_found' => 'Content block not found.',
 
+    'reply_subject'=> 'Your reply to the contact message',
 
+    'admin_message_subject' => 'Message from Taqat Admin',
 
 
 ];

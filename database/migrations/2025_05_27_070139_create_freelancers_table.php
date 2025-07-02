@@ -21,6 +21,7 @@ return new class extends Migration {
             $table->foreignId('sub_category_id')->nullable()->constrained('sub_categories')->nullOnDelete();
             $table->string('hourly_rate')->nullable();
             $table->string('available_hire')->nullable();
+            $table->string('admin_available_hire')->nullable();
 
 
             $table->timestamps();

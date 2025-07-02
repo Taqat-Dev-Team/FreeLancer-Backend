@@ -51,7 +51,7 @@
         }
 
         .header .logo {
-            max-width: 200px;
+            width: 230px;
             height: auto;
             /*margin-bottom: 15px;*/
         }
@@ -96,7 +96,7 @@
         }
 
         .footer .logo-footer {
-            max-width: 150px;
+            width: 180px;
             height: auto;
             /*margin-top: 15px;*/
             opacity: 0.7;
@@ -141,7 +141,7 @@
         @endif
 
         <div class="reply-box">
-            {{ $replyText }}
+            {!!  $replyText !!}
         </div>
 
         @if(($locale ?? 'ar') == 'en')
@@ -153,7 +153,8 @@
         @endif
     </div>
     <div class="footer">
-        <p>&copy; {{ date('Y') }} {{ ($locale ?? 'ar') == 'en' ? 'Taqat. All rights reserved.' : 'طاقات. جميع الحقوق محفوظة.' }}</p>
+        <p>
+            &copy; {{ date('Y') }} {{ ($locale ?? 'ar') == 'en' ? 'Taqat. All rights reserved.' : 'طاقات. جميع الحقوق محفوظة.' }}</p>
     </div>
 </div>
 </body>

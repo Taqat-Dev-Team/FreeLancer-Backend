@@ -20,9 +20,9 @@ class FreelancerActivated extends Mailable
     public function __construct(User $user)
     {
         $this->user = $user;
-        $this->locale = $locale ?? ($user->lang ?? 'ar');
+        $this->locale = $user->lang ?? 'ar';
 
-    } 
+    }
 
     public function build()
     {

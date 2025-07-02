@@ -19,7 +19,7 @@ class FreelancerDeactivated extends Mailable
     {
         $this->user = $user;
         $this->reason = $reason;
-        $this->locale = $locale ?? ($user->lang ?? 'ar');
+        $this->locale = $user->lang ?? 'ar';
 
     }
 

@@ -64,7 +64,9 @@ class ContactController extends Controller
     public function show($id)
     {
         $contact = Contact::findOrFail($id);
-        $contact->update(['status' => 1, 'read_at' => now()]);
+        if ($contact->status == 0) {
+            $contact->update(['status' => 1, 'read_at' => now()]);
+        }
         return view('admin.contacts.show', ['contact' => $contact]);
     }
 
@@ -77,7 +79,7 @@ class ContactController extends Controller
 
         try {
             $contact = Contact::findOrFail($id);
-            $contact->update(['status' => 1]);
+            $contact->update(['status' => 2, 'replied_at' => now()]);
 
             $contact->reply()->create([
                 'text' => $request->reply,

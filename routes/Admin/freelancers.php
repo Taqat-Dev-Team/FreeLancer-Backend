@@ -30,6 +30,8 @@ Route::prefix('admin/freelancer/')->name('admin.')->group(function () {
                     Route::get('/{id}/show', 'show')->name('show');
                     Route::delete('/{id}', 'destroy')->name('delete');
                     Route::post('/status/{id}', 'status')->name('status');
+                    Route::post('/admin-active/{id}', 'ActiveByAdmin')->name('ActiveByAdmin');
+                    Route::post('/send-message', 'sendMessage')->name('sendMessage');
                 });
             });
 

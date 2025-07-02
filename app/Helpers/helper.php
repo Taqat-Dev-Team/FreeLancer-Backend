@@ -1,22 +1,28 @@
 <?php
 function otp(): int
 {
-    if(env('APP_ENV'== 'production' || env('APP_ENV') == 'staging')) {
-        // في بيئة الإنتاج، نستخدم رمز OTP من 6 أرقام
+    $env = env('APP_ENV');
+
+    if ($env === 'production' || $env === 'staging') {
+        // في بيئة الإنتاج أو الستيجنق، نستخدم رمز OTP حقيقي
         return rand(100000, 999999);
     }
-    return 111111; // إنشاء رمز OTP من 6 أرقام
 
+    // في بيئة التطوير أو غيرها، نستخدم رمز ثابت
+    return 111111;
 }
 
 function Mobileotp(): int
 {
-    if(env('APP_ENV'== 'production' || env('APP_ENV') == 'staging')) {
-        // في بيئة الإنتاج، نستخدم رمز OTP من 6 أرقام
+    $env = env('APP_ENV');
+
+    if ($env === 'production' || $env === 'staging') {
+        // في بيئة الإنتاج أو الستيجنق، نستخدم رمز OTP حقيقي
         return rand(100000, 999999);
     }
-    return 111111; // إنشاء رمز OTP من 6 أرقام
 
+    // في بيئة التطوير أو غيرها، نستخدم رمز ثابت
+    return 111111;
 }
 
 
