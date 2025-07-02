@@ -11,9 +11,11 @@
         @endif
     </title>
     <style>
+        /* استيراد خط تجوال */
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+
         body {
-            font-family: 'Tajawal', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-family: 'Tajawal', 'Helvetica Neue', Helvetica, Arial, sans-serif; /* تطبيق خط تجوال */
             margin: 0;
             padding: 0;
             background-color: #f4f7f6;
@@ -21,38 +23,114 @@
             -webkit-text-size-adjust: 100%;
             -ms-text-size-adjust: 100%;
         }
-        table { border-collapse: collapse; width: 100%; }
-        td { padding: 0; }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td {
+            padding: 0;
+        }
+
         .container {
-            width: 100%; max-width: 600px; margin: 0 auto;
-            background-color: #ffffff; border-radius: 8px;
-            overflow: hidden; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
+
         .header {
-            background-color: #1279be; /* Primary Color */
-            padding: 30px 25px; text-align: center; color: #ffffff;
+            background-color: #1279be; /* Primary Color: #1279be */
+            padding: 30px 25px;
+            text-align: center;
+            color: #ffffff;
         }
+
         .header h1 {
-            font-family: 'Tajawal', sans-serif; margin: 0; font-size: 28px; font-weight: 700;
+            font-family: 'Tajawal', sans-serif; /* تطبيق خط تجوال على العنوان */
+            margin: 0;
+            font-size: 28px;
+            font-weight: 700; /* تجوال Bold */
         }
-        .header .logo { max-width: 150px; height: auto; margin-bottom: 15px; }
+
+        .header .logo {
+            max-width: 200px;
+            height: auto;
+            /*margin-bottom: 15px;*/
+        }
+
         .content {
-            padding: 30px 25px; line-height: 1.6; color: #555555;
+            padding: 30px 25px;
+            line-height: 1.6;
+            color: #555555;
+            /* Text alignment and direction will be handled by Blade conditional classes */
         }
-        .content p { margin-bottom: 15px; font-size: 16px; }
-        .button {
-            display: inline-block; background-color: #1279be; color: #ffffff !important;
-            padding: 12px 25px; border-radius: 5px; text-decoration: none;
-            font-weight: bold; font-size: 16px; margin-top: 20px;
+
+        .content p {
+            margin-bottom: 15px;
+            font-size: 16px;
         }
+
+        .otp-code-box {
+            background-color: #e9ecef;
+            color: #1279be; /* OTP color with primary color */
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            padding: 15px 20px;
+            margin: 25px auto;
+            border-radius: 6px;
+            width: fit-content;
+            letter-spacing: 2px;
+            direction: ltr; /* Ensure OTP code is always LTR */
+        }
+
         .footer {
-            background-color: #f4f7f6; padding: 25px; text-align: center;
-            font-size: 13px; color: #777777; border-top: 1px solid #eeeeee;
+            background-color: #f4f7f6;
+            padding: 25px;
+            text-align: center;
+            font-size: 13px;
+            color: #777777;
+            border-top: 1px solid #eeeeee;
         }
-        .footer p { margin: 5px 0; }
-        .footer .logo-footer { max-width: 100px; height: auto; margin-top: 15px; opacity: 0.7; }
-        .rtl { text-align: right; direction: rtl; }
-        .ltr { text-align: left; direction: ltr; }
+
+        .footer p {
+            margin: 5px 0;
+        }
+
+        .footer .logo-footer {
+            max-width: 150px;
+            height: auto;
+            /*margin-top: 15px;*/
+            opacity: 0.7;
+        }
+
+        .button {
+            display: inline-block;
+            background-color: #1279be;
+            color: #ffffff;
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        /* Blade conditional classes for RTL/LTR content */
+        .rtl {
+            text-align: right;
+            direction: rtl;
+        }
+
+        .ltr {
+            text-align: left;
+            direction: ltr;
+        }
     </style>
 </head>
 <body>

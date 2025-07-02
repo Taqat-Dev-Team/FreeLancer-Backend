@@ -68,7 +68,7 @@ class UserResource extends JsonResource
                     return [
                         'id' => $item->social_media_id,
                         'name' => $item->social?->name ?? $item->title,
-                        'icon' => $this->icon??'<svg width="18" height="4" viewBox="0 0 18 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        'icon' => $item->social->icon??'<svg width="18" height="4" viewBox="0 0 18 4" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M1.5 2.5C6.36667 0.875 11.6333 0.875 16.5 2.5" stroke="#696A70" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
 
                         'link' => $item->link,

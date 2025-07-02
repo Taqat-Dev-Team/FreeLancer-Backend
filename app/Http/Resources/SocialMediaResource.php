@@ -28,7 +28,7 @@ class SocialMediaResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'icon' => $this->icon,
-            ];
+        ];
     }
 
 

@@ -30,8 +30,9 @@ class IdentityController extends Controller
         Cache::put('otp_' . $request->mobile, $otp, now()->addMinutes(5));
 
         // SmsService::send($request->mobile, "Your OTP is: $otp");
+
         return $this->apiResponse(
-            ['otp' => $otp],
+            [],
             __('messages.otp_mobile_success'),
             true,
             200
