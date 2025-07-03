@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Front\FreeLancer;
 
 use App\ApiResponseTrait;
-use App\Events\NewIdentityVerification;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Front\Freelancer\IdentityRequest;
 use App\Http\Resources\UserResource;
@@ -25,6 +24,7 @@ class IdentityController extends Controller
             'mobile' => ['required', 'digits_between:7,15', 'regex:/^[0-9]+$/'],
         ]);
 
+
         $otp = Mobileotp();
 
         Cache::put('otp_' . $request->mobile, $otp, now()->addMinutes(5));
@@ -39,6 +39,39 @@ class IdentityController extends Controller
         );
     }
 
+
+    public function resendOtp(Request $request)
+    {
+        $request->validate([
+            'mobile' => ['required', 'digits_between:7,15', 'regex:/^[0-9]+$/'],
+        ]);
+
+
+        // Check if the OTP was sent within the last 5 minutes
+        if (Cache::has('otp_' . $request->mobile)) {
+            return $this->apiResponse(
+                [],
+                __('messages.otp_mobile_already_sent'),
+                false,
+                422
+            );
+        }
+
+
+        $otp = Mobileotp();
+
+        Cache::put('otp_' . $request->mobile, $otp, now()->addMinutes(5));
+
+        // SmsService::send($request->mobile, "Your OTP is: $otp");
+
+        return $this->apiResponse(
+            [],
+            __('messages.otp_mobile_success'),
+            true,
+            200
+        );
+
+    }
 
     public function verifyOtp(Request $request)
     {

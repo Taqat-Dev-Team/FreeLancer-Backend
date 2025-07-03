@@ -64,7 +64,7 @@ class FreeLancerVerifiedController extends Controller
                 $modalId = 'availabilityModal_' . $row->id;
 
                 return '<span class="badge badge-light-warning cursor-pointer" data-bs-toggle="modal" data-bs-target="#' . $modalId . '">Not Available To Hire</span>'
-                    . view('admin.FreeLancer.partials.availability_modal', ['row' => $row, 'modalId' => $modalId])->render();
+                    . view('admin.FreeLancer.verified.partials.availability_modal', ['row' => $row, 'modalId' => $modalId])->render();
             })
             ->addColumn('actions', function ($row) {
                 $actions = '
@@ -77,7 +77,7 @@ class FreeLancerVerifiedController extends Controller
                  data-kt-menu="true">
 
                 <div class="menu-item px-3">
-                    <a href="#" class="menu-link px-3 edit-badge" data-id="' . $row->id . '">View</a>
+                    <a href="'.route('admin.freelancers.verified.show',$row->id).'" class="menu-link px-3 edit-badge" data-id="' . $row->id . '">View</a>
                 </div>
 
                 <div class="menu-item px-3">
@@ -88,9 +88,18 @@ class FreeLancerVerifiedController extends Controller
                 if (!$row->admin_available_hire) {
                     $actions .= '
             <div class="menu-item px-3">
-                <a href="#" class="menu-link px-3 toggle-admin-availability btn btn-active-light-primary"
+                <a href="#" class="menu-link px-3 toggle-admin-availability-active btn btn-active-light-primary"
                    data-id="' . $row->id . '" data-status="' . $row->admin_available_hire . '">
                    Activate by Admin
+                </a>
+            </div>';
+                } else {
+                    $actions .= '
+
+           <div class="menu-item px-3">
+                <a href="#" class="menu-link px-3 toggle-admin-availability-deactivate btn btn-active-light-primary"
+                   data-id="' . $row->id . '" data-status="' . $row->admin_available_hire . '">
+                  Deactivate by Admin
                 </a>
             </div>';
                 }
@@ -163,6 +172,24 @@ class FreeLancerVerifiedController extends Controller
         }
 
         $freelancer->admin_available_hire = 1;
+        Mail::to($freelancer->user->email)->send(new AdminMessageToFreelancer(trans('messages.freelancer_admin_active', [], $freelancer->user->lang ?? 'ar'), $freelancer->user));
+
+        $freelancer->save();
+
+        return response()->json(['message' => 'Freelancer admin availability updated successfully.']);
+
+    }
+
+    public function deactivateByAdmin($id)
+    {
+        $freelancer = Freelancer::find($id);
+        if (!$freelancer) {
+            return response()->json(['message' => 'Freelancer not found.'], 404);
+        }
+
+        $freelancer->admin_available_hire = 0;
+        Mail::to($freelancer->user->email)->send(new AdminMessageToFreelancer(trans('messages.freelancer_admin_deactivate', [], $freelancer->user->lang ?? 'ar'), $freelancer->user));
+
         $freelancer->save();
 
         return response()->json(['message' => 'Freelancer admin availability updated successfully.']);
@@ -197,4 +224,16 @@ class FreeLancerVerifiedController extends Controller
     }
 
 
+    public function show($id)
+    {
+        $freelancer = Freelancer::all()->find($id);
+
+        if (!$freelancer) {
+            return response()->json(['message' => 'Freelancer not found.'], 404);
+        }
+
+        return view('admin.FreeLancer.index', compact('freelancer'));
+
+
+    }
 }

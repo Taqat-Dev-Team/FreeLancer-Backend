@@ -31,6 +31,7 @@ Route::prefix('admin/freelancer/')->name('admin.')->group(function () {
                     Route::delete('/{id}', 'destroy')->name('delete');
                     Route::post('/status/{id}', 'status')->name('status');
                     Route::post('/admin-active/{id}', 'ActiveByAdmin')->name('ActiveByAdmin');
+                    Route::post('/admin-deactivate/{id}', 'deactivateByAdmin')->name('deactivateByAdmin');
                     Route::post('/send-message', 'sendMessage')->name('sendMessage');
                 });
             });

@@ -1,4 +1,6 @@
 <?php
+use App\Models\Contact;
+use App\Models\IdentityVerification;
 function otp(): int
 {
     $env = env('APP_ENV');
@@ -61,15 +63,15 @@ function AcademicGrade()
 
 function unreadContactsCount()
 {
-    return \App\Models\Contact::where('status', 0)->count();
+    return Contact::where('status', 0)->count();
 }
 
 function IdentityRequestsCount()
 {
-    return \App\Models\IdentityVerification::where('status', '0')->count();
+    return IdentityVerification::where('status', '0')->count();
 }
 
 function VerifiedFreeLancersCount()
 {
-    return \App\Models\IdentityVerification::where('status', '1')->count();
+    return IdentityVerification::where('status', '1')->count();
 }

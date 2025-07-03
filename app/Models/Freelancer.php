@@ -78,7 +78,6 @@ class Freelancer extends Model implements HasMedia
     }
 
 
-
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -128,7 +127,8 @@ class Freelancer extends Model implements HasMedia
 
     public function socialLinks()
     {
-        return $this->hasMany(FreelancerSocial::class, 'freelancer_id');
+        return $this->hasMany(FreelancerSocial::class, 'freelancer_id')
+            ->with('social');
     }
 
     public function languages()
@@ -221,7 +221,7 @@ class Freelancer extends Model implements HasMedia
             'social' => $this->hasSocial(),
             'portfolio' => $this->hasPortfolio(),
             'video_introduction' => filled($this->video_introduction_url),
-            'profile_picture' => filled($this->user->photo),
+            'profile_picture' => filled($this->user->getFirstMediaUrl('photo')),
             'work_field' => filled($this->category_id),
         ];
 

@@ -54,16 +54,21 @@
         <span class="menu-title">FreeLancers</span>
         <span class="menu-arrow"></span>
     </span>
+                    @php
+                        $identityRequestsCount = IdentityRequestsCount();
+                        $verifiedFreeLancersCount = VerifiedFreeLancersCount();
+                    @endphp
+
                     <div class="menu-sub menu-sub-accordion">
                         <div class="menu-item">
                             <a class="menu-link {{ request()->routeIs('admin.freelancers.request.index') ? 'active' : '' }}"
                                href="{{ route('admin.freelancers.request.index') }}">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
                                 <span class="menu-title ">VerifiedRequest</span>
-                                @if(IdentityRequestsCount() > 0)
+                                @if($identityRequestsCount > 0)
                                     <span class="menu-badge  justify-content-end">
                                                                         <span class="badge badge-light-primary ms-2">
-                                                                            {{ IdentityRequestsCount() }}
+                                                                            {{ $identityRequestsCount }}
                                                                         </span>
                                                                     </span>
                                 @endif
@@ -77,10 +82,10 @@
                                href="{{ route('admin.freelancers.verified.index') }}">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
                                 <span class="menu-title ">Verified </span>
-                                @if(VerifiedFreeLancersCount() > 0)
+                                @if($verifiedFreeLancersCount > 0)
                                     <span class="menu-badge  justify-content-end">
                                         <span class="badge badge-light-success ms-2">
-                                            {{ VerifiedFreeLancersCount() }}
+                                            {{ $verifiedFreeLancersCount }}
                                         </span>
                                     </span>
                                 @endif

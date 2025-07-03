@@ -26,6 +26,7 @@ Route::middleware(['auth:sanctum', 'verified.email', 'freelancer'])->prefix('fre
     Route::middleware('notVerification')->group(function () {
         Route::controller(IdentityController::class)->group(function () {
             Route::post('send-otp', 'sendOtp');
+            Route::post('resend-otp', 'resendOtp');
             Route::post('verify-otp', 'verifyOtp');
             Route::post('update-identity', 'updateIdentity');
         });

@@ -305,8 +305,11 @@ return [
     'reply_subject'=> 'Your reply to the contact message',
 
     'admin_message_subject' => 'Message from Taqat Admin',
+    'freelancer_admin_active'=>'Your freelancer account has been activated by the admin. You can now start receiving job offers and working on projects. Welcome aboard!',
+    'freelancer_admin_deactivate'=> 'Your freelancer account has been deactivated by the admin. Please contact support for more information.',
 
 
+    'otp_mobile_already_sent'=>'An OTP has already been sent to your mobile number. Please check your messages or wait for it to expire before requesting a new one.',
 ];
 
 
