@@ -153,6 +153,10 @@ class Freelancer extends Model implements HasMedia
         return $this->hasMany(Project::class);
     }
 
+    public function jobs()
+    {
+       return 5;
+    }
     // ----------------------------
     // Helpers
     // ----------------------------

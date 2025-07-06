@@ -85,6 +85,7 @@ class IdentityController extends Controller
         $user = Auth::user();
         $user->update([
             'mobile_verified_at' => now(),
+            'mobile' => $request->mobile,
         ]);
 
         if (!$storedOtp || $request->otp != $storedOtp) {

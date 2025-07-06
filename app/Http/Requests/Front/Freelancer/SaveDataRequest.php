@@ -35,7 +35,7 @@ class SaveDataRequest extends FormRequest
             'sub_category_id' => 'required|exists:sub_categories,id',
             'country_id' => 'required|exists:countries,id',
             'gender' => 'required|in:male,female',
-            'mobile' => ['required', 'digits_between:7,15', 'regex:/^[0-9]+$/'],
+//            'mobile' => ['required', 'digits_between:7,15', 'regex:/^[0-9]+$/'],
         ];
     }
 
@@ -62,9 +62,9 @@ class SaveDataRequest extends FormRequest
             'category_id.exists' => __('validation.exists', ['attribute' => __('messages.category')]),
             'sub_category_id.exists' => __('validation.exists', ['attribute' => __('messages.sub_category')]),
             'country_id.required' => __('validation.required', ['attribute' => __('messages.country')]),
-            'mobile.required' => __('validation.required', ['attribute' => __('messages.mobile')]),
-            'mobile.digits_between' => __('validation.digits_between', ['attribute' => __('messages.mobile'), 'min' => 7, 'max' => 15]),
-            'mobile.regex' => __('validation.regex', ['attribute' => __('messages.mobile')]),
+//            'mobile.required' => __('validation.required', ['attribute' => __('messages.mobile')]),
+//            'mobile.digits_between' => __('validation.digits_between', ['attribute' => __('messages.mobile'), 'min' => 7, 'max' => 15]),
+//            'mobile.regex' => __('validation.regex', ['attribute' => __('messages.mobile')]),
 
             'hourly_rate.numeric' => __('validation.numeric', ['attribute' => __('messages.hourly_rate')]),
             'hourly_rate.min' => __('validation.min.numeric', ['attribute' => __('messages.hourly_rate'), 'min' => 0]),

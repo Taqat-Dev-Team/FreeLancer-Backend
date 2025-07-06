@@ -378,10 +378,10 @@
                                                 <div class="d-flex fs-6 fw-semibold align-items-center">
                                                     <!--begin::Bullet-->
                                                     <div
-                                                        class="bullet {{ $freelancer->availability() ? 'bg-success' : 'bg-warning' }} me-3"
+                                                        class="bullet {{ $freelancer->availability()==1 ? 'bg-success' : 'bg-warning' }} me-3"
                                                         style="border-radius: 3px;width: 12px;height: 12px"></div>
                                                     <div
-                                                        class="fs-5 fw-bold text-gray-600 me-5">{{$freelancer->availability()? 'Available': 'Not Available'}}</div>
+                                                        class="fs-5 fw-bold text-gray-600 me-5">{{$freelancer->availability()==1 ? 'Available': 'Not Available'}}</div>
                                                 </div>
                                                 <!--end::Label-->
                                                 <!--begin::Stats-->
@@ -503,7 +503,7 @@
                                                 </div>
 
                                                 <div class="fs-7 text-muted">
-                                                    {{ AcademicGrade()->firstWhere('id', $edu->grade)['label'] }}
+                                                    {{ AcademicGrade()->firstWhere('id', (int)$edu->grade)['label'] }}
                                                 </div>
                                                 <a href="#">{{$edu->university}}</a></div>
                                             <!--end::Info-->
@@ -583,7 +583,7 @@
                         </div>
 
                         <!--end::Tasks-->
-                        
+
                     </div>
                     <!--end:::Tab content-->
                 </div>

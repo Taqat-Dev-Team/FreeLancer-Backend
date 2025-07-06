@@ -47,6 +47,7 @@ class UserResource extends JsonResource
         if ($this->freelancer) {
 
             return array_merge($baseData, [
+                'total_jobs'=>$this->freelancer->jobs(),
                 'id_verified' => $this->freelancer->idVerified(),
                 'category' => new CategoryResource($this->freelancer->category),
                 'sub_category' => new SubCategoryResource($this->freelancer->subCategory),

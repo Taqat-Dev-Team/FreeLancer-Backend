@@ -74,7 +74,7 @@ class ProfileController extends Controller
                 'country_id' => $request->country_id,
                 'gender' => $request->gender,
                 'save_data' => 1,
-                'mobile' => $request->mobile,
+//                'mobile' => $request->mobile,
             ]);
 
             if ($request->hasFile('photo')) {
