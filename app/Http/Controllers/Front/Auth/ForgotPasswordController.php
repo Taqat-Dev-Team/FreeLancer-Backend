@@ -35,13 +35,11 @@ class ForgotPasswordController extends Controller
 
         $user = \App\Models\User::where('email', $request->email)->first();
         if (!$user) {
-            // لمنع Enumeration Attack، نرجع رسالة عامة حتى لو الإيميل مش موجود
             return $this->apiResponse([], __('messages.password_reset_link_sent'), true, 200);
         }
 
 
         $userLocale = $user->lang ?? app()->getLocale();
-        app()->setLocale($userLocale);
 
         $status = Password::broker()->sendResetLink(
             $request->only('email'),

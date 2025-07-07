@@ -22,11 +22,11 @@ class ResetPasswordMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(string $token, string $userEmail, string $locale= null)
+    public function __construct(string $token, string $userEmail, string $locale = null)
     {
         $this->token = $token;
         $this->userEmail = $userEmail;
-        $this->locale = $user->lang ?? 'ar';
+        $this->locale = $locale ?? 'ar';
 
     }
 

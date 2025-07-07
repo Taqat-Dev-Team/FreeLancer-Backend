@@ -308,7 +308,9 @@ return [
     'freelancer_admin_active'=>'Your freelancer account has been activated by the admin. You can now start receiving job offers and working on projects. Welcome aboard!',
     'freelancer_admin_deactivate'=> 'Your freelancer account has been deactivated by the admin. Please contact support for more information.',
 
-
+    'invalid_token' => 'The reset token is invalid or has expired.',
+    'invalid_user' => 'This email address is not registered with us.',
+    'unknown_error' => 'An unexpected error occurred while resetting the password.',
     'otp_mobile_already_sent'=>'An OTP has already been sent to your mobile number. Please check your messages or wait for it to expire before requesting a new one.',
 ];
 

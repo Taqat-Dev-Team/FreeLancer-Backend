@@ -115,10 +115,10 @@ class Freelancer extends Model implements HasMedia
         return $this->hasMany(FreelancerEducation::class);
     }
 
-    public function courses()
-    {
-        return $this->hasMany(FreelancerCourse::class);
-    }
+//    public function courses()
+//    {
+//        return $this->hasMany(FreelancerCourse::class);
+//    }
 
     public function portfolios()
     {
@@ -155,7 +155,7 @@ class Freelancer extends Model implements HasMedia
 
     public function jobs()
     {
-       return 5;
+        return 5;
     }
     // ----------------------------
     // Helpers
@@ -224,7 +224,7 @@ class Freelancer extends Model implements HasMedia
             'languages' => $this->hasLanguages(),
             'social' => $this->hasSocial(),
             'portfolio' => $this->hasPortfolio(),
-            'video_introduction' => filled($this->video_introduction_url),
+            'video_introduction' => filled($this->user->video),
             'profile_picture' => filled($this->user->getFirstMediaUrl('photo')),
             'work_field' => filled($this->category_id),
         ];
@@ -289,13 +289,27 @@ class Freelancer extends Model implements HasMedia
         $totalMonths = 0;
 
         foreach ($this->workExperiences as $experience) {
-            $start = Carbon::parse($experience->start_date);
-            $end = $experience->end_date ? Carbon::parse($experience->end_date) : Carbon::now();
+            if (!$experience->start_date) {
+                continue;
+            }
 
-            $months = $start->diffInMonths($end);
-            $totalMonths += $months;
+            try {
+                $start = Carbon::parse($experience->start_date);
+                $end = $experience->end_date ? Carbon::parse($experience->end_date) : Carbon::now();
+
+                if ($start->greaterThan($end)) {
+                    continue;
+                }
+
+                $months = $start->diffInMonths($end);
+                $totalMonths += $months;
+            } catch (\Exception $e) {
+                // تجاهل التواريخ غير الصحيحة
+                continue;
+            }
         }
 
-        return round($totalMonths / 12);
+        return round($totalMonths / 12, 1); // مثل 2.5 سنوات
     }
+
 }

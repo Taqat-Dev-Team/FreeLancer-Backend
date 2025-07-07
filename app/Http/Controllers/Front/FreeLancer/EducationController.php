@@ -122,14 +122,22 @@ class EducationController extends Controller
      */
     private function formatDates(array $data): array
     {
-        $data['start_date'] = Carbon::createFromFormat('m-Y', $data['start_date'])->startOfMonth();
+        // صيغة تاريخ البدء
+        if (isset($data['start_date'])) {
+            $data['start_date'] = Carbon::createFromFormat('m-Y', $data['start_date'])->startOfMonth();
+        }
 
-        if (!empty($data['end_date'])) {
-            $data['end_date'] = Carbon::createFromFormat('m-Y', $data['end_date'])->startOfMonth();
+        if (array_key_exists('end_date', $data)) {
+            if (!empty($data['end_date'])) {
+                $data['end_date'] = Carbon::createFromFormat('m-Y', $data['end_date'])->startOfMonth();
+            } else {
+                $data['end_date'] = null;
+            }
         } else {
             $data['end_date'] = null;
         }
 
         return $data;
     }
+
 }

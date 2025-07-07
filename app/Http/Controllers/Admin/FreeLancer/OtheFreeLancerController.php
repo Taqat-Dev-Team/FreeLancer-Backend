@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\FreeLancer;
 use App\Http\Controllers\Controller;
 use App\Mail\AdminMessageToFreelancer;
 use App\Models\Freelancer;
+use App\Models\IdentityVerification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\DataTables;
@@ -231,8 +232,8 @@ class OtheFreeLancerController extends Controller
             return response()->json(['message' => 'Freelancer not found.'], 404);
         }
 
-        return view('admin.FreeLancer.index', compact('freelancer'));
-
+        $idHistory=$freelancer->identityVerification()->get();
+        return view('admin.FreeLancer.index', compact('freelancer','idHistory'));
 
     }
 }

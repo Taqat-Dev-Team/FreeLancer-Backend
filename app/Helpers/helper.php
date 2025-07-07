@@ -80,3 +80,4 @@ function OthersFreeLancersCount()
 {
     return \App\Models\Freelancer::whereDoesntHave('identityVerification')->count();
 }
+

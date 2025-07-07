@@ -55,7 +55,8 @@ class UserResource extends JsonResource
 
                 'hourly_rate' => $this->freelancer->hourly_rate,
 
-                'available_hire' => $this->freelancer->availability(),
+                'available_hire' => $this->freelancer->available_hire,
+                'available_hire_status' => $this->freelancer->availability(),
                 'not_available_reasons'=>$this->freelancer->availabilityDetails(),
 
                 'experience' => $this->freelancer->experience,

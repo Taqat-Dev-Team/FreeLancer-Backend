@@ -22,6 +22,12 @@ class IdentityVerification extends Model implements HasMedia
     }
 
 
+    // في IdVerification.php
+    public function getFullNameAttribute()
+    {
+        return "{$this->first_name} {$this->father_name} {$this->grandfather_name} {$this->family_name}";
+    }
+
     public function getStatusTextAttribute()
     {
         return match ($this->status) {

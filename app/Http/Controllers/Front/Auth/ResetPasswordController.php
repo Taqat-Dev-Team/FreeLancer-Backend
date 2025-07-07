@@ -58,19 +58,20 @@ class ResetPasswordController extends Controller
         switch ($response) {
             case Password::PASSWORD_RESET:
                 Log::info('User password reset successfully.', ['email' => $request->email]);
-                return $this->apiResponse([], 'تمت إعادة تعيين كلمة المرور بنجاح.', true, 200);
+                return $this->apiResponse([], __('messages.password_reset_success'), true, 200);
 
             case Password::INVALID_TOKEN:
                 Log::error('Password reset failed: Invalid token.', ['email' => $request->email]);
-                return $this->apiResponse([], 'رمز إعادة التعيين غير صالح أو منتهي الصلاحية.', false, 400);
+                return $this->apiResponse([], __('messages.invalid_token'), false, 400);
 
             case Password::INVALID_USER:
                 Log::error('Password reset failed: Invalid user (email not found).', ['email' => $request->email]);
-                return $this->apiResponse([], 'البريد الإلكتروني غير مسجل لدينا.', false, 400);
+                return $this->apiResponse([], __('messages.invalid_user'), false, 400);
 
             default:
                 Log::error('Password reset failed: An unknown error occurred.', ['email' => $request->email]);
-                return $this->apiResponse([], 'حدث خطأ غير متوقع أثناء إعادة تعيين كلمة المرور.', false, 500);
+                return $this->apiResponse([], __('messages.unknown_error'), false, 500);
         }
+
     }
 }
