@@ -23,7 +23,7 @@ class NotVerificationMiddleware
 
         $verification = $user->freelancer->identityVerification;
 
-        if ($verification && !$verification->status == 2) {
+        if ($verification &&  !$verification->status == 2) {
             return $this->apiResponse([], __('messages.Access Denied'), false, 401);
         }
 

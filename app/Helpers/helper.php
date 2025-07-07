@@ -75,3 +75,8 @@ function VerifiedFreeLancersCount()
 {
     return IdentityVerification::where('status', '1')->count();
 }
+
+function OthersFreeLancersCount()
+{
+    return \App\Models\Freelancer::whereDoesntHave('identityVerification')->count();
+}

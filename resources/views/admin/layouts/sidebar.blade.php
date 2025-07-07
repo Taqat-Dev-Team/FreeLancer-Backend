@@ -57,6 +57,7 @@
                     @php
                         $identityRequestsCount = IdentityRequestsCount();
                         $verifiedFreeLancersCount = VerifiedFreeLancersCount();
+                        $OthersFreeLancersCount = OthersFreeLancersCount();
                     @endphp
 
                     <div class="menu-sub menu-sub-accordion">
@@ -92,6 +93,25 @@
                             </a>
                         </div>
                     </div>
+
+
+                    <div class="menu-sub menu-sub-accordion">
+                        <div class="menu-item">
+                            <a class="menu-link {{ request()->routeIs('admin.freelancers.index') ? 'active' : '' }}"
+                               href="{{ route('admin.freelancers.index') }}">
+                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                                <span class="menu-title ">Other </span>
+                                @if($OthersFreeLancersCount > 0)
+                                    <span class="menu-badge  justify-content-end">
+                                        <span class="badge badge-light-warning ms-2">
+                                            {{ $OthersFreeLancersCount }}
+                                        </span>
+                                    </span>
+                                @endif
+                            </a>
+                        </div>
+                    </div>
+
                 </div>
 
                 <div data-kt-menu-trigger="click"

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\FreeLancer\FreeLancerVerificationRequestsController;
 use App\Http\Controllers\Admin\FreeLancer\FreeLancerVerifiedController;
+use App\Http\Controllers\Admin\FreeLancer\OtheFreeLancerController;
 
 
 Route::prefix('admin/freelancer/')->name('admin.')->group(function () {
@@ -27,7 +28,6 @@ Route::prefix('admin/freelancer/')->name('admin.')->group(function () {
                 Route::controller(FreeLancerVerifiedController::class)->group(function () {
                     Route::get('/', 'index')->name('index');
                     Route::get('/data', 'data')->name('data');
-                    Route::get('/{id}/show', 'show')->name('show');
                     Route::delete('/{id}', 'destroy')->name('delete');
                     Route::post('/status/{id}', 'status')->name('status');
                     Route::post('/admin-active/{id}', 'ActiveByAdmin')->name('ActiveByAdmin');
@@ -35,6 +35,20 @@ Route::prefix('admin/freelancer/')->name('admin.')->group(function () {
                     Route::post('/send-message', 'sendMessage')->name('sendMessage');
                 });
             });
+
+
+                Route::controller(OtheFreeLancerController::class)->group(function () {
+                    Route::get('/', 'index')->name('index');
+                    Route::get('/data', 'data')->name('data');
+                    Route::get('/{id}/show', 'show')->name('show');
+                    Route::delete('/{id}', 'destroy')->name('delete');
+                    Route::post('/status/{id}', 'status')->name('status');
+                    Route::post('/admin-active/{id}', 'ActiveByAdmin')->name('ActiveByAdmin');
+                    Route::post('/admin-deactivate/{id}', 'deactivateByAdmin')->name('deactivateByAdmin');
+                    Route::post('/send-message', 'sendMessage')->name('sendMessage');
+                    Route::get('/{id}/show', 'show')->name('show');
+
+                });
 
 
         });

@@ -313,55 +313,6 @@ class ProfileController extends Controller
         }
     }
 
-    public function updateSummary(SummaryRequest $request)
-    {
-        try {
-            $user = Auth::user();
-            $token = $this->extractBearerToken($request);
-            $freelancer = $user->freelancer;
-
-            $user->update([
-                'bio' => $request->bio,
-                'video' => $request->video,
-                'video_title' => $request->video_title,
-                'images_title' => $request->images_title,
-            ]);
-
-
-
-            // معالجة الصور
-            if ($request->hasFile('images')) {
-                // احذف الصور السابقة إن وجدت
-                $freelancer->clearMediaCollection('images');
-
-                foreach ($request->file('images') as $image) {
-                    $freelancer->addMedia($image)
-                        ->usingFileName(Str::random(20) . '.' . $image->getClientOriginalExtension())
-                        ->toMediaCollection('images', 'freelancersImages'); // استخدم disk الصحيح
-                }
-            }
-
-
-            return $this->apiResponse(
-                new SummaryResource($user),
-                __('messages.data_saved_successfully'),
-                true,
-                200
-            );
-        } catch (Exception $e) {
-            Log::error('Error saving user data.', [
-                'user_id' => $user->id,
-                'error' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine()
-            ]);
-
-            return $this->apiResponse([], __('messages.data_save_failed'), false, 500);
-
-
-        }
-    }
-
     public function updatePhoto(Request $request)
     {
         $request->validate([
@@ -398,6 +349,53 @@ class ProfileController extends Controller
         }
 
     }
+
+    public function updateSummary(SummaryRequest $request)
+    {
+        try {
+            $user = Auth::user();
+            $token = $this->extractBearerToken($request);
+            $freelancer = $user->freelancer;
+
+            $user->update([
+                'bio' => $request->bio,
+                'video' => $request->video,
+                'video_title' => $request->video_title,
+                'images_title' => $request->images_title,
+            ]);
+
+
+            // معالجة الصور
+            if ($request->hasFile('images')) {
+
+                foreach ($request->file('images') as $image) {
+                    $freelancer->addMedia($image)
+                        ->usingFileName(Str::random(20) . '.' . $image->getClientOriginalExtension())
+                        ->toMediaCollection('images', 'freelancersImages'); // استخدم disk الصحيح
+                }
+            }
+
+
+            return $this->apiResponse(
+                new SummaryResource($user),
+                __('messages.data_saved_successfully'),
+                true,
+                200
+            );
+        } catch (Exception $e) {
+            Log::error('Error saving user data.', [
+                'user_id' => $user->id,
+                'error' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
+            ]);
+
+            return $this->apiResponse([], __('messages.data_save_failed'), false, 500);
+
+
+        }
+    }
+
 
     public function deleteImageSummary($id)
     {

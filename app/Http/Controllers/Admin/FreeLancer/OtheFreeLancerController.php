@@ -9,20 +9,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\DataTables;
 
-class FreeLancerVerifiedController extends Controller
+class OtheFreeLancerController extends Controller
 {
     public function index()
     {
-        return view('admin.FreeLancer.verified.index');
+        return view('admin.FreeLancer.other.index');
 
     }
 
     public function data(Request $request)
     {
-        $freelancers = Freelancer::with(['user.country', 'identityVerification'])
-            ->whereHas('identityVerification', function ($query) {
-                $query->where('status', '1');
-            });
+        $freelancers = Freelancer::with(['user.country'])
+            ->whereDoesntHave('identityVerification');
+
 
         if ($request->filled('search')) {
             $search = $request->search;
@@ -77,7 +76,7 @@ class FreeLancerVerifiedController extends Controller
                  data-kt-menu="true">
 
                 <div class="menu-item px-3">
-                    <a href="'.route('admin.freelancers.show',$row->id).'" class="menu-link px-3 edit-badge" data-id="' . $row->id . '">View</a>
+                    <a href="' . route('admin.freelancers.show', $row->id) . '" class="menu-link px-3 edit-badge" data-id="' . $row->id . '">View</a>
                 </div>
 
                 <div class="menu-item px-3">
@@ -224,16 +223,16 @@ class FreeLancerVerifiedController extends Controller
     }
 
 
-//    public function show($id)
-//    {
-//        $freelancer = Freelancer::find($id);
-//
-//        if (!$freelancer) {
-//            return response()->json(['message' => 'Freelancer not found.'], 404);
-//        }
-//
-//        return view('admin.FreeLancer.index', compact('freelancer'));
-//
-//
-//    }
+    public function show($id)
+    {
+        $freelancer = Freelancer::find($id);
+
+        if (!$freelancer) {
+            return response()->json(['message' => 'Freelancer not found.'], 404);
+        }
+
+        return view('admin.FreeLancer.index', compact('freelancer'));
+
+
+    }
 }

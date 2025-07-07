@@ -36,7 +36,8 @@ class UserResource extends JsonResource
             'country' => new CountryResource($this->country),
             'birth_date' => $this->birth_date,
             'save_data' => $this->save_data,
-            'joined_date' => $this->created_at->format('d M, Y') . ' , ' . $this->created_at->diffForHumans(),
+            'joined_date' => $this->created_at->format('d M, Y'),
+//            'joined_date' => $this->created_at->format('d M, Y') . ' , ' . $this->created_at->diffForHumans(),
             'type' => $this->client ? 'client' : ($this->freelancer ? 'freelancer' : null),
         ];
 
@@ -47,13 +48,16 @@ class UserResource extends JsonResource
         if ($this->freelancer) {
 
             return array_merge($baseData, [
-                'total_jobs'=>$this->freelancer->jobs(),
+                'total_jobs' => $this->freelancer->jobs(),
                 'id_verified' => $this->freelancer->idVerified(),
                 'category' => new CategoryResource($this->freelancer->category),
                 'sub_category' => new SubCategoryResource($this->freelancer->subCategory),
 
                 'hourly_rate' => $this->freelancer->hourly_rate,
-                'available_hire' => $this->freelancer->available_hire,
+
+                'available_hire' => $this->freelancer->availability(),
+                'not_available_reasons'=>$this->freelancer->availabilityDetails(),
+
                 'experience' => $this->freelancer->experience,
 
 
