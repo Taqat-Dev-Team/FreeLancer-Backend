@@ -109,17 +109,6 @@
             opacity: 0.7;
         }
 
-        .button {
-            display: inline-block;
-            background-color: #1279be;
-            color: #ffffff;
-            padding: 12px 25px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 16px;
-            margin-top: 20px;
-        }
 
         /* Blade conditional classes for RTL/LTR content */
         .rtl {

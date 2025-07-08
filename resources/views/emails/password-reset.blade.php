@@ -75,19 +75,7 @@
             font-size: 16px;
         }
 
-        .otp-code-box {
-            background-color: #e9ecef;
-            color: #1279be; /* OTP color with primary color */
-            font-size: 28px;
-            font-weight: bold;
-            text-align: center;
-            padding: 15px 20px;
-            margin: 25px auto;
-            border-radius: 6px;
-            width: fit-content;
-            letter-spacing: 2px;
-            direction: ltr; /* Ensure OTP code is always LTR */
-        }
+
 
         .footer {
             background-color: #f4f7f6;

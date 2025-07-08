@@ -312,6 +312,13 @@ return [
     'invalid_user' => 'This email address is not registered with us.',
     'unknown_error' => 'An unexpected error occurred while resetting the password.',
     'otp_mobile_already_sent'=>'An OTP has already been sent to your mobile number. Please check your messages or wait for it to expire before requesting a new one.',
+
+    'otp_mobile_success' => 'Verification code sent successfully.',
+    'otp_mobile_already_sent' => 'Verification code already sent. Please wait before resending.',
+    'invalid_otp' => 'The verification code is invalid or expired.',
+    'verified' => 'Phone number verified successfully.',
+    'otp_send_failed' => 'Failed to send the verification code. Please try again later.',
+
 ];
 
 

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 
 class IdentityController extends Controller
@@ -21,15 +22,19 @@ class IdentityController extends Controller
     public function sendOtp(Request $request)
     {
         $request->validate([
-            'mobile' => ['required', 'digits_between:7,15', 'regex:/^[0-9]+$/'],
+            'mobile' => [
+                'required',
+                'digits_between:7,15',
+                'regex:/^[0-9]+$/',
+                Rule::unique('users', 'mobile')->ignore(Auth::id()),
+            ],
         ]);
-
 
         $otp = Mobileotp();
 
         Cache::put('otp_' . $request->mobile, $otp, now()->addMinutes(5));
 
-        // SmsService::send($request->mobile, "Your OTP is: $otp");
+//         SmsService::send($request->mobile, "Your OTP is: $otp");
 
         return $this->apiResponse(
             [],
@@ -39,16 +44,20 @@ class IdentityController extends Controller
         );
     }
 
-
     public function resendOtp(Request $request)
     {
         $request->validate([
-            'mobile' => ['required', 'digits_between:7,15', 'regex:/^[0-9]+$/'],
+            'mobile' => [
+                'required',
+                'digits_between:7,15',
+                'regex:/^[0-9]+$/',
+                Rule::unique('users', 'mobile')->ignore(Auth::id()),
+            ],
         ]);
 
+        $cacheKey = 'otp_' . $request->mobile;
 
-        // Check if the OTP was sent within the last 5 minutes
-        if (Cache::has('otp_' . $request->mobile)) {
+        if (Cache::has($cacheKey)) {
             return $this->apiResponse(
                 [],
                 __('messages.otp_mobile_already_sent'),
@@ -57,12 +66,11 @@ class IdentityController extends Controller
             );
         }
 
-
         $otp = Mobileotp();
 
-        Cache::put('otp_' . $request->mobile, $otp, now()->addMinutes(5));
+        Cache::put($cacheKey, $otp, now()->addMinutes(5));
 
-        // SmsService::send($request->mobile, "Your OTP is: $otp");
+//         SmsService::send($request->mobile, "Your OTP is: $otp");
 
         return $this->apiResponse(
             [],
@@ -70,23 +78,21 @@ class IdentityController extends Controller
             true,
             200
         );
-
     }
 
     public function verifyOtp(Request $request)
     {
         $request->validate([
-            'mobile' => ['required', 'digits_between:7,15', 'regex:/^[0-9]+$/'],
-            'otp' => 'required|digits:6'
+            'mobile' => [
+                'required',
+                'digits_between:7,15',
+                'regex:/^[0-9]+$/',
+            ],
+            'otp' => 'required|digits:6',
         ]);
 
         $cacheKey = 'otp_' . $request->mobile;
         $storedOtp = Cache::get($cacheKey);
-        $user = Auth::user();
-        $user->update([
-            'mobile_verified_at' => now(),
-            'mobile' => $request->mobile,
-        ]);
 
         if (!$storedOtp || $request->otp != $storedOtp) {
             return $this->apiResponse(
@@ -97,8 +103,15 @@ class IdentityController extends Controller
             );
         }
 
+        $user = Auth::user();
+
+        $user->update([
+            'mobile_verified_at' => now(),
+            'mobile' => $request->mobile,
+        ]);
 
         Cache::forget($cacheKey);
+
         return $this->apiResponse(
             [],
             __('messages.verified'),
@@ -129,6 +142,7 @@ class IdentityController extends Controller
                 'family_name' => $request->family_name,
                 'id_number' => $request->id_number,
                 'full_address' => $request->full_address,
+                'phone' => $user->mobile
 
             ]);
 

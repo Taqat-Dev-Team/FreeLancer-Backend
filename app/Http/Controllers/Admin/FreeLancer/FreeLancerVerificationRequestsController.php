@@ -122,7 +122,7 @@ class FreeLancerVerificationRequestsController extends Controller
 
         $freelancer->identityVerification->status = $action === 'accept' ? '1' : '2';
         if ($action === 'accept') {
-            Mail::to($freelancer->user->email)->send(new VerificationAccepted($freelancer->user,$freelancer->user->lang));
+            Mail::to($freelancer->user->email)->send(new VerificationAccepted($freelancer->user, $freelancer->user->lang));
 
             $badge = Badge::whereId(1)->first();
             if ($badge) {
@@ -130,6 +130,8 @@ class FreeLancerVerificationRequestsController extends Controller
             }
         }
 
+
+        $freelancer->identityVerification->verification_date = now();
 
         $freelancer->identityVerification->save();
 

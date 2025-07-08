@@ -1,6 +1,8 @@
 <?php
+
 use App\Models\Contact;
 use App\Models\IdentityVerification;
+
 function otp(): int
 {
     $env = env('APP_ENV');
@@ -68,16 +70,15 @@ function unreadContactsCount()
 
 function IdentityRequestsCount()
 {
-    return IdentityVerification::where('status', '0')->count();
+    return IdentityVerification::where('status', '0')->distinct('freelancer_id')->count('freelancer_id');
 }
 
 function VerifiedFreeLancersCount()
 {
-    return IdentityVerification::where('status', '1')->count();
+    return IdentityVerification::where('status', '1')->distinct('freelancer_id')->count('freelancer_id');
 }
 
 function OthersFreeLancersCount()
 {
     return \App\Models\Freelancer::whereDoesntHave('identityVerification')->count();
 }
-

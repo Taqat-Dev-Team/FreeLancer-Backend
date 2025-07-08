@@ -13,11 +13,11 @@
             </h3>
             <div class="card-toolbar">
                 @if($freelancer->admin_available_hire)
-                    <a href="#" class="btn btn-light-warning w-100 toggle-admin-availability-deactivate" data-id="5">
+                    <a href="#" class="btn btn-light-warning w-100 toggle-admin-availability-deactivate" data-id="{{$freelancer->id}}">
                         <i class="ki-solid ki-cross fs-1 me-2"></i> Deactivate Availability
                     </a>
                 @else
-                    <a href="#" class="btn btn-light-primary w-100 toggle-admin-availability-active" data-id="5">
+                    <a href="#" class="btn btn-light-primary w-100 toggle-admin-availability-active" data-id="{{$freelancer->id}}">
                         <i class="ki-solid ki-check fs-1 me-2"></i> Activate Availability
                     </a>
                 @endif
@@ -29,8 +29,9 @@
                 <div class="col-7 px-0">
                     <div class="d-flex flex-column content-justify-center">
                         <div class="d-flex fs-6 fw-semibold align-items-center">
-                            <div class="bullet {{ $freelancer->availability() == 1 ? 'bg-success' : 'bg-warning' }} me-3"
-                                 style="border-radius: 3px;width: 12px;height: 12px"></div>
+                            <div
+                                class="bullet {{ $freelancer->availability() == 1 ? 'bg-success' : 'bg-warning' }} me-3"
+                                style="border-radius: 3px;width: 12px;height: 12px"></div>
                             <div class="fs-5 fw-bold text-gray-600 me-5">
                                 {{ $freelancer->availability() == 1 ? 'Available' : 'Not Available' }}
                             </div>
@@ -39,6 +40,19 @@
                             Available to Hire: {{ $freelancer->available_hire ? 'Yes' : 'No' }}<br>
                             Available from Admin: {{ $freelancer->admin_available_hire ? 'Yes' : 'No' }}
                         </div>
+
+                        @if ($freelancer->availabilityDetails())
+                            <div class="fs-5 fw-bold text-gray-600 me-5">
+                                Reasons:
+                                <ul class="mb-0">
+
+                                    @foreach ($freelancer->availabilityDetails() as $reason)
+                                        <li>{{ $reason }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                     </div>
                 </div>
             </div>
@@ -87,7 +101,8 @@
                                     <i class="ki-outline ki-cross fs-1 text-danger"></i>
                                 @endif
                             </span>
-                            <span class="fs-6 fw-semibold text-muted d-block lh-1 pt-2">{{ $item['description'] }}</span>
+                            <span
+                                class="fs-6 fw-semibold text-muted d-block lh-1 pt-2">{{ $item['description'] }}</span>
                         </div>
                     @endforeach
                 </div>

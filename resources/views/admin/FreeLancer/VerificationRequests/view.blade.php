@@ -133,6 +133,7 @@
 
 </div>
 
+{{--shwo get data--}}
 <script>
     $(document).ready(function () {
 

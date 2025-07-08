@@ -87,19 +87,7 @@
             font-size: 16px;
         }
 
-        .otp-code-box {
-            background-color: #e9ecef;
-            color: #1279be; /* OTP color with primary color */
-            font-size: 28px;
-            font-weight: bold;
-            text-align: center;
-            padding: 15px 20px;
-            margin: 25px auto;
-            border-radius: 6px;
-            width: fit-content;
-            letter-spacing: 2px;
-            direction: ltr; /* Ensure OTP code is always LTR */
-        }
+
 
         .footer {
             background-color: #f4f7f6;
@@ -121,19 +109,6 @@
             opacity: 0.7;
         }
 
-        .button {
-            display: inline-block;
-            background-color: #1279be;
-            color: #ffffff;
-            padding: 12px 25px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 16px;
-            margin-top: 20px;
-        }
-
-        /* Blade conditional classes for RTL/LTR content */
         .rtl {
             text-align: right;
             direction: rtl;

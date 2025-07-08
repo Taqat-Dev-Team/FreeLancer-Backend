@@ -64,7 +64,7 @@ class FreeLancerVerifiedController extends Controller
                 $modalId = 'availabilityModal_' . $row->id;
 
                 return '<span class="badge badge-light-warning cursor-pointer" data-bs-toggle="modal" data-bs-target="#' . $modalId . '">Not Available To Hire</span>'
-                    . view('admin.FreeLancer.verified.partials.availability_modal', ['row' => $row, 'modalId' => $modalId])->render();
+                    . view('admin.FreeLancer.partials.availability_modal', ['row' => $row, 'modalId' => $modalId])->render();
             })
             ->addColumn('actions', function ($row) {
                 $actions = '
@@ -77,7 +77,7 @@ class FreeLancerVerifiedController extends Controller
                  data-kt-menu="true">
 
                 <div class="menu-item px-3">
-                    <a href="'.route('admin.freelancers.show',$row->id).'" class="menu-link px-3 edit-badge" data-id="' . $row->id . '">View</a>
+                    <a href="' . route('admin.freelancers.show', $row->id) . '" class="menu-link px-3 edit-badge" data-id="' . $row->id . '">View</a>
                 </div>
 
                 <div class="menu-item px-3">
@@ -137,103 +137,4 @@ class FreeLancerVerifiedController extends Controller
     }
 
 
-    public function status(Request $request, $id)
-    {
-        $freelancer = Freelancer::find($id);
-
-        if (!$freelancer) {
-            return response()->json(['message' => 'Freelancer not found.'], 404);
-        }
-
-        $user = $freelancer->user;
-        $previousStatus = $user->status;
-        $user->status = !$user->status;
-        $user->save();
-
-        // إرسال الإيميل حسب الحالة الجديدة
-        if ($user->status) {
-            // تم التفعيل
-            Mail::to($user->email)->send(new \App\Mail\FreelancerActivated($user));
-        } else {
-            // تم التعطيل مع سبب
-            $reason = $request->input('reason');
-            Mail::to($user->email)->send(new \App\Mail\FreelancerDeactivated($user, $reason));
-        }
-
-        return response()->json(['message' => 'Freelancer status updated successfully.']);
-    }
-
-
-    public function ActiveByAdmin($id)
-    {
-        $freelancer = Freelancer::find($id);
-        if (!$freelancer) {
-            return response()->json(['message' => 'Freelancer not found.'], 404);
-        }
-
-        $freelancer->admin_available_hire = 1;
-        Mail::to($freelancer->user->email)->send(new AdminMessageToFreelancer(trans('messages.freelancer_admin_active', [], $freelancer->user->lang ?? 'ar'), $freelancer->user));
-
-        $freelancer->save();
-
-        return response()->json(['message' => 'Freelancer admin availability updated successfully.']);
-
-    }
-
-    public function deactivateByAdmin($id)
-    {
-        $freelancer = Freelancer::find($id);
-        if (!$freelancer) {
-            return response()->json(['message' => 'Freelancer not found.'], 404);
-        }
-
-        $freelancer->admin_available_hire = 0;
-        Mail::to($freelancer->user->email)->send(new AdminMessageToFreelancer(trans('messages.freelancer_admin_deactivate', [], $freelancer->user->lang ?? 'ar'), $freelancer->user));
-
-        $freelancer->save();
-
-        return response()->json(['message' => 'Freelancer admin availability updated successfully.']);
-
-    }
-
-    public function destroy($id)
-    {
-        $freelancer = Freelancer::find($id);
-        $freelancer->delete();
-        return response()->json(['message' => 'Freelancer deleted successfully.']);
-
-    }
-
-    public function sendMessage(Request $request)
-    {
-        $request->validate([
-            'id' => 'required|exists:freelancers,id',
-            'message' => 'required|string|max:2000',
-        ]);
-
-        $freelancer = Freelancer::with('user')->find($request->id);
-
-        if (!$freelancer || !$freelancer->user || !$freelancer->user->email) {
-            return response()->json(['message' => 'Freelancer email not found.'], 404);
-        }
-
-        // إرسال البريد
-        Mail::to($freelancer->user->email)->send(new AdminMessageToFreelancer($request->message, $freelancer->user));
-
-        return response()->json(['message' => 'Message sent successfully!']);
-    }
-
-
-//    public function show($id)
-//    {
-//        $freelancer = Freelancer::find($id);
-//
-//        if (!$freelancer) {
-//            return response()->json(['message' => 'Freelancer not found.'], 404);
-//        }
-//
-//        return view('admin.FreeLancer.index', compact('freelancer'));
-//
-//
-//    }
 }

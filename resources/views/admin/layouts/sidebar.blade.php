@@ -89,8 +89,8 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link {{ request()->routeIs('admin.freelancers.index') ? 'active' : '' }}"
-                               href="{{ route('admin.freelancers.index') }}">
+                            <a class="menu-link {{ request()->routeIs('admin.freelancers.other.index') ? 'active' : '' }}"
+                               href="{{ route('admin.freelancers.other.index') }}">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
                                 <span class="menu-title ">Other </span>
                                 @if($OthersFreeLancersCount > 0)

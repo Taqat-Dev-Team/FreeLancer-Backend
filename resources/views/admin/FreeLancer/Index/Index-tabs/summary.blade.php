@@ -22,7 +22,7 @@
                     @if($key == 0)
                         <!-- الصورة الأولى كبيرة -->
                         <div class="col-6 mb-5">
-                            <a class="d-block card-rounded overlay h-100"
+                            <a target="_blank" class="d-block card-rounded overlay h-100"
                                data-fslightbox="lightbox-projects"
                                href="{{ $url }}">
                                 <div
@@ -61,6 +61,8 @@
         <!--end::Card body-->
 
     </div>
+
+    @if($freelancer->user->video)
     <div class="card card-flush mb-10">
 
         <!--begin::Card body-->
@@ -100,8 +102,7 @@
                             src="{{ $embedUrl }}"
                             allowfullscreen></iframe>
                 </div>
-            @else
-                <p class="text-danger">فيديو غير صالح أو الرابط غير مدعوم.</p>
+
             @endif
 
             <!--end::Video-->
@@ -109,5 +110,6 @@
         <!--end::Card body-->
 
     </div>
+    @endif
     <!--end::Body-->
 </div>
