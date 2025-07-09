@@ -125,6 +125,11 @@ class Freelancer extends Model implements HasMedia
         return $this->hasMany(FreelancerPortfolio::class);
     }
 
+    public function services()
+    {
+        return $this->hasMany(Service::class);
+    }
+
     public function socialLinks()
     {
         return $this->hasMany(FreelancerSocial::class, 'freelancer_id')
@@ -135,6 +140,8 @@ class Freelancer extends Model implements HasMedia
     {
         return $this->hasMany(FreeLancerLanguage::class, 'freelancer_id');
     }
+
+
 
 
     public function badges()
@@ -155,8 +162,9 @@ class Freelancer extends Model implements HasMedia
 
     public function jobs()
     {
-        return 5;
+        return 0;
     }
+
     // ----------------------------
     // Helpers
     // ----------------------------
@@ -182,7 +190,7 @@ class Freelancer extends Model implements HasMedia
                 '0' => __('messages.pending'),
                 '1' => __('messages.verified_id'),
                 '2' => __('messages.rejected'),
-                default => __('messages.unknown'),
+                default => __('messages.notVerified'),
             },
         ];
     }

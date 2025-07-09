@@ -33,10 +33,10 @@ function Mobileotp(): int
 function languages_levels()
 {
     return collect([
-        ['id' => 0, 'label' => __('messages.beginner')],
-        ['id' => 1, 'label' => __('messages.intermediate')],
-        ['id' => 2, 'label' => __('messages.advanced')],
-        ['id' => 3, 'label' => __('messages.native')],
+        ['id' => 1, 'label' => __('messages.beginner')],
+        ['id' => 2, 'label' => __('messages.intermediate')],
+        ['id' => 3, 'label' => __('messages.advanced')],
+        ['id' => 4, 'label' => __('messages.native')],
     ]);
 }
 
@@ -53,10 +53,28 @@ function work_type()
 function AcademicGrade()
 {
     return collect([
-        ['id' => 0, 'label' => __('messages.excellent')],
-        ['id' => 1, 'label' => __('messages.very_good')],
-        ['id' => 2, 'label' => __('messages.good')],
-        ['id' => 3, 'label' => __('messages.pass')]
+        ['id' => 1, 'label' => __('messages.excellent')],
+        ['id' => 2, 'label' => __('messages.very_good')],
+        ['id' => 3, 'label' => __('messages.good')],
+        ['id' => 4, 'label' => __('messages.pass')]
+
+    ]);
+
+}
+
+function ServiceFileFormat()
+{
+    return collect([
+        ['id' => 1, 'label' => 'AI'],
+        ['id' => 2, 'label' => 'EPS'],
+        ['id' => 3, 'label' => 'PSD'],
+        ['id' => 4, 'label' => 'PPT'],
+        ['id' => 5, 'label' => 'JPG'],
+        ['id' => 6, 'label' => 'PNG'],
+        ['id' => 7, 'label' => 'PDF'],
+        ['id' => 8, 'label' => 'DOCX'],
+        ['id' => 9, 'label' => 'XLSX'],
+        ['id' => 10, 'label' => 'ZIP'],
 
     ]);
 

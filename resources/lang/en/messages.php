@@ -302,22 +302,72 @@ return [
     // Content Block
     'content_block_not_found' => 'Content block not found.',
 
-    'reply_subject'=> 'Your reply to the contact message',
+    'reply_subject' => 'Your reply to the contact message',
 
     'admin_message_subject' => 'Message from Taqat Admin',
-    'freelancer_admin_active'=>'Your freelancer account has been activated by the admin. You can now start receiving job offers and working on projects. Welcome aboard!',
-    'freelancer_admin_deactivate'=> 'Your freelancer account has been deactivated by the admin. Please contact support for more information.',
+    'freelancer_admin_active' => 'Your freelancer account has been activated by the admin. You can now start receiving job offers and working on projects. Welcome aboard!',
+    'freelancer_admin_deactivate' => 'Your freelancer account has been deactivated by the admin. Please contact support for more information.',
 
     'invalid_token' => 'The reset token is invalid or has expired.',
     'invalid_user' => 'This email address is not registered with us.',
     'unknown_error' => 'An unexpected error occurred while resetting the password.',
-    'otp_mobile_already_sent'=>'An OTP has already been sent to your mobile number. Please check your messages or wait for it to expire before requesting a new one.',
+    'otp_mobile_already_sent' => 'An OTP has already been sent to your mobile number. Please check your messages or wait for it to expire before requesting a new one.',
 
-    'otp_mobile_success' => 'Verification code sent successfully.',
-    'otp_mobile_already_sent' => 'Verification code already sent. Please wait before resending.',
-    'invalid_otp' => 'The verification code is invalid or expired.',
-    'verified' => 'Phone number verified successfully.',
+
     'otp_send_failed' => 'Failed to send the verification code. Please try again later.',
+
+    'notVerified' => 'Not Verified',
+
+
+    'main_image_image' => 'The main image must be an image.',
+    'main_image_mimes' => 'The main image must be a file of type: jpeg, png, jpg, gif.',
+    'main_image_max' => 'The main image may not be greater than 10MB.',
+
+
+    'content_blocks_array' => 'The content blocks must be an array.',
+    'content_block_type_required' => 'The type of each content block is required when content_blocks is present.',
+    'content_block_type_in' => 'The type must be either "image" or "text".',
+
+
+    'title_max' => 'The title may not be greater than 255 characters.',
+
+    'category_id_exists' => 'The selected category does not exist.',
+    'sub_category_id_exists' => 'The selected sub-category does not exist.',
+
+    'file_format_array' => 'The file format must be an array.',
+    'file_format_string' => 'Each file format must be a string.',
+
+    'tags_array' => 'The tags must be an array.',
+    'tags_string' => 'Each tag must be a string.',
+    'tags_max' => 'Each tag may not be greater than 50 characters.',
+
+    'days_required' => 'The number of days is required.',
+    'days_integer' => 'The number of days must be an integer.',
+    'days_min' => 'The number of days must be at least 1.',
+
+    'revisions_required' => 'The number of revisions is required.',
+    'revisions_string' => 'The revisions must be a string.',
+    'revisions_max' => 'The revisions may not be greater than 20 characters.',
+
+    'price_required' => 'The price is required.',
+    'price_numeric' => 'The price must be a number.',
+    'price_min' => 'The price may not be less than 0.',
+
+    'add_ons_array' => 'The add-ons must be an array.',
+    'add_ons_title_required' => 'The add-on title is required.',
+    'add_ons_title_string' => 'The add-on title must be a string.',
+    'add_ons_title_max' => 'The add-on title may not be greater than 255 characters.',
+
+    'add_ons_price_required' => 'The add-on price is required.',
+    'add_ons_price_numeric' => 'The add-on price must be a number.',
+    'add_ons_price_min' => 'The add-on price may not be less than 0.',
+
+    'add_ons_additional_days_numeric' => 'The additional days must be a number.',
+    'add_ons_additional_days_min' => 'The additional days may not be less than 0.',
+
+    'freelancer_id_required' => 'The freelancer ID is required.',
+    'freelancer_id_exists' => 'The selected freelancer does not exist.',
+
 
 ];
 

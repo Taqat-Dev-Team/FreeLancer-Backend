@@ -74,13 +74,14 @@ class GeneralFreeLancerController extends Controller
 
     public function destroy($id)
     {
-        return 1;
+
         $freelancer = Freelancer::find($id);
+
+        $freelancer->user->delete();
         $freelancer->delete();
         return response()->json(['message' => 'Freelancer deleted successfully.']);
 
     }
-
 
 
     public function show($id)

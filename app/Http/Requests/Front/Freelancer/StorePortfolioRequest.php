@@ -33,4 +33,23 @@ class StorePortfolioRequest extends FormRequest
             'content_blocks.*.type' => 'required_with:content_blocks|in:image,text',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'title.string' => __('validation.title_string'),
+            'title.max' => __('validation.title_max'),
+
+            'main_image.image' => __('validation.main_image_image'),
+            'main_image.mimes' => __('validation.main_image_mimes'),
+            'main_image.max' => __('validation.main_image_max'),
+
+            'tags.string' => __('validation.tags_string'),
+
+            'content_blocks.array' => __('validation.content_blocks_array'),
+            'content_blocks.*.type.required_with' => __('validation.content_block_type_required'),
+            'content_blocks.*.type.in' => __('validation.content_block_type_in'),
+        ];
+    }
+
 }

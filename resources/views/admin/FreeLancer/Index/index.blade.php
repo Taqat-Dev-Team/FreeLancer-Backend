@@ -203,6 +203,16 @@
                                href="#kt_user_view_services_tab" aria-selected="true" role="tab">Services</a>
                         </li>
 
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link text-active-primary pb-4 " data-bs-toggle="tab"
+                               href="#kt_user_view_projects_tab" aria-selected="true" role="tab">Projects</a>
+                        </li>
+
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link text-active-primary pb-4 " data-bs-toggle="tab"
+                               href="#kt_user_view_tickets_tab" aria-selected="true" role="tab">Tickets</a>
+                        </li>
+
                         {{--                        <li class="nav-item ms-auto">--}}
                         {{--                            <!--begin::Action menu-->--}}
                         {{--                            <a href="#" class="btn btn-primary ps-7" data-kt-menu-trigger="click"--}}
