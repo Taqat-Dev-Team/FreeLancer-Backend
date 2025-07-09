@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\ContactController;
+use App\Http\Controllers\Admin\UserController;
 
 
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -26,15 +27,31 @@ Route::prefix('admin')->name('admin.')->group(function () {
         });
 
 
-        Route::controller(ContactController::class)->group(function () {
-            Route::get('contacts', 'index')->name('contacts.index');
-            Route::get('contacts/data', 'getData')->name('contacts.data');
-            Route::get('contacts/{id}/show', 'show')->name('contacts.show');
-            Route::delete('contacts/{id}', 'destroy')->name('contacts.destroy');
-            Route::post('contacts/reply{id}', 'reply')->name('contacts.reply');
+        Route::prefix('contacts')->name('contacts.')->group(function () {
 
+            Route::controller(ContactController::class)->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('/data', 'getData')->name('data');
+                Route::get('/{id}/show', 'show')->name('show');
+                Route::delete('/{id}', 'destroy')->name('destroy');
+                Route::post('/reply{id}', 'reply')->name('reply');
+
+            });
         });
 
+
+        Route::prefix('users')->name('users.')->group(function () {
+            Route::controller(UserController::class)->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('/{id}/show', 'show')->name('show');
+                Route::get('/data', 'data')->name('data');
+                Route::delete('/{id}', 'destroy')->name('delete');
+                Route::post('/status/{id}', 'status')->name('status');
+                Route::post('/send-message', 'sendMessage')->name('sendMessage');
+
+
+            });
+        });
 
     });
 
@@ -42,6 +59,5 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 
-
-require  __DIR__.'/management.php';
-require  __DIR__.'/freelancers.php';
+require __DIR__ . '/management.php';
+require __DIR__ . '/freelancers.php';

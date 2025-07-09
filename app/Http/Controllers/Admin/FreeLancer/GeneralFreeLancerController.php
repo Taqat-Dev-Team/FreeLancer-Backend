@@ -3,13 +3,11 @@
 namespace App\Http\Controllers\Admin\FreeLancer;
 
 use App\Http\Controllers\Controller;
-use App\Mail\AdminMessageToFreelancer;
+use App\Mail\AdminMessageToUser;
 use App\Models\Badge;
 use App\Models\Freelancer;
-use App\Models\IdentityVerification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-use Yajra\DataTables\DataTables;
 
 class GeneralFreeLancerController extends Controller
 {
@@ -23,7 +21,6 @@ class GeneralFreeLancerController extends Controller
         }
 
         $user = $freelancer->user;
-        $previousStatus = $user->status;
         $user->status = !$user->status;
         $user->save();
 
@@ -109,7 +106,7 @@ class GeneralFreeLancerController extends Controller
         }
 
         // إرسال البريد
-        Mail::to($freelancer->user->email)->send(new AdminMessageToFreelancer($request->message, $freelancer->user));
+        Mail::to($freelancer->user->email)->send(new AdminMessageToUser($request->message, $freelancer->user));
 
         return response()->json(['message' => 'Message sent successfully!']);
     }

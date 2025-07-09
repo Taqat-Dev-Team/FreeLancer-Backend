@@ -2,6 +2,7 @@
 
 use App\Models\Contact;
 use App\Models\IdentityVerification;
+use App\Models\User;
 
 function otp(): int
 {
@@ -40,6 +41,11 @@ function languages_levels()
     ]);
 }
 
+function usersNotTypedCount()
+{
+       return User::whereDoesntHave('freelancer')
+        ->whereDoesntHave('client')->count();
+}
 function work_type()
 {
     return collect([

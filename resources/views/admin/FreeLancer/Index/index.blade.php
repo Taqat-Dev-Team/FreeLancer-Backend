@@ -81,8 +81,8 @@
 
                                     <div class="fw-bold mt-5">Address</div>
                                     <div class="text-gray-600 mb-2">
-                                        {{ $country->name }}<br>
-                                        <img src="{{ $country->flag }}" class="w-20px h-20px rounded-circle" alt="Flag">
+                                        {{ $country?->name }}<br>
+                                        <img src="{{ $country?->flag }}" class="w-20px h-20px rounded-circle" >
                                         {{ $user->mobile }}
                                     </div>
 

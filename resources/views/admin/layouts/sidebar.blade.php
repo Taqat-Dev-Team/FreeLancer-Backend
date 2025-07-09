@@ -104,6 +104,39 @@
                         </div>
                     </div>
                 </div>
+
+                 @php $usersNotTypedCount=usersNotTypedCount() @endphp
+
+                <div data-kt-menu-trigger="click"
+                     class="menu-item {{ request()->routeIs('admin.users*') ? 'here show' : '' }} menu-accordion">
+                <span class="menu-link">
+                    <span class="menu-icon">
+                        <i class="ki-outline ki-profile-user fs-2"></i>
+                    </span>
+                    <span class="menu-title">Users</span>
+                    <span class="menu-arrow"></span>
+                </span>
+
+                    <div class="menu-sub menu-sub-accordion">
+                        <div class="menu-item">
+                            <a class="menu-link {{ request()->routeIs('admin.users.index') ? 'active' : '' }}"
+                               href="{{ route('admin.users.index') }}">
+                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                                <span class="menu-title ">User List</span>
+                                @if($usersNotTypedCount > 0)
+                                    <span class="menu-badge justify-content-end">
+                                    <span class="badge badge-light-primary ms-2">
+                                        {{ $usersNotTypedCount }}
+                                    </span>
+                                </span>
+                                @endif
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+
                 <div data-kt-menu-trigger="click"
                      class="menu-item {{ request()->routeIs('admin.management*') ? 'here show' : '' }} menu-accordion">
                 <span class="menu-link">

@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Lang;
 
-class AdminMessageToFreelancer extends Mailable
+class AdminMessageToUser extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -36,7 +36,7 @@ class AdminMessageToFreelancer extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.admin_message_to_freelancer',
+            view: 'emails.admin_message_to_user',
             with: [
                 'replyText' => $this->messageContent,
                 'locale' => $this->locale,
