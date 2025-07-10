@@ -12,17 +12,16 @@ Route::get('/clear', function () {
 });
 
 
-
-
 Route::get('/link', function () {
     Artisan::call('storage:link');
 });
 
 
-Route::get('/', function () {
-    return redirect()->route('admin.login');
-})->name('home');
+
+Route::view('/', 'Front.welcome')->name('home');
+Route::view('/register', 'Front.register')->name('register');
+Route::view('/login', 'Front.login')->name('login');
 
 
-require  __DIR__.'/Admin/admin.php';
+require __DIR__ . '/Admin/admin.php';
 

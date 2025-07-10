@@ -49,6 +49,7 @@ class AuthController extends Controller
 
             DB::commit();
 
+
             return $this->apiResponse(
                 ['email' => $user->email],
                 __('messages.register_success'),

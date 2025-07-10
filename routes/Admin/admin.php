@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\ContactController;
+use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\UserController;
 
 
@@ -36,6 +37,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::delete('/{id}', 'destroy')->name('destroy');
                 Route::post('/reply{id}', 'reply')->name('reply');
 
+            });
+        });
+
+        Route::prefix('settings')->name('settings.')->group(function () {
+
+            Route::controller(SettingsController::class)->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::post('/', 'update')->name('update');
             });
         });
 

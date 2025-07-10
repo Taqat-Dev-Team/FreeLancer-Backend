@@ -17,6 +17,7 @@
             </div>
         </div>
     </div>
+
     <div class="app-sidebar-menu flex-column-fluid">
         <div id="kt_app_sidebar_menu_wrapper" class="hover-scroll-overlay-y my-5" data-kt-scroll="true"
              data-kt-scroll-activate="true" data-kt-scroll-height="auto"
@@ -231,6 +232,18 @@
                         @endif
                     </a>
                 </div>
+
+
+                <div class="menu-item {{ request()->routeIs('admin.settings.*') ? 'here show' : '' }}">
+                    <a class="menu-link {{ request()->routeIs('admin.settings.*')? 'active':'' }}"
+                       href="{{ route('admin.settings.index') }}">
+                    <span class="menu-icon">
+                        <i class="ki-outline ki-gear fs-2 {{ request()->routeIs('admin.settings.*')? 'text-white':'' }}"></i>
+                    </span>
+                        <span class="menu-title {{ request()->routeIs('admin.settings.*')? 'text-white':'' }}">Settings</span>
+                    </a>
+                </div>
+
             </div>
         </div>
     </div>

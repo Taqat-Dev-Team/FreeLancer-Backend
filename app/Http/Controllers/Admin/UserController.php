@@ -15,7 +15,7 @@ class UserController extends Controller
 
     public function index()
     {
-        return view('admin.users.index');
+        return view('admin.Users.index');
     }
 
 
@@ -57,34 +57,32 @@ class UserController extends Controller
             <div class="menu menu-sub menu-sub-dropdown menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px py-3"
                  data-kt-menu="true">
 
-                <div class="menu-item px-3">
-                    <a href="' . route('admin.freelancers.show', $row->id) . '" class="menu-link px-3 edit-badge" data-id="' . $row->id . '">View</a>
-                </div>
+
 
                 <div class="menu-item px-3">
                     <a href="#" class="menu-link px-3 delete-freelancer btn btn-active-light-danger" data-id="' . $row->id . '">Delete</a>
                 </div>';
 
 
-                // ✅ زر تغيير حالة المستخدم
-                $actions .= '
-        <div class="menu-item px-3">
-            <a href="#" class="menu-link px-3 status-freelancer btn btn-active-light-warning"
-               data-id="' . $row->id . '" data-status="' . $row->status . '">
-               Change Status
-            </a>
-        </div>';
-
-                // ✅ زر إرسال رسالة
-                $actions .= '
-        <div class="menu-item px-3">
-            <a href="#" class="menu-link px-3 message-freelancer btn btn-active-light-info"
-               data-id="' . $row->id . '">
-               Send Message
-            </a>
-        </div>
-    </div>
-</div>';
+//                // ✅ زر تغيير حالة المستخدم
+//                $actions .= '
+//        <div class="menu-item px-3">
+//            <a href="#" class="menu-link px-3 status-freelancer btn btn-active-light-warning"
+//               data-id="' . $row->id . '" data-status="' . $row->status . '">
+//               Change Status
+//            </a>
+//        </div>';
+//
+//                // ✅ زر إرسال رسالة
+//                $actions .= '
+//        <div class="menu-item px-3">
+//            <a href="#" class="menu-link px-3 message-freelancer btn btn-active-light-info"
+//               data-id="' . $row->id . '">
+//               Send Message
+//            </a>
+//        </div>
+//    </div>
+//</div>';
 
                 return $actions;
             })

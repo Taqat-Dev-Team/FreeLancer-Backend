@@ -16,6 +16,7 @@ License: For each use you must have a valid license purchased only from above li
     <title>Taqat - {{@$title}}</title>
 
     @include('admin.layouts.css')
+
     <!--end::Global Stylesheets Bundle-->
 </head>
 <!--end::Head-->
