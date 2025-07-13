@@ -9,40 +9,98 @@
             </div>
         </div>
 
+
         <!-- Facebook -->
-        <x-admin.text-input label="Facebook" name="facebook" :value="setting('facebook')" />
+
+        <div class="row mb-7">
+            <div class="col-md-3 text-md-end">
+                <label class="fs-6 fw-semibold form-label mt-3">Facebook</label>
+            </div>
+            <div class="col-md-9">
+                <input type="text" class="form-control form-control-solid" name="facebook"
+                       value="{{  $settings['facebook'] ??''  }}">
+            </div>
+        </div>
+
 
         <!-- Twitter -->
-        <x-admin.text-input label="Twitter" name="twitter" :value="setting('twitter')" />
+        <div class="row mb-7">
+            <div class="col-md-3 text-md-end">
+                <label class="fs-6 fw-semibold form-label mt-3">Twitter</label>
+            </div>
+            <div class="col-md-9">
+                <input type="text" class="form-control form-control-solid" name="twitter"
+                       value="{{  $settings['twitter'] ??''  }}">
+            </div>
+        </div>
+
 
         <!-- Instagram -->
-        <x-admin.text-input label="Instagram" name="instagram" :value="setting('instagram')" />
+        <div class="row mb-7">
+            <div class="col-md-3 text-md-end">
+                <label class="fs-6 fw-semibold form-label mt-3">Instagram</label>
+            </div>
+            <div class="col-md-9">
+                <input type="text" class="form-control form-control-solid" name="instagram"
+                       value="{{  $settings['instagram'] ??''  }}">
+            </div>
+        </div>
+
 
         <!-- LinkedIn -->
-        <x-admin.text-input label="LinkedIn" name="linkedin" :value="setting('linkedin')" />
+        <div class="row mb-7">
+            <div class="col-md-3 text-md-end">
+                <label class="fs-6 fw-semibold form-label mt-3">LinkedIn</label>
+            </div>
+            <div class="col-md-9">
+                <input type="text" class="form-control form-control-solid" name="linkedin"
+                       value="{{  $settings['linkedin'] ??''  }}">
+            </div>
+        </div>
 
         <!-- TikTok -->
-        <x-admin.text-input label="TikTok" name="tiktok" :value="setting('tiktok')" />
+        <div class="row mb-7">
+            <div class="col-md-3 text-md-end">
+                <label class="fs-6 fw-semibold form-label mt-3">TikTok</label>
+            </div>
+            <div class="col-md-9">
+                <input type="text" class="form-control form-control-solid" name="tiktok"
+                       value="{{  $settings['tiktok'] ??''  }}">
+            </div>
+        </div>
 
         <!-- YouTube -->
-        <x-admin.text-input label="YouTube" name="youtube" :value="setting('youtube')" />
+        {{--        <div class="row mb-7">--}}
+        {{--            <div class="col-md-3 text-md-end">--}}
+        {{--                <label class="fs-6 fw-semibold form-label mt-3">YouTube</label>--}}
+        {{--            </div>--}}
+        {{--            <div class="col-md-9">--}}
+        {{--                <input type="text" class="form-control form-control-solid" name="youtube"--}}
+        {{--                       value="{{  $settings['youtube'] ??''  }}">--}}
+        {{--            </div>--}}
+        {{--        </div>--}}
+
 
         <!-- WhatsApp -->
-        <x-admin.text-input label="WhatsApp" name="whatsapp" :value="setting('whatsapp')" />
+        <div class="row mb-7">
+            <div class="col-md-3 text-md-end">
+                <label class="fs-6 fw-semibold form-label mt-3">WhatsApp</label>
+            </div>
+            <div class="col-md-9">
+                <input type="text" class="form-control form-control-solid" name="whatsapp"
+                       value="{{  $settings['whatsapp'] ??''  }}">
+            </div>
+        </div>
 
-        <!-- Telegram -->
-        <x-admin.text-input label="Telegram" name="telegram" :value="setting('telegram')" />
 
         <!-- Submit Button -->
         <div class="row py-5">
             <div class="col-md-9 offset-md-3">
                 <div class="d-flex">
-                    <button type="reset" class="btn btn-light me-3">Cancel</button>
-                    <button type="submit" class="btn btn-primary submit-button">
-                        <span class="indicator-label">Save</span>
-                        <span class="indicator-progress d-none">Please wait...
-                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                    </span>
+                    <button type="submit" class="btn btn-primary">
+                        <span class="indicator-label">Save changes</span>
+                        <span class="indicator-progress">Please wait...
+                                  <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                     </button>
                 </div>
             </div>

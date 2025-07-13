@@ -18,7 +18,8 @@
                 </label>
             </div>
             <div class="col-md-9">
-                <input type="text" class="form-control form-control-solid" name="phone_number" value="{{ setting('phone_number') }}">
+                <input type="text" class="form-control form-control-solid" name="phone_number"
+                       value="{{  $settings['phone_number'] ??''  }}">
             </div>
         </div>
 
@@ -30,7 +31,8 @@
                 </label>
             </div>
             <div class="col-md-9">
-                <input type="email" class="form-control form-control-solid" name="email" value="{{ setting('email') }}">
+                <input type="email" class="form-control form-control-solid" name="email"
+                       value="{{  $settings['email'] ??''  }}">
             </div>
         </div>
 
@@ -42,7 +44,8 @@
                 </label>
             </div>
             <div class="col-md-9">
-                <textarea class="form-control form-control-solid" name="address_en">{{ setting('address_en') }}</textarea>
+                <textarea class="form-control form-control-solid"
+                          name="address_en"> {{  $settings['address_en'] ??''  }}</textarea>
             </div>
         </div>
 
@@ -54,7 +57,8 @@
                 </label>
             </div>
             <div class="col-md-9">
-                <textarea class="form-control form-control-solid" name="address_ar">{{ setting('address_ar') }}</textarea>
+                <textarea class="form-control form-control-solid"
+                          name="address_ar">{{  $settings['address_ar'] ??''  }}</textarea>
             </div>
         </div>
 
@@ -62,13 +66,12 @@
         <div class="row py-5">
             <div class="col-md-9 offset-md-3">
                 <div class="d-flex">
-                    <button type="reset" class="btn btn-light me-3">Cancel</button>
-                    <button type="submit" class="btn btn-primary submit-button">
-                        <span class="indicator-label">Save</span>
-                        <span class="indicator-progress d-none">Please wait...
-                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                    </span>
+                    <button type="submit" class="btn btn-primary">
+                        <span class="indicator-label">Save changes</span>
+                        <span class="indicator-progress">Please wait...
+                                  <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                     </button>
+
                 </div>
             </div>
         </div>

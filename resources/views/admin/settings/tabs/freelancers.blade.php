@@ -20,7 +20,7 @@
             <div class="col-md-9">
                 <input type="number" class="form-control form-control-solid"
                        name="freelancers_availability_percentage"
-                       value="{{ setting('freelancers_availability_percentage') }}">
+                       value="{{  $settings['freelancers_availability_percentage'] ??''  }}">
             </div>
         </div>
 
@@ -28,12 +28,10 @@
         <div class="row py-5">
             <div class="col-md-9 offset-md-3">
                 <div class="d-flex">
-                    <button type="reset" class="btn btn-light me-3">Cancel</button>
-                    <button type="submit" class="btn btn-primary submit-button">
-                        <span class="indicator-label">Save</span>
-                        <span class="indicator-progress d-none">Please wait...
-                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                    </span>
+                    <button type="submit" class="btn btn-primary">
+                        <span class="indicator-label">Save changes</span>
+                        <span class="indicator-progress">Please wait...
+                                  <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                     </button>
                 </div>
             </div>

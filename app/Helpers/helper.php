@@ -43,9 +43,10 @@ function languages_levels()
 
 function usersNotTypedCount()
 {
-       return User::whereDoesntHave('freelancer')
+    return User::whereDoesntHave('freelancer')
         ->whereDoesntHave('client')->count();
 }
+
 function work_type()
 {
     return collect([
@@ -109,7 +110,39 @@ function OthersFreeLancersCount()
 
 
 if (!function_exists('setting')) {
-    function setting($key, $default = null) {
-        return \App\Models\Setting::where('key', $key)->value('value') ?? $default;
+    function setting($key = null, $default = null)
+    {
+        static $settings = null;
+
+        if ($settings === null) {
+            $settings = \App\Models\Setting::pluck('value', 'key')->toArray();
+        }
+
+        if ($key === null) {
+            return $settings; // يرجع كل الإعدادات
+        }
+
+        return $settings[$key] ?? $default;
+    }
+}
+
+
+if (!function_exists('setting_media')) {
+    function setting_media($key) {
+        static $settingsModels = null;
+
+        global $settings_media; // جلب المتغير الموجود في blade
+
+        if ($settingsModels === null && !empty($settings_media)) {
+            $settingsModels = $settings_media;
+        }
+
+        $setting = $settingsModels[$key] ?? null;
+
+        if ($setting && $setting->hasMedia($key)) {
+            return $setting->getFirstMedia($key)->getFullUrl();
+        }
+
+        return null;
     }
 }

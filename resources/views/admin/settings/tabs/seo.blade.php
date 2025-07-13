@@ -10,64 +10,86 @@
         </div>
 
         <!-- Meta Description EN -->
-        <x-admin.textarea-input
-            label="English Meta Tag Description"
-            name="meta_description_en"
-            :value="setting('meta_description_en')" />
+        <div class="row mb-7">
+            <label class="col-md-3 col-form-label text-md-end required">English Meta Tag Description</label>
+            <div class="col-md-9">
+                <textarea name="meta_description_en" class="form-control form-control-solid"
+                          rows="3">{{ $settings['meta_description_en'] ??'' }}</textarea>
+            </div>
+        </div>
 
         <!-- Meta Description AR -->
-        <x-admin.textarea-input
-            label="Arabic Meta Tag Description"
-            name="meta_description_ar"
-            :value="setting('meta_description_ar')" />
+        <div class="row mb-7">
+            <label class="col-md-3 col-form-label text-md-end required">Arabic Meta Tag Description</label>
+            <div class="col-md-9">
+                <textarea name="meta_description_ar" class="form-control form-control-solid"
+                          rows="3">{{  $settings['meta_description_ar'] ?? '' }}</textarea>
+            </div>
+        </div>
 
         <!-- Meta Keywords EN -->
-        <x-admin.text-input
-            label="English Meta Keywords"
-            name="meta_keywords_en"
-            :value="setting('meta_keywords_en')"
-            data-attr='data-kt-ecommerce-settings-type="tagify"' />
+        <div class="row mb-7">
+            <label class="col-md-3 col-form-label text-md-end required">English Meta Keywords</label>
+            <div class="col-md-9">
+                <input name="meta_keywords_en" value="{{ $settings['meta_keywords_en'] ??'' }}" type="text"
+                       class="form-control form-control-solid"
+                       data-kt-ecommerce-settings-type="tagify"/>
+            </div>
+        </div>
 
         <!-- Meta Keywords AR -->
-        <x-admin.text-input
-            label="Arabic Meta Keywords"
-            name="meta_keywords_ar"
-            :value="setting('meta_keywords_ar')"
-            data-attr='data-kt-ecommerce-settings-type="tagify"' />
+        <div class="row mb-7">
+            <label class="col-md-3 col-form-label text-md-end required">Arabic Meta Keywords</label>
+            <div class="col-md-9">
+                <input name="meta_keywords_ar" value="{{  $settings['meta_keywords_ar'] ??'' }}" type="text"
+                       class="form-control form-control-solid"
+                       data-kt-ecommerce-settings-type="tagify"/>
+            </div>
+        </div>
 
         <!-- Social Title EN -->
-        <x-admin.text-input
-            label="English Social Title"
-            name="social_title_en"
-            :value="setting('social_title_en')" />
+        <div class="row mb-7">
+            <label class="col-md-3 col-form-label text-md-end required">English Social Title</label>
+            <div class="col-md-9">
+                <input name="social_title_en" value="{{  $settings['social_title_en'] ??''  }}" type="text" class="form-control form-control-solid"/>
+            </div>
+        </div>
 
         <!-- Social Title AR -->
-        <x-admin.text-input
-            label="Arabic Social Title"
-            name="social_title_ar"
-            :value="setting('social_title_ar')" />
+        <div class="row mb-7">
+            <label class="col-md-3 col-form-label text-md-end required">Arabic Social Title</label>
+            <div class="col-md-9">
+                <input name="social_title_ar" value="{{  $settings['social_title_ar'] ??''  }}" type="text"
+                       class="form-control form-control-solid"/>
+            </div>
+        </div>
 
         <!-- Social Description EN -->
-        <x-admin.textarea-input
-            label="English Social Description"
-            name="social_description_en"
-            :value="setting('social_description_en')" />
+        <div class="row mb-7">
+            <label class="col-md-3 col-form-label text-md-end required">English Social Description</label>
+            <div class="col-md-9">
+                <textarea name="social_description_en" class="form-control form-control-solid"
+                          rows="3">{{  $settings['social_description_en'] ??''  }}</textarea>
+            </div>
+        </div>
 
         <!-- Social Description AR -->
-        <x-admin.textarea-input
-            label="Arabic Social Description"
-            name="social_description_ar"
-            :value="setting('social_description_ar')" />
+        <div class="row mb-7">
+            <label class="col-md-3 col-form-label text-md-end required">Arabic Social Description</label>
+            <div class="col-md-9">
+                <textarea name="social_description_ar" class="form-control form-control-solid"
+                          rows="3">{{  $settings['social_description_ar'] ??''  }}</textarea>
+            </div>
+        </div>
 
+        <!-- Submit -->
         <div class="row py-5">
             <div class="col-md-9 offset-md-3">
                 <div class="d-flex">
-                    <button type="reset" class="btn btn-light me-3">Cancel</button>
-                    <button type="submit" class="btn btn-primary submit-button">
-                        <span class="indicator-label">Save</span>
-                        <span class="indicator-progress d-none">Please wait...
-                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                    </span>
+                    <button type="submit" class="btn btn-primary">
+                        <span class="indicator-label">Save changes</span>
+                        <span class="indicator-progress">Please wait...
+                                  <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                     </button>
                 </div>
             </div>

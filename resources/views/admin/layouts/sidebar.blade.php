@@ -62,10 +62,39 @@
 
                     <div class="menu-sub menu-sub-accordion">
                         <div class="menu-item">
+                            <a class="menu-link {{ request()->routeIs('admin.freelancers.other.index') ? 'active' : '' }}"
+                               href="{{ route('admin.freelancers.other.index') }}">
+                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                                <span class="menu-title ">All freelancers </span>
+                                @if($OthersFreeLancersCount > 0)
+                                    <span class="menu-badge justify-content-end">
+                                    <span class="badge badge-light-warning ms-2">
+                                        {{ $OthersFreeLancersCount }}
+                                    </span>
+                                </span>
+                                @endif
+                            </a>
+                        </div>
+                        <div class="menu-item">
                             <a class="menu-link {{ request()->routeIs('admin.freelancers.request.index') ? 'active' : '' }}"
                                href="{{ route('admin.freelancers.request.index') }}">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                                <span class="menu-title ">VerifiedRequest</span>
+                                <span class="menu-title ">verification request</span>
+                                @if($identityRequestsCount > 0)
+                                    <span class="menu-badge justify-content-end">
+                                    <span class="badge badge-light-primary ms-2">
+                                        {{ $identityRequestsCount }}
+                                    </span>
+                                </span>
+                                @endif
+                            </a>
+                        </div>
+
+                        <div class="menu-item">
+                            <a class="menu-link {{ request()->routeIs('admin.freelancers.request.index') ? 'active' : '' }}"
+                               href="{{ route('admin.freelancers.request.index') }}">
+                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                                <span class="menu-title ">profile review</span>
                                 @if($identityRequestsCount > 0)
                                     <span class="menu-badge justify-content-end">
                                     <span class="badge badge-light-primary ms-2">
@@ -89,24 +118,11 @@
                                 @endif
                             </a>
                         </div>
-                        <div class="menu-item">
-                            <a class="menu-link {{ request()->routeIs('admin.freelancers.other.index') ? 'active' : '' }}"
-                               href="{{ route('admin.freelancers.other.index') }}">
-                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                                <span class="menu-title ">Other </span>
-                                @if($OthersFreeLancersCount > 0)
-                                    <span class="menu-badge justify-content-end">
-                                    <span class="badge badge-light-warning ms-2">
-                                        {{ $OthersFreeLancersCount }}
-                                    </span>
-                                </span>
-                                @endif
-                            </a>
-                        </div>
+
                     </div>
                 </div>
 
-                 @php $usersNotTypedCount=usersNotTypedCount() @endphp
+                @php $usersNotTypedCount=usersNotTypedCount() @endphp
 
                 <div data-kt-menu-trigger="click"
                      class="menu-item {{ request()->routeIs('admin.users*') ? 'here show' : '' }} menu-accordion">
@@ -222,7 +238,8 @@
                     <span class="menu-icon">
                         <i class="ki-outline ki-message-text-2 fs-2 {{ request()->routeIs('admin.contacts.*')? 'text-white':'' }}"></i>
                     </span>
-                        <span class="menu-title {{ request()->routeIs('admin.contacts.*')? 'text-white':'' }}">Contacts</span>
+                        <span
+                            class="menu-title {{ request()->routeIs('admin.contacts.*')? 'text-white':'' }}">Contacts</span>
                         @if(unreadContactsCount()>0)
                             <span class="menu-badge">
                             <span class="badge badge-light-danger ms-2">
@@ -240,7 +257,8 @@
                     <span class="menu-icon">
                         <i class="ki-outline ki-gear fs-2 {{ request()->routeIs('admin.settings.*')? 'text-white':'' }}"></i>
                     </span>
-                        <span class="menu-title {{ request()->routeIs('admin.settings.*')? 'text-white':'' }}">Settings</span>
+                        <span
+                            class="menu-title {{ request()->routeIs('admin.settings.*')? 'text-white':'' }}">Settings</span>
                     </a>
                 </div>
 

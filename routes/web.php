@@ -17,10 +17,11 @@ Route::get('/link', function () {
 });
 
 
+Route::get('/', function () {
+return redirect()->route('admin.dashboard');
+})->name('home');
 
-Route::view('/', 'Front.welcome')->name('home');
-Route::view('/register', 'Front.register')->name('register');
-Route::view('/login', 'Front.login')->name('login');
+
 
 
 require __DIR__ . '/Admin/admin.php';

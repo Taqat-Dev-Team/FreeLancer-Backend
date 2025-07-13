@@ -1,11 +1,17 @@
 @extends('admin.layouts.master', ['title' => 'Settings'])
-
-
 @section('toolbarTitle', 'Website Settings')
 @section('toolbarSubTitle', 'Settings ')
 @section('toolbarPage', 'Website Settings')
-
 @section('content')
+    @php
+        $settings = setting();
+
+        
+
+    @endphp
+
+
+
     <div id="kt_app_content" class="app-content flex-column-fluid">
         <!--begin::Content container-->
         <div id="kt_app_content_container" class="app-container container-fluid">
@@ -90,51 +96,45 @@
 
 
     @push('js')
+
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                const csrfMeta = document.querySelector('meta[name="csrf-token"]');
-                if (!csrfMeta) {
-                    console.error('Missing CSRF meta tag in <head>');
-                    return;
-                }
-
-                const csrfToken = csrfMeta.getAttribute('content');
-
                 document.querySelectorAll('form[id$="_form"]').forEach(function (form) {
                     form.addEventListener('submit', function (e) {
                         e.preventDefault();
 
-                        let btn = form.querySelector('.submit-button');
-                        let indicator = btn.querySelector('.indicator-progress');
-                        let label = btn.querySelector('.indicator-label');
+                        const submitButton = $(this).find('button[type="submit"]');
 
-                        label.classList.add('d-none');
-                        indicator.classList.remove('d-none');
+                        // Disable the button and show the spinner
+                        submitButton.attr('disabled', true);
+                        submitButton.find('.indicator-label').hide();
+                        submitButton.find('.indicator-progress').show();
+
 
                         let formData = new FormData(form);
 
                         fetch("/admin/settings", {
                             method: 'POST',
                             headers: {
-                                'X-CSRF-TOKEN': csrfToken
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                             },
                             body: formData
                         })
                             .then(res => res.json())
                             .then(data => {
-                                if (data.status) {
-                                    toastr.success(data.message || 'Saved successfully');
-                                } else {
-                                    toastr.error(data.message || 'Failed to save settings');
-                                }
+                                toastr[data.success ? 'success' : 'error'](data.message);
                             })
                             .catch(err => {
-                                toastr.error('Error occurred while saving settings.');
-                                console.error(err);
+                                toastr.error('حدث خطأ أثناء حفظ الإعدادات');
                             })
                             .finally(() => {
-                                label.classList.remove('d-none');
-                                indicator.classList.add('d-none');
+                                submitButton.attr('disabled', false);
+                                submitButton.find('.indicator-label').show();
+                                submitButton.find('.indicator-progress').hide();
+
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 1500);
                             });
                     });
                 });

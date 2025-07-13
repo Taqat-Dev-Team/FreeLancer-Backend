@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class SettingsController extends Controller
 {
@@ -17,7 +18,7 @@ class SettingsController extends Controller
 
     public function update(Request $request)
     {
-        $setting = Setting::firstOrCreate([]);
+        // الحقول النصية
         $textFields = [
             'phone_number', 'email', 'address_en', 'address_ar',
             'freelancers_availability_percentage',
@@ -31,29 +32,37 @@ class SettingsController extends Controller
 
         foreach ($textFields as $field) {
             if ($request->has($field)) {
-                $setting->$field = $request->input($field);
+                Setting::setValue($field, $request->input($field));
             }
         }
-        $setting->save();
 
         $imageFields = ['favicon', 'white_logo', 'logo'];
 
-        foreach ($imageFields as $imageField) {
-            if ($request->hasFile($imageField)) {
-                $setting->clearMediaCollection($imageField);
+        foreach ($imageFields as $field) {
+            $setting = Setting::firstOrCreate(['key' => $field]);
 
-                $setting->addMediaFromRequest($imageField)->toMediaCollection($imageField);
-            } elseif ($request->has($imageField . '_remove') && $request->input($imageField . '_remove') == '1') {
-                $setting->clearMediaCollection($imageField);
+            if ($request->hasFile($field)) {
+                $setting->clearMediaCollection($field);
+
+                $media = $setting->addMediaFromRequest($field)
+                    ->usingFileName(Str::random(20) . '.' . $request->file($field)->getClientOriginalExtension())
+                    ->toMediaCollection($field, 'settings');
+
+                $setting->value = $media->getFullUrl();
+                $setting->save();
+
+            } elseif ($request->input($field . '_remove') == '1') {
+                $setting->clearMediaCollection($field);
+                $setting->value = null;
+                $setting->save();
             }
         }
+
 
         return response()->json([
             'success' => true,
             'message' => __('Settings updated successfully.'),
-            'data' => $setting,
         ]);
     }
-
 
 }
