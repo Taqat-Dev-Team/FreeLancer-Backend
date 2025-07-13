@@ -38,7 +38,10 @@ class IdentityVerification extends Model implements HasMedia
         };
     }
 
-
+public function freelancer()
+{
+    return $this->belongsTo(Freelancer::class,'freelancer_id');
+}
 }
 
 

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 
 class IdentityController extends Controller
@@ -21,65 +22,123 @@ class IdentityController extends Controller
 
     public function sendOtp(Request $request)
     {
-        $request->validate([
-            'mobile' => [
-                'required',
-                'digits_between:7,15',
-                'regex:/^[0-9]+$/',
-                Rule::unique('users', 'mobile')->ignore(Auth::id()),
-            ],
-        ]);
+        try {
+            $validated = $request->validate([
+                'mobile' => [
+                    'required',
+                    'digits_between:7,15',
+                    'regex:/^[0-9]+$/',
+                ],
+            ]);
 
-        $otp = Mobileotp();
+            $mobile = $request->mobile;
 
-        Cache::put('otp_' . $request->mobile, $otp, now()->addMinutes(5));
+            $userQuery = \App\Models\User::where('mobile', $mobile);
+            if (Auth::check()) {
+                $userQuery->where('id', '!=', Auth::id());
+            }
 
-//         SmsService::send($request->mobile, "Your OTP is: $otp");
+            if ($userQuery->exists()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => __('messages.mobile_already_exists'),
+                    'errors' => ['mobile' => [__('messages.mobile_already_exists')]],
+                ], 422);
+            }
 
-        return $this->apiResponse(
-            [],
-            __('messages.otp_mobile_success'),
-            true,
-            200
-        );
+            $otp = Mobileotp();
+            Cache::put('otp_' . $mobile, $otp, now()->addMinutes(5));
+
+            return $this->apiResponse([], __('messages.otp_mobile_success'), true, 200);
+
+        } catch (ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => __('messages.validation_error'),
+                'errors' => $e->errors(),
+            ], 422);
+        } catch (\Exception $e) {
+            Log::error('OTP Error:', [
+                'message' => $e->getMessage(),
+            ]);
+            return response()->json([
+                'success' => false,
+                'message' => __('messages.server_error'),
+            ], 500);
+        }
     }
 
     public function resendOtp(Request $request)
     {
-        $request->validate([
-            'mobile' => [
-                'required',
-                'digits_between:7,15',
-                'regex:/^[0-9]+$/',
-                Rule::unique('users', 'mobile')->ignore(Auth::id()),
-            ],
-        ]);
+        try {
+            // تحقق من صيغة الرقم فقط
+            $validated = $request->validate([
+                'mobile' => [
+                    'required',
+                    'digits_between:7,15',
+                    'regex:/^[0-9]+$/',
+                ],
+            ]);
 
-        $cacheKey = 'otp_' . $request->mobile;
+            $mobile = $request->mobile;
 
-        if (Cache::has($cacheKey)) {
+            // تحقق يدوي من التكرار
+            $userQuery = \App\Models\User::where('mobile', $mobile);
+
+            if (Auth::check()) {
+                $userQuery->where('id', '!=', Auth::id());
+            }
+
+            if ($userQuery->exists()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => __('messages.mobile_already_exists'),
+                    'errors' => ['mobile' => [__('messages.mobile_already_exists')]],
+                ], 422);
+            }
+
+            // تحقق من وجود OTP مخزن مسبقًا
+            $cacheKey = 'otp_' . $mobile;
+
+            if (Cache::has($cacheKey)) {
+                return $this->apiResponse(
+                    [],
+                    __('messages.otp_mobile_already_sent'),
+                    false,
+                    422
+                );
+            }
+
+            // توليد وحفظ OTP
+            $otp = Mobileotp();
+            Cache::put($cacheKey, $otp, now()->addMinutes(5));
+
+            // SmsService::send($mobile, "Your OTP is: $otp");
+
             return $this->apiResponse(
                 [],
-                __('messages.otp_mobile_already_sent'),
-                false,
-                422
+                __('messages.otp_mobile_success'),
+                true,
+                200
             );
+
+        } catch (ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => __('messages.validation_error'),
+                'errors' => $e->errors(),
+            ], 422);
+        } catch (\Exception $e) {
+            Log::error('Resend OTP Error:', [
+                'message' => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => __('messages.server_error'),
+            ], 500);
         }
-
-        $otp = Mobileotp();
-
-        Cache::put($cacheKey, $otp, now()->addMinutes(5));
-
-//         SmsService::send($request->mobile, "Your OTP is: $otp");
-
-        return $this->apiResponse(
-            [],
-            __('messages.otp_mobile_success'),
-            true,
-            200
-        );
     }
-
     public function verifyOtp(Request $request)
     {
         $request->validate([

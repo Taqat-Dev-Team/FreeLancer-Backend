@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\FreeLancer\FreeLancerVerificationRequestsControll
 use App\Http\Controllers\Admin\FreeLancer\FreeLancerVerifiedController;
 use App\Http\Controllers\Admin\FreeLancer\OtheFreeLancerController;
 use App\Http\Controllers\Admin\FreeLancer\GeneralFreeLancerController;
+use App\Http\Controllers\Admin\FreeLancer\FreeLancerReviewController;
 
 
 Route::prefix('admin/freelancer/')->name('admin.')->group(function () {
@@ -26,6 +27,18 @@ Route::prefix('admin/freelancer/')->name('admin.')->group(function () {
 
                 });
             });
+
+
+            Route::name('review.')->prefix('review')->group(function () {
+                Route::controller(FreeLancerReviewController::class)->group(function () {
+                    Route::get('/', 'index')->name('index');
+                    Route::get('/data', 'data')->name('data');
+                    Route::delete('/{id}', 'destroy')->name('delete');
+
+
+                });
+            });
+
 
             Route::name('verified.')->prefix('verified')->group(function () {
                 Route::controller(FreeLancerVerifiedController::class)->group(function () {

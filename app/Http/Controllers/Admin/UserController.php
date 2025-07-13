@@ -73,16 +73,16 @@ class UserController extends Controller
 //            </a>
 //        </div>';
 //
-//                // ✅ زر إرسال رسالة
-//                $actions .= '
-//        <div class="menu-item px-3">
-//            <a href="#" class="menu-link px-3 message-freelancer btn btn-active-light-info"
-//               data-id="' . $row->id . '">
-//               Send Message
-//            </a>
-//        </div>
-//    </div>
-//</div>';
+                // ✅ زر إرسال رسالة
+                $actions .= '
+        <div class="menu-item px-3">
+            <a href="#" class="menu-link px-3 message-freelancer btn btn-active-light-info"
+               data-id="' . $row->id . '">
+               Send Message
+            </a>
+        </div>
+    </div>
+</div>';
 
                 return $actions;
             })

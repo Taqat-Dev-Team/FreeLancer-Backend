@@ -356,7 +356,7 @@ return [
 
     'freelancer_id_required' => 'معرّف المستقل مطلوب.',
     'freelancer_id_exists' => 'المستقل المحدد غير موجود.',
-
+    'mobile_already_exists'=>'رقم الهاتف مسجل مسبقا'
 
 ];
 

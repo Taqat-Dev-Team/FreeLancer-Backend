@@ -98,9 +98,25 @@ function IdentityRequestsCount()
     return IdentityVerification::where('status', '0')->distinct('freelancer_id')->count('freelancer_id');
 }
 
+function reviewFreeLancersCount()
+{
+    return IdentityVerification::where('status', '1')
+        ->whereHas('freelancer', function ($query) {
+            $query->where('review', '0');
+        })
+        ->distinct('freelancer_id')
+        ->count('freelancer_id');
+}
+
+
 function VerifiedFreeLancersCount()
 {
-    return IdentityVerification::where('status', '1')->distinct('freelancer_id')->count('freelancer_id');
+    return IdentityVerification::where('status', '1')
+        ->whereHas('freelancer', function ($query) {
+            $query->where('review', '1');
+        })
+        ->distinct('freelancer_id')
+        ->count('freelancer_id');
 }
 
 function OthersFreeLancersCount()

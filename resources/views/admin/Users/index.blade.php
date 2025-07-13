@@ -38,7 +38,6 @@
 
                                 <th class="">#</th>
                                 <th class="min-w-125px">photo</th>
-                                <th class="min-w-125px">name</th>
                                 <th class="min-w-125px">email</th>
                                 <th class="">Joined Date</th>
                                 <th class="">status</th>
@@ -87,7 +86,6 @@
 
                         {data: 'DT_RowIndex', name: 'id'},
                         {data: 'photo', name: 'photo', orderable: false, searchable: false},
-                        {data: 'name', name: 'name', orderable: true, searchable: true},
                         {data: 'email', name: 'email', orderable: true, searchable: true},
                         {data: 'date', name: 'created_at', orderable: true, searchable: false},
                         {data: 'status', name: 'status', orderable: true, searchable: false},

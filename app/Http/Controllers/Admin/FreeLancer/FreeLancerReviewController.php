@@ -7,20 +7,26 @@ use App\Models\Freelancer;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
-class FreeLancerVerifiedController extends Controller
+class FreeLancerReviewController extends Controller
 {
     public function index()
     {
-        return view('admin.FreeLancer.verified.index');
+        return view('admin.FreeLancer.review.index');
 
     }
 
     public function data(Request $request)
     {
-        $freelancers = Freelancer::with(['user.country', 'identityVerification'])->where('review','1')
+        $freelancers = Freelancer::with(['user.country', 'identityVerification'])->where('review', '0')
             ->whereHas('identityVerification', function ($query) {
                 $query->where('status', '1');
             });
+
+
+        if ($request->has('review') && is_array($request->review) && count(array_filter($request->review))) {
+            $freelancers = $freelancers->whereIn('review', $request->review);
+        }
+
 
         if ($request->filled('search')) {
             $search = $request->search;

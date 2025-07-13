@@ -40,7 +40,7 @@ class Freelancer extends Model implements HasMedia
             || $this->idVerified()->status !== '1'
             || !$this->user->status
             || !$this->admin_available_hire
-            || $this->getProfileCompletionStatusAttribute()['percentage'] < 60
+            || $this->getProfileCompletionStatusAttribute()['percentage'] < setting('freelancers_availability_percentage')
         ) {
             return false;
         }
@@ -66,8 +66,8 @@ class Freelancer extends Model implements HasMedia
 
 
         $status = $this->getProfileCompletionStatusAttribute();
-        if ($status['percentage'] < 60) {
-            $reasons[] = 'Profile completion is below 60%.';
+        if ($status['percentage'] < setting('freelancers_availability_percentage')) {
+            $reasons[] = 'Profile completion is below '.setting('freelancers_availability_percentage').'%.';
         }
 
         if (!$this->admin_available_hire) {
