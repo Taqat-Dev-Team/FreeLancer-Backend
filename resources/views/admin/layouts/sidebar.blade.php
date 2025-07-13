@@ -7,9 +7,9 @@
     <div class="app-sidebar-logo flex-shrink-0 d-none d-lg-flex flex-center align-items-center"
          id="kt_app_sidebar_logo">
         <a href="{{ url('/') }}">
-            <img alt="Logo" src="{{ asset('logos/logo.png') }}"
+            <img alt="Logo" src="{{$dark }}"
                  class="h-75px d-none d-sm-inline app-sidebar-logo-default theme-light-show"/>
-            <img alt="Logo" src="{{ asset('logos/white.png') }}" class="h-40px theme-dark-show"/>
+            <img alt="Logo" src="{{ $white }}" class="h-40px theme-dark-show"/>
         </a>
         <div class="d-flex align-items-center d-lg-none ms-n3 me-1" title="Show aside menu">
             <div class="btn btn-icon btn-active-color-primary w-30px h-30px" id="kt_aside_mobile_toggle">

@@ -11,9 +11,9 @@
                 <i class="ki-outline ki-abstract-14 fs-2"></i>
             </div>
             <!--begin::Logo image-->
-            <a href="index.html">
-                <img alt="Logo" src="assets/media/logos/demo55-small.svg" class="h-25px theme-light-show"/>
-                <img alt="Logo" src="assets/media/logos/demo55-small-dark.svg" class="h-25px theme-dark-show"/>
+            <a href="{{route('home')}}">
+                <img alt="Logo" src="{{$dark}}" class="h-65px theme-light-show"/>
+                <img alt="Logo" src="{{$white}}" class="h-25px theme-dark-show"/>
             </a>
             <!--end::Logo image-->
         </div>

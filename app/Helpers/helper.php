@@ -128,16 +128,9 @@ if (!function_exists('setting')) {
 
 
 if (!function_exists('setting_media')) {
-    function setting_media($key) {
-        static $settingsModels = null;
-
-        global $settings_media; // جلب المتغير الموجود في blade
-
-        if ($settingsModels === null && !empty($settings_media)) {
-            $settingsModels = $settings_media;
-        }
-
-        $setting = $settingsModels[$key] ?? null;
+    function setting_media($key)
+    {
+        $setting = \App\Models\Setting::where('key', $key)->first();
 
         if ($setting && $setting->hasMedia($key)) {
             return $setting->getFirstMedia($key)->getFullUrl();

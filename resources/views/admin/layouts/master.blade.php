@@ -10,10 +10,22 @@ Dribbble: www.dribbble.com/keenthemes
 Like: www.facebook.com/keenthemes
 License: For each use you must have a valid license purchased only from above link in order to legally use the theme for your project.
 -->
+
+
 <html lang="en">
-<!--begin::Head-->
+@php
+    $settings = setting();
+    $white = setting_media('white_logo');
+
+    $favicon = setting_media('favicon');
+    $dark = setting_media('logo');
+@endphp
+
+    <!--begin::Head-->
 <head>
-    <title>Taqat - {{@$title}}</title>
+
+
+    <title>{{$settings['name_en']}} - {{@$title}}</title>
 
     @include('admin.layouts.css')
 

@@ -1,6 +1,7 @@
 <div class="tab-pane fade" id="kt_ecommerce_settings_logos" role="tabpanel">
     {{--    <!--begin::Form-->--}}
 
+
     <form id="settings_logos_form" class="form" enctype="multipart/form-data">
         @csrf
 
@@ -10,8 +11,13 @@
             </div>
         </div>
 
+        @php
+            $white = setting_media('white_logo');
+              $favicon = setting_media('favicon');
+              $dark = setting_media('logo');
+              @endphp
+
         {{-- Favicon --}}
-        @php $favicon = setting_media('favicon')?? asset('logos/favicon.png'); @endphp
         <div class="row mb-7 fv-row fv-plugins-icon-container">
             <div class="col-md-3 text-md-end">
                 <label class="fs-6 fw-semibold form-label mt-3">
@@ -42,7 +48,6 @@
         </div>
 
         {{-- White Logo --}}
-        @php $white = setting_media('white_logo')?? asset('logos/white.png'); @endphp
         <div class="row mb-7 fv-row fv-plugins-icon-container">
             <div class="col-md-3 text-md-end">
                 <label class="fs-6 fw-semibold form-label mt-3">
@@ -53,7 +58,7 @@
                 <div class="image-input image-input-outline" data-kt-image-input="true"
                      style="background-image: url('{{ $white }}');">
                     <div class="image-input-wrapper w-850px"
-                         style="background-image: url('{{ $white }}'); height: 170px !important;  background-color: #cac1c10d">
+                         style="background-image: url('{{ $white }}'); height: 170px !important;  background-color: #bdb7b74a">
                 </div>
 
                 <label
@@ -74,7 +79,6 @@
 </div>
 
 {{-- Dark Logo --}}
-@php $dark = setting_media('logo')?? asset('logos/logo.png'); @endphp
 <div class="row mb-7 fv-row fv-plugins-icon-container">
     <div class="col-md-3 text-md-end">
         <label class="fs-6 fw-semibold form-label mt-3">
@@ -85,7 +89,7 @@
         <div class="image-input image-input-outline" data-kt-image-input="true"
              style="background-image: url('{{ $dark }}');">
             <div class="image-input-wrapper w-850px"
-                 style="background-image: url('{{ $dark }}'); height: 170px !important; background-color: #cac1c10d"></div>
+                 style="background-image: url('{{ $dark }}'); height: 170px !important; background-color: #bdb7b74a"></div>
 
             <label
                 class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow"
@@ -111,7 +115,7 @@
             <button type="submit" class="btn btn-primary">
                 <span class="indicator-label">Save changes</span>
                 <span class="indicator-progress">Please wait...
-                                  <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
             </button>
 
         </div>

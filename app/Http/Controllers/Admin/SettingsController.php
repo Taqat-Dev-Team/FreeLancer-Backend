@@ -27,7 +27,7 @@ class SettingsController extends Controller
             'meta_keywords_en', 'meta_keywords_ar',
             'social_title_en', 'social_title_ar',
             'social_description_en', 'social_description_ar',
-            'facebook', 'instagram', 'linkedin', 'twitter',
+            'facebook', 'instagram', 'linkedin', 'twitter', 'whats sap', 'tiktok'
         ];
 
         foreach ($textFields as $field) {

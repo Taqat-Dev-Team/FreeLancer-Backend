@@ -4,13 +4,8 @@
 @section('toolbarPage', 'Website Settings')
 @section('content')
     @php
-        $settings = setting();
-
-        
-
+        $settings=setting();
     @endphp
-
-
 
     <div id="kt_app_content" class="app-content flex-column-fluid">
         <!--begin::Content container-->

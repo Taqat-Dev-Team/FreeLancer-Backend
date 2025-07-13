@@ -1,11 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <base href="{{url('/')}}"/>
-    <title>Login</title>
+
     <meta charset="utf-8"/>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" href="{{url('logos/favicon.png') }}"/>
+    @php
+        $settings = setting();
+       $white = setting_media('white_logo');
+
+       $favicon = setting_media('favicon');
+       $dark = setting_media('logo');
+           $keywords_en_raw = $settings['meta_keywords_en'] ?? '[]';
+           $keywords_en_array = is_string($keywords_en_raw) ? json_decode($keywords_en_raw, true) : [];
+           $keywords_en = collect($keywords_en_array)->pluck('value')->implode(', ');
+    @endphp
+    <base href="{{url('/')}}"/>
+    <title>{{$settings['name_en']}} - Login</title>
+
+
+    <!-- SEO Meta -->
+    <meta name="description" content="{{ $settings['meta_description_en'] ?? 'Default site description here' }}"/>
+    <meta name="keywords" content="{{ $keywords_en }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}"/>
+
+    <!-- Open Graph -->
+    <meta property="og:locale" content="en_US"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:title"
+          content="{{ $settings['social_title_en'] ?? ($settings['meta_title_en'] ?? 'Default Site Title') }}"/>
+    <meta property="og:description"
+          content="{{ $settings['social_description_en'] ?? $settings['meta_description_en'] ?? 'Default social description' }}"/>
+    <meta property="og:url" content="{{ url()->current() }}"/>
+    <meta property="og:site_name"
+          content="{{ $settings['social_title_en'] ?? ($settings['meta_title_en'] ?? config('app.name')) }}"/>
+
+    <!-- Canonical -->
+    <link rel="canonical" href="{{ url()->current() }}"/>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ $favicon }}"/>
+    <link rel="icon" type="image/png" href="{{ $favicon }}"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700"/>
     <link href="{{ url('admin/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ url('admin/css/style.bundle.css') }}" rel="stylesheet" type="text/css"/>
@@ -35,15 +68,21 @@
     </style>
 
 
-    <div class="d-flex flex-column flex-lg-row flex-column-fluid justify-content-center align-items-center min-h-screen p-20 p-md-20">
-        <div class="bg-body d-flex flex-column flex-center rounded-4 w-100 p-20 p-md-20" style="max-width: 600px;"> {{-- Ziadat al-padding al-dakhili huna --}}
+    <div
+        class="d-flex flex-column flex-lg-row flex-column-fluid justify-content-center align-items-center min-h-screen p-20 p-md-20">
+        <div class="bg-body d-flex flex-column flex-center rounded-4 w-100 p-20 p-md-20"
+             style="max-width: 600px;"> {{-- Ziadat al-padding al-dakhili huna --}}
 
-            <a href="{{ url('/') }}" class="d-flex justify-content-center text-center mb-8"> {{-- Ziadat al-margin asfal al-logo --}}
-                <img alt="Logo" src="{{ asset('logos/logo.png') }}" class="h-70px h-md-90px theme-light-show"/> {{-- Ziadat ارتفاعat al-suwar --}}
-                <img alt="Logo" src="{{ asset('logos/white.png') }}" class="h-60px h-md-80px theme-dark-show"/> {{-- Ziadat ارتفاعat al-suwar --}}
+            <a href="{{ url('/') }}"
+               class="d-flex justify-content-center text-center mb-8"> {{-- Ziadat al-margin asfal al-logo --}}
+                <img alt="Logo" src="{{ $dark }}"
+                     class="h-70px h-md-90px theme-light-show"/> {{-- Ziadat ارتفاعat al-suwar --}}
+                <img alt="Logo" src="{{$white }}"
+                     class="h-60px h-md-80px theme-dark-show"/> {{-- Ziadat ارتفاعat al-suwar --}}
             </a>
             <div class="d-flex flex-center flex-column align-items-stretch w-100" style="max-width: 400px;">
-                <div class="d-flex flex-center flex-column flex-column-fluid pb-20 pb-lg-25"> {{-- Ziadat al-padding asfal al-form --}}
+                <div
+                    class="d-flex flex-center flex-column flex-column-fluid pb-20 pb-lg-25"> {{-- Ziadat al-padding asfal al-form --}}
                     <form class="form w-100" novalidate="novalidate" id="login_form" method="post"
                           action="{{ route('admin.login.submit') }}">
                         @csrf
@@ -87,10 +126,11 @@
                 </div>
             </div>
         </div>
-    </div><script>var hostUrl = "{{ url('assets/') }}/";</script>
-<script src="{{ url('admin/plugins/global/plugins.bundle.js') }}"></script>
-<script src="{{ url('admin/js/scripts.bundle.js') }}"></script>
-<script src="{{ url('admin/js/custom/login.js') }}"></script>
+    </div>
+    <script>var hostUrl = "{{ url('assets/') }}/";</script>
+    <script src="{{ url('admin/plugins/global/plugins.bundle.js') }}"></script>
+    <script src="{{ url('admin/js/scripts.bundle.js') }}"></script>
+    <script src="{{ url('admin/js/custom/login.js') }}"></script>
 
 
 </body>
