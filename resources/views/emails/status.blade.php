@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html lang="{{ $locale ?? 'ar' }}">
 <head>
+    @php
+        $settings = setting();
+
+        $white = setting_media('white_logo');
+          $dark = setting_media('logo');
+    @endphp
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
         @if(($locale ?? 'ar') == 'en')
-            {{ $status == 'active' ? 'Account Activated' : 'Account Deactivated' }}
+            {{$settings['name_en']}} | {{ $status == 'active' ? 'Account Activated' : 'Account Deactivated' }}
         @else
-            {{ $status == 'active' ? 'تم تفعيل حسابك' : 'تم تعطيل حسابك' }}
+            {{$settings['name_ar']}}  |   {{ $status == 'active' ? 'تم تفعيل حسابك' : 'تم تعطيل حسابك' }}
         @endif
     </title>
     <style>
@@ -88,7 +94,6 @@
         }
 
 
-
         .footer {
             background-color: #f4f7f6;
             padding: 25px;
@@ -127,7 +132,7 @@
             <table role="presentation" cellspacing="0" cellpadding="0" border="0" class="container">
                 <tr>
                     <td class="header">
-                        <img src="{{ url('logos/white.png') }}" alt="Taqat Logo" class="logo">
+                        <img src="{{$white }}" alt="Taqat Logo" class="logo">
                     </td>
                 </tr>
                 <tr>
@@ -135,12 +140,12 @@
                         @if(($locale ?? 'ar') == 'en')
                             @if($status == 'active')
                                 <p>Hello {{ $user->name }},</p>
-                                <p>Your account on <strong>Taqat Platform</strong> has been <strong>activated</strong>
+                                <p>Your account on <strong> {{$settings['name_en']}} Platform</strong> has been <strong>activated</strong>
                                     successfully.</p>
                                 <p>You can now log in and use all available services.</p>
                             @else
                                 <p>Hello {{ $user->name }},</p>
-                                <p>Your account on <strong>Taqat Platform</strong> has been <strong>deactivated</strong>.
+                                <p>Your account on <strong>{{$settings['name_en']}} Platform</strong> has been <strong>deactivated</strong>.
                                 </p>
                                 @if(!empty($reason))
                                     <div class="reason-box">
@@ -152,11 +157,13 @@
                         @else
                             @if($status == 'active')
                                 <p>مرحبًا {{ $user->name }},</p>
-                                <p>تم <strong>تفعيل</strong> حسابك في <strong>منصة طاقات</strong> بنجاح.</p>
+                                <p>تم <strong>تفعيل</strong> حسابك في <strong>منصة {{$settings['name_ar']}}</strong>
+                                    بنجاح.</p>
                                 <p>يمكنك الآن تسجيل الدخول واستخدام جميع الخدمات المتاحة.</p>
                             @else
                                 <p>مرحبًا {{ $user->name }},</p>
-                                <p>تم <strong>تعطيل</strong> حسابك في <strong>منصة طاقات</strong>.</p>
+                                <p>تم <strong>تعطيل</strong> حسابك في <strong>منصة {{$settings['name_ar']}}</strong>.
+                                </p>
                                 @if(!empty($reason))
                                     <div class="reason-box">
                                         السبب: {{ $reason }}
@@ -171,12 +178,12 @@
                     <td class="footer @if(($locale ?? 'ar') == 'en') ltr @else rtl @endif">
                         <p>
                             @if(($locale ?? 'ar') == 'en')
-                                &copy; {{ date('Y') }} Taqat. All rights reserved.
+                                &copy; {{ date('Y') }} {{$settings['name_en']}}. All rights reserved.
                             @else
-                                &copy; {{ date('Y') }} طاقات. جميع الحقوق محفوظة.
+                                &copy; {{ date('Y') }} {{$settings['name_ar']}}. جميع الحقوق محفوظة.
                             @endif
                         </p>
-                        <img src="{{ asset('logos/logo.png') }}" alt="Taqat Logo" class="logo-footer">
+                        <img src="{{ $dark}}" alt=" Logo" class="logo-footer">
                     </td>
                 </tr>
             </table>

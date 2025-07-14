@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html lang="{{ $locale ?? 'ar' }}">
+@php
+    $settings = setting();
+
+    $white = setting_media('white_logo');
+      $dark = setting_media('logo');
+@endphp
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
         @if(($locale ?? 'ar') == 'en')
-            Your Taqat Verification Code
+            Your {{$settings['name_en']}} Verification Code
         @else
-            رمز التحقق الخاص بك في طاقات
+            رمز التحقق الخاص بك في {{$settings['name_ar']}}
         @endif
     </title>
     <style>
@@ -129,7 +135,7 @@
             <table role="presentation" cellspacing="0" cellpadding="0" border="0" class="container">
                 <tr>
                     <td class="header">
-                        <img src="{{ url('logos/white.png') }}" alt="Taqat Logo" class="logo">
+                        <img src="{{$white }}" alt="Taqat Logo" class="logo">
                         {{--                        <h1>Taqat</h1>--}}
                     </td>
                 </tr>
@@ -138,14 +144,15 @@
                         @if(($locale ?? 'ar') == 'en')
                             {{--                            <p>Hello {{$userName}},</p>--}}
                             <p>Hello ,</p>
-                            <p>Thank you for joining **Taqat Platform** – where creativity meets opportunity!</p>
+                            <p>Thank you for joining **{{$settings['name_en']}} Platform** – where creativity meets
+                                opportunity!</p>
                             <p>We are delighted to have you as part of our community.</p>
                             <p>To complete your registration and ensure your account's security, please use the
                                 following verification code:</p>
                         @else
                             {{--                            <p>مرحبًا {{$userName}},</p>--}}
                             <p>مرحبًا ,</p>
-                            <p>شكرًا لانضمامك إلى **منصة طاقات** – حيث يلتقي الإبداع بالفرص!</p>
+                            <p>شكرًا لانضمامك إلى **منصة {{$settings['name_ar']}}** – حيث يلتقي الإبداع بالفرص!</p>
                             <p>يسعدنا أن تكون جزءًا من مجتمعنا.</p>
                             <p>لإتمام عملية التسجيل وضمان أمان حسابك، يرجى استخدام رمز التحقق التالي:</p>
                         @endif
@@ -159,13 +166,13 @@
                                 possible.</p>
                             <p>If you did not request this code, you can ignore this message or contact our support
                                 team.</p>
-                            <p>Welcome to Taqat!</p>
-                            <p>The Taqat Team.</p>
+                            <p>Welcome to {{$settings['name_en']}}!</p>
+                            <p>The {{$settings['name_en']}} Team.</p>
                         @else
                             <p>صلاحية الرمز تنتهي خلال **5 دقائق**، لذا تأكد من إدخاله في أقرب وقت ممكن.</p>
                             <p>إذا لم تطلب هذا الرمز، يمكنك تجاهل هذه الرسالة أو التواصل مع فريق الدعم لدينا.</p>
-                            <p>مرحبًا بك في طاقات!</p>
-                            <p>فريق طاقات.</p>
+                            <p>مرحبًا بك في {{$settings['name_ar']}}!</p>
+                            <p>فريق {{$settings['name_ar']}}.</p>
                         @endif
                     </td>
                 </tr>
@@ -173,23 +180,12 @@
                     <td class="footer @if(($locale ?? 'ar') == 'en') ltr @else rtl @endif">
                         <p>
                             @if(($locale ?? 'ar') == 'en')
-                                &copy; {{ date('Y') }} Taqat. All rights reserved.
+                                &copy; {{ date('Y') }} {{$settings['name_en']}}. All rights reserved.
                             @else
-                                &copy; {{ date('Y') }} طاقات. جميع الحقوق محفوظة.
+                                &copy; {{ date('Y') }} {{$settings['name_ar']}}. جميع الحقوق محفوظة.
                             @endif
                         </p>
-                        <p>
-                            @if(($locale ?? 'ar') == 'en')
-                                {{--                                <a href="#" style="color: #1279be; text-decoration: none;">Privacy Policy</a>--}}
-{{--                                &nbsp; | &nbsp;--}}
-                                {{--                                <a href="#" style="color: #1279be; text-decoration: none;">Terms of Use</a>--}}
-                            @else
-                                {{--                                <a href="#" style="color: #1279be; text-decoration: none;">سياسة الخصوصية</a>--}}
-{{--                                &nbsp; | &nbsp;--}}
-                                {{--                                <a href="#" style="color: #1279be; text-decoration: none;">شروط الاستخدام</a>--}}
-                            @endif
-                        </p>
-                        <img src="{{ asset('logos/logo.png') }}" alt="Taqat Logo" class="logo-footer">
+                        <img src="{{ $dark }}" alt="Logo" class="logo-footer">
                     </td>
                 </tr>
             </table>

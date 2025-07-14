@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Admin\FreeLancer;
 
 use App\Http\Controllers\Controller;
 use App\Mail\AdminMessageToUser;
+use App\Mail\FreelancerActivated;
+use App\Mail\FreelancerApprove;
+use App\Mail\FreelancerDeactivated;
+use App\Mail\FreelancerReject;
 use App\Models\Badge;
 use App\Models\Freelancer;
 use Illuminate\Http\Request;
@@ -123,6 +127,30 @@ class GeneralFreeLancerController extends Controller
             'success' => true,
             'message' => 'Badge assigned successfully.'
         ]);
+    }
+
+    public function reviewFreelancer(Request $request, $id)
+    {
+        $freelancer = Freelancer::findOrFail($id);
+
+        $request->validate([
+            'action' => 'required|in:0,1,2', // validate as string
+            'reason' => 'nullable|string|max:1000',
+        ]);
+
+        $freelancer->review = (string)$request->action;
+        $freelancer->review_reason = $request->action === '2' ? $request->reason : null;
+        $freelancer->save();
+
+        $message = $request->action === '1' ? 'Freelancer approved successfully.' : 'Freelancer rejected with reason.';
+
+        if ($request->action === '1') {
+            Mail::to($freelancer->user->email)->send(new FreelancerApprove($freelancer->user));
+        } else {
+            Mail::to($freelancer->user->email)->send(new FreelancerReject($freelancer->user, $request->reason));
+        }
+
+        return response()->json(['message' => $message]);
     }
 
 

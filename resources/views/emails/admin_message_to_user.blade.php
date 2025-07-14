@@ -1,8 +1,16 @@
 <!DOCTYPE html>
+
+@php
+    $settings = setting();
+
+    $white = setting_media('white_logo');
+      $dark = setting_media('logo');
+@endphp
+
 <html lang="{{ $locale ?? 'ar' }}">
 <head>
     <meta charset="UTF-8">
-    <title>{{ $locale === 'en' ? 'Message from Taqat Admin' : 'رسالة من إدارة طاقات' }}</title>
+    <title>{{ $locale === 'en' ? 'Message from'.$settings['name_en']. 'Admin' : 'رسالة من إدارة '. $settings['name_ar'] }}</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
 
@@ -46,6 +54,14 @@
             margin-bottom: 15px;
         }
 
+        .footer .logo-footer {
+            width: 180px;
+            height: auto;
+            /*margin-top: 15px;*/
+            opacity: 0.7;
+        }
+
+
         .reply-box {
             background-color: #f0f4f8;
             border-left: 5px solid #1279be;
@@ -70,18 +86,19 @@
 </head>
 <body>
 
+
 <div class="container">
     <div class="header">
-        <img src="{{ url('logos/white.png') }}" alt="Taqat Logo">
+        <img src="{{$white}}" alt=" Logo">
     </div>
 
     <div class="content">
         @if($locale === 'en')
             <p>Hello{{ $userName ? ' ' . $userName : '' }},</p>
-            <p>This message was sent to you by <strong>Taqat Admin</strong>:</p>
+            <p>This message was sent to you by <strong>{{$settings['name_en']}} Admin</strong>:</p>
         @else
             <p>مرحبًا{{ $userName ? ' ' . $userName : '' }}،</p>
-            <p>تم إرسال هذه الرسالة من قبل <strong>إدارة طاقات</strong>:</p>
+            <p>تم إرسال هذه الرسالة من قبل <strong>إدارة {{$settings['name_ar']}}</strong>:</p>
         @endif
 
         <div class="reply-box">
@@ -90,15 +107,19 @@
 
         @if($locale === 'en')
             <p>If you need further assistance, don’t hesitate to contact us again.</p>
-            <p>Best regards,<br><strong>Taqat Support Team</strong></p>
+            <p>Best regards,<br><strong>{{$settings['name_en']}} Support Team</strong></p>
         @else
             <p>إذا كنت بحاجة إلى أي مساعدة إضافية، لا تتردد في التواصل معنا مجددًا.</p>
-            <p>مع خالص التحية،<br><strong>فريق دعم طاقات</strong></p>
+            <p>مع خالص التحية،<br><strong>فريق دعم {{$settings['name_ar']}}</strong></p>
         @endif
     </div>
 
     <div class="footer">
-        <p>&copy; {{ date('Y') }} {{ $locale === 'en' ? 'Taqat. All rights reserved.' : 'طاقات. جميع الحقوق محفوظة.' }}</p>
+        <p>
+            &copy; {{ date('Y') }} {{ $locale === 'en' ? $settings['name_en'] . 'All rights reserved.' : '. جميع الحقوق محفوظة.'.$settings['name_ar']}}</p>
+
+        <img src="{{ $dark}}" alt=" Logo" class="logo-footer">
+
     </div>
 </div>
 

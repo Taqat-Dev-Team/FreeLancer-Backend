@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 <html lang="{{ $locale ?? 'ar' }}">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    @php
+        $settings = setting();
+
+        $white = setting_media('white_logo');
+          $dark = setting_media('logo');
+    @endphp
+
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>
         @if(($locale ?? 'ar') == 'en')
-            Identity Verification Successful
+            {{$settings['name_en']}} |  Identity Verification Successful
         @else
-            تم التحقق من الهوية بنجاح
+            {{$settings['name_ar']}}  |  تم التحقق من الهوية بنجاح
         @endif
     </title>
     <style>
@@ -116,14 +124,15 @@
             <table role="presentation" class="container">
                 <tr>
                     <td class="header">
-                        <img src="{{ url('logos/white.png') }}" alt="Taqat Logo" class="logo" />
+                        <img src="{{$white}}" alt="Logo" class="logo"/>
                     </td>
                 </tr>
                 <tr>
                     <td class="content @if(($locale ?? 'ar') == 'en') ltr @else rtl @endif">
                         @if(($locale ?? 'ar') == 'en')
                             <p>Hello {{ $user->name }},</p>
-                            <p>Congratulations! Your identity verification request has been <strong>approved successfully</strong>.</p>
+                            <p>Congratulations! Your identity verification request has been <strong>approved
+                                    successfully</strong>.</p>
                             <p>You can now fully enjoy the benefits and features of our platform.</p>
                         @else
                             <p>مرحبًا {{ $user->name }},</p>
@@ -140,11 +149,13 @@
                         </div>
 
                         @if(($locale ?? 'ar') == 'en')
-                            <p>If you have any questions or need assistance, please do not hesitate to contact our support team.</p>
-                            <p>Thank you for being part of Taqat!</p>
+                            <p>If you have any questions or need assistance, please do not hesitate to contact our
+                                support team.</p>
+                            <p>Thank you for being part of {{$settings['name_en']}}!</p>
                         @else
-                            <p>إذا كان لديك أي استفسارات أو تحتاج إلى مساعدة، لا تتردد في التواصل مع فريق الدعم لدينا.</p>
-                            <p>شكرًا لانضمامك إلى منصة طاقات!</p>
+                            <p>إذا كان لديك أي استفسارات أو تحتاج إلى مساعدة، لا تتردد في التواصل مع فريق الدعم
+                                لدينا.</p>
+                            <p>شكرًا لانضمامك إلى منصة {{$settings['name_ar']}}!</p>
                         @endif
                     </td>
                 </tr>
@@ -152,12 +163,12 @@
                     <td class="footer @if(($locale ?? 'ar') == 'en') ltr @else rtl @endif">
                         <p>
                             @if(($locale ?? 'ar') == 'en')
-                                &copy; {{ date('Y') }} Taqat. All rights reserved.
+                                &copy; {{ date('Y') }} {{$settings['name_en']}}. All rights reserved.
                             @else
-                                &copy; {{ date('Y') }} طاقات. جميع الحقوق محفوظة.
+                                &copy; {{ date('Y') }} {{$settings['name_ar']}}. جميع الحقوق محفوظة.
                             @endif
                         </p>
-                        <img src="{{ asset('logos/logo.png') }}" alt="Taqat Logo" class="logo-footer" />
+                        <img src="{{ $dark }}" alt="Logo" class="logo-footer"/>
                     </td>
                 </tr>
             </table>

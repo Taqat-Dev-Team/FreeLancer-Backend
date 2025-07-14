@@ -17,7 +17,8 @@ class Freelancer extends Model implements HasMedia
         'sub_category_id',
         'hourly_rate',
         'available_hire',
-        'admin_available_hire'
+        'review',
+        'review_reason'
     ];
 
     protected $casts = [

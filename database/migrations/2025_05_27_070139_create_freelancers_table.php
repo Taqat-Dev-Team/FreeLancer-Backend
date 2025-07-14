@@ -13,15 +13,14 @@ return new class extends Migration {
         Schema::create('freelancers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->string('cv')->nullable();
-            $table->integer('cv_view_count')->default(0);
 
             $table->foreignId('category_id')->nullable()->constrained('categories')->nullOnDelete();
 
             $table->foreignId('sub_category_id')->nullable()->constrained('sub_categories')->nullOnDelete();
             $table->string('hourly_rate')->nullable();
             $table->string('available_hire')->nullable();
-            $table->string('admin_available_hire')->nullable();
+            $table->enum('review', ['0', '1', '2'])->default(0);
+            $table->string('review_reason')->nullable();
 
 
             $table->timestamps();

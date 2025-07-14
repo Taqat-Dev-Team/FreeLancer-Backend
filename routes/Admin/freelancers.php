@@ -61,10 +61,9 @@ Route::prefix('admin/freelancer/')->name('admin.')->group(function () {
             Route::controller(GeneralFreeLancerController::class)->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::delete('/{id}', 'destroy')->name('delete');
+                Route::post('review/{id}', 'reviewFreelancer')->name('review');
                 Route::get('/{id}/show', 'show')->name('show');
                 Route::post('/status/{id}', 'status')->name('status');
-                Route::post('/admin-active/{id}', 'ActiveByAdmin')->name('ActiveByAdmin');
-                Route::post('/admin-deactivate/{id}', 'deactivateByAdmin')->name('deactivateByAdmin');
                 Route::post('/send-message', 'sendMessage')->name('sendMessage');
                 Route::delete('badges/delete/{freelancerId}/{badgeId}', 'deleteBadge')->name('deleteBadge');
                 Route::post('/badges/assign', 'assignBadge')->name('badges.assign');

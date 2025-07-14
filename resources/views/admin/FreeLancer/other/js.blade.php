@@ -25,7 +25,6 @@
                 {data: 'mobile', name: 'user.mobile', orderable: true, searchable: true},
                 {data: 'date', name: 'user.created_at', orderable: true, searchable: false},
                 {data: 'status', name: 'user.status', orderable: true, searchable: false},
-                {data: 'availability', name: 'availability', orderable: false, searchable: false},
                 {data: 'actions', name: 'user.actions', orderable: false, searchable: false},
             ],
             drawCallback: function () {

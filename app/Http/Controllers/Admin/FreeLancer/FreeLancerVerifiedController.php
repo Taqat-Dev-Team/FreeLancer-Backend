@@ -17,7 +17,7 @@ class FreeLancerVerifiedController extends Controller
 
     public function data(Request $request)
     {
-        $freelancers = Freelancer::with(['user.country', 'identityVerification'])
+        $freelancers = Freelancer::with(['user.country', 'identityVerification'])->where('review','1')
             ->whereHas('identityVerification', function ($query) {
                 $query->where('status', '1');
             });

@@ -7,14 +7,15 @@
     $white = setting_media('white_logo');
       $dark = setting_media('logo');
 @endphp
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
         @if(($locale ?? 'ar') == 'en')
-            Password Reset Request
+            {{$settings['name_en']}}  | {{ $status == 'active' ? 'Account Activated' : 'Account Deactivated' }}
         @else
-            طلب إعادة تعيين كلمة المرور
+            {{$settings['name_ar']}}  |  {{ $status == 'active' ? 'تم تفعيل حسابك' : 'تم تعطيل حسابك' }}
         @endif
     </title>
     <style>
@@ -35,6 +36,18 @@
             border-collapse: collapse;
             width: 100%;
         }
+
+        .reason-box {
+
+            background-color: #ffe6e6;
+            color: #cc0000;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
 
         td {
             padding: 0;
@@ -83,7 +96,6 @@
         }
 
 
-
         .footer {
             background-color: #f4f7f6;
             padding: 25px;
@@ -104,19 +116,6 @@
             opacity: 0.7;
         }
 
-        .button {
-            display: inline-block;
-            background-color: #1279be;
-            color: #ffffff;
-            padding: 12px 25px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 16px;
-            margin-top: 20px;
-        }
-
-        /* Blade conditional classes for RTL/LTR content */
         .rtl {
             text-align: right;
             direction: rtl;
@@ -127,43 +126,54 @@
             direction: ltr;
         }
     </style>
-
 </head>
 <body>
+
+
 <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
     <tr>
         <td align="center" style="padding: 20px 0;">
             <table role="presentation" cellspacing="0" cellpadding="0" border="0" class="container">
                 <tr>
                     <td class="header">
-                        <img src="{{$white }}" alt="Logo" class="logo">
-{{--                        <h1>طاقات / Taqat</h1>--}}
+                        <img src="{{ $white }}" alt="Logo" class="logo">
                     </td>
                 </tr>
                 <tr>
                     <td class="content @if(($locale ?? 'ar') == 'en') ltr @else rtl @endif">
                         @if(($locale ?? 'ar') == 'en')
-                            <p>Hello,</p>
-                            <p>You are receiving this email because we received a password reset request for your account.</p>
-                            <p>To reset your password, click the button below:</p>
-                            <p style="text-align: center;">
-                                <a href="{{ $resetUrl }}" class="button" target="_blank" rel="noopener noreferrer">Reset Password</a>
-                            </p>
-                            <p>This password reset link will expire in {{ config('auth.passwords.users.expire') }} minutes.</p>
-                            <p>If you did not request a password reset, no further action is required.</p>
-                            <p>Regards,</p>
-                            <p>The {{$settings['name_en']}} Team.</p>
+                            @if($status == 'active')
+                                <p>Hello {{ $user->name }},</p>
+                                <p>Your account on <strong>{{$settings['name_en']}} Platform</strong> has been <strong>approved</strong>
+                                    successfully.</p>
+                                <p>Your account can now appear to employers and receive offers.</p>
+                            @else
+                                <p>Hello {{ $user->name }},</p>
+                                <p>Your account on <strong>{{$settings['name_en']}} Platform</strong> has been <strong>rejected</strong>.
+                                </p>
+                                @if(!empty($reason))
+                                    <div class="reason-box">
+                                        Reason: {{ $reason }}
+                                    </div>
+                                @endif
+                                <p>If you have any questions, feel free to contact support.</p>
+                            @endif
                         @else
-                            <p>مرحبًا،</p>
-                            <p>تتلقى هذا البريد الإلكتروني لأننا تلقينا طلبًا لإعادة تعيين كلمة المرور لحسابك.</p>
-                            <p>لإعادة تعيين كلمة المرور الخاصة بك، انقر على الزر أدناه:</p>
-                            <p style="text-align: center;">
-                                <a href="{{ $resetUrl }}" class="button" target="_blank" rel="noopener noreferrer">إعادة تعيين كلمة المرور</a>
-                            </p>
-                            <p>صلاحية رابط إعادة تعيين كلمة المرور هذا ستنتهي خلال {{ config('auth.passwords.users.expire') }} دقيقة.</p>
-                            <p>إذا لم تطلب إعادة تعيين كلمة المرور، فلا داعي لاتخاذ أي إجراء آخر.</p>
-                            <p>مع تحياتنا،</p>
-                            <p>فريق  {{$settings['name_ar']}}.</p>
+                            @if($status == 'active')
+                                <p>مرحبًا {{ $user->name }},</p>
+                                <p>تم <strong>قبول</strong> حسابك في <strong>منصة {{$settings['name_ar']}}</strong>
+                                    بنجاح.</p>
+                                <p>يمكن لحسابك الان الظهور للاصحاب الوظائف وتلقي العروض</p>
+                            @else
+                                <p>مرحبًا {{ $user->name }},</p>
+                                <p>تم <strong>رفض</strong> حسابك في <strong>منصة {{$settings['name_ar']}}</strong>.</p>
+                                @if(!empty($reason))
+                                    <div class="reason-box">
+                                        السبب: {{ $reason }}
+                                    </div>
+                                @endif
+                                <p>إذا كانت لديك أي استفسارات، يرجى التواصل مع الدعم الفني.</p>
+                            @endif
                         @endif
                     </td>
                 </tr>
@@ -171,12 +181,11 @@
                     <td class="footer @if(($locale ?? 'ar') == 'en') ltr @else rtl @endif">
                         <p>
                             @if(($locale ?? 'ar') == 'en')
-                                &copy; {{ date('Y') }}  {{$settings['name_en']}}. All rights reserved.
+                                &copy; {{ date('Y') }} {{$settings['name_en']}}. All rights reserved.
                             @else
-                                &copy; {{ date('Y') }}  {{$settings['name_ar']}}. جميع الحقوق محفوظة.
+                                &copy; {{ date('Y') }} {{$settings['name_ar']}}. جميع الحقوق محفوظة.
                             @endif
                         </p>
-
                         <img src="{{ $dark}}" alt="Logo" class="logo-footer">
                     </td>
                 </tr>

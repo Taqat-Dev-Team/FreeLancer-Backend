@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html lang="{{ $locale ?? 'ar' }}">
+@php
+    $settings = setting();
+
+    $white = setting_media('white_logo');
+      $dark = setting_media('logo');
+@endphp
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
         @if(($locale ?? 'ar') == 'en')
-            Identity Verification Rejected
+            {{$settings['name_en']}} | Identity Verification Rejected
         @else
-            تم رفض التحقق من الهوية
+            {{$settings['name_ar']}} | تم رفض التحقق من الهوية
         @endif
     </title>
     <style>
@@ -126,7 +132,7 @@
             <table role="presentation" class="container">
                 <tr>
                     <td class="header">
-                        <img src="{{ url('logos/white.png') }}" alt="Taqat Logo" class="logo">
+                        <img src="{{ $white }}" alt="Logo" class="logo">
                     </td>
                 </tr>
                 <tr>
@@ -149,10 +155,10 @@
 
                         @if(($locale ?? 'ar') == 'en')
                             <p>If you have any questions or need assistance, feel free to contact our support team.</p>
-                            <p>Thank you for using Taqat.</p>
+                            <p>Thank you for using {{$settings['name_en']}}.</p>
                         @else
                             <p>إذا كان لديك أي استفسار أو تحتاج إلى مساعدة، لا تتردد في التواصل مع فريق الدعم لدينا.</p>
-                            <p>شكرًا لاستخدامك منصة طاقات.</p>
+                            <p>شكرًا لاستخدامك منصة {{$settings['name_ar']}}.</p>
                         @endif
                     </td>
                 </tr>
@@ -160,12 +166,12 @@
                     <td class="footer @if(($locale ?? 'ar') == 'en') ltr @else rtl @endif">
                         <p>
                             @if(($locale ?? 'ar') == 'en')
-                                &copy; {{ date('Y') }} Taqat. All rights reserved.
+                                &copy; {{ date('Y') }} {{$settings['name_en']}}. All rights reserved.
                             @else
-                                &copy; {{ date('Y') }} طاقات. جميع الحقوق محفوظة.
+                                &copy; {{ date('Y') }} {{$settings['name_ar']}}. جميع الحقوق محفوظة.
                             @endif
                         </p>
-                        <img src="{{ asset('logos/logo.png') }}" alt="Taqat Logo" class="logo-footer">
+                        <img src="{{ $dark }}" alt="Logo" class="logo-footer">
                     </td>
                 </tr>
             </table>

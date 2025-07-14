@@ -57,16 +57,6 @@ class OtheFreeLancerController extends Controller
             })
             ->addColumn('name', fn($row) => optional($row->user)->name ?? '-')
             ->addColumn('email', fn($row) => optional($row->user)->email ?? '-')
-            ->addColumn('availability', function ($row) {
-                if ($row->availability()) {
-                    return '<span class="badge badge-light-primary">Available To Hire</span>';
-                }
-
-                $modalId = 'availabilityModal_' . $row->id;
-
-                return '<span class="badge badge-light-warning cursor-pointer" data-bs-toggle="modal" data-bs-target="#' . $modalId . '">Not Available To Hire</span>'
-                    . view('admin.FreeLancer.partials.availability_modal', ['row' => $row, 'modalId' => $modalId])->render();
-            })
             ->addColumn('actions', function ($row) {
                 $actions = '
         <div class="dropdown">
@@ -85,15 +75,6 @@ class OtheFreeLancerController extends Controller
                     <a href="#" class="menu-link px-3 delete-freelancer btn btn-active-light-danger" data-id="' . $row->id . '">Delete</a>
                 </div>';
 
-
-                // ✅ زر تغيير حالة المستخدم
-                $actions .= '
-        <div class="menu-item px-3">
-            <a href="#" class="menu-link px-3 status-freelancer btn btn-active-light-warning"
-               data-id="' . $row->id . '" data-status="' . $row->user->status . '">
-               Change Status
-            </a>
-        </div>';
 
                 // ✅ زر إرسال رسالة
                 $actions .= '
@@ -114,7 +95,7 @@ class OtheFreeLancerController extends Controller
                     : '<span class="badge badge-light-danger" >Not Active</span>';
             })
             ->addIndexColumn()
-            ->rawColumns(['actions', 'photo', 'mobile', 'status', 'availability'])
+            ->rawColumns(['actions', 'photo', 'mobile', 'status'])
             ->make(true);
     }
 

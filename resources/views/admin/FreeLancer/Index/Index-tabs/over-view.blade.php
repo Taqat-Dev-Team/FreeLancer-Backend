@@ -4,43 +4,123 @@
 
 <div class="tab-pane fade show active" id="kt_user_view_overview_tab" role="tabpanel">
 
-    <!-- Availability Card -->
-    <div class="card card-flush mb-6 mb-xl-9">
-        <div class="card-header pt-5">
-            <h3 class="card-title align-items-start flex-column">
-                <span class="card-label fw-bold text-gray-900">Availability </span>
-                <span class="text-gray-500 mt-1 fw-semibold fs-6">Availability To Hire</span>
-            </h3>
+    <div class="row">
+        <!-- Availability Card -->
+        <div class="card card-flush mb-6 mb-xl-9 mx-3 col-5">
+            <div class="card-header pt-5">
+                <h3 class="card-title align-items-start flex-column">
+                    <span class="card-label fw-bold text-gray-900">Availability </span>
+                    <span class="text-gray-500 mt-1 fw-semibold fs-6">Availability To Hire</span>
+                </h3>
+            </div>
+
+            <div class="card-body d-flex align-items-end pt-6">
+                <div class="row align-items-center mx-0 w-100">
+                    <div class="col-7 px-0">
+                        <div class="d-flex flex-column content-justify-center">
+                            <div class="d-flex fs-6 fw-semibold align-items-center ">
+
+
+                                <div
+                                    class="bullet {{ $freelancer->availability() == 1 ? 'bg-success' : 'bg-warning' }} me-3"
+                                    style="border-radius: 3px;width: 12px;height: 12px"></div>
+                                <div class="fs-5 fw-bold text-gray-600 me-5">
+                                    {{ $freelancer->availability() == 1 ? 'Available' : 'Not Available' }}
+                                </div>
+                            </div>
+                            <div class="fw-bolder text-gray-700 text-start mt-5">
+                                Available to Hire: {{ $freelancer->available_hire ? 'Yes' : 'No' }}<br>
+                            </div>
+
+                            @if ($freelancer->availabilityDetails())
+                                <div class="fs-5 fw-bold text-gray-600 me-5 mt-5">
+                                    Reasons:
+                                    <ul class="mb-0">
+
+                                        @foreach ($freelancer->availabilityDetails() as $reason)
+                                            <li>{{ $reason }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        <div class="card card-flush mb-6 mb-xl-9   mx-3 col-3">
+            <div class="card-header pt-5">
+                <h3 class="card-title align-items-start flex-column">
+                    <span class="card-label fw-bold text-gray-900">Status </span>
+                    <span class="text-gray-500 mt-1 fw-semibold fs-6">Freelancer Status</span>
+                </h3>
+            </div>
 
-        <div class="card-body d-flex align-items-end pt-6">
-            <div class="row align-items-center mx-0 w-100">
-                <div class="col-7 px-0">
-                    <div class="d-flex flex-column content-justify-center">
-                        <div class="d-flex fs-6 fw-semibold align-items-center">
-                            <div
-                                class="bullet {{ $freelancer->availability() == 1 ? 'bg-success' : 'bg-warning' }} me-3"
-                                style="border-radius: 3px;width: 12px;height: 12px"></div>
-                            <div class="fs-5 fw-bold text-gray-600 me-5">
-                                {{ $freelancer->availability() == 1 ? 'Available' : 'Not Available' }}
+            <div class="card-body d-flex align-items-end pt-6">
+                <div class="row align-items-center mx-0 w-100">
+                    <div class="col-7 px-0">
+                        <div class="d-flex flex-column content-justify-center">
+                            <div class="d-flex fs-6 fw-semibold align-items-center">
+                                <div
+                                    class="bullet {{ $freelancer->user->status == '1' ? 'bg-success' : 'bg-warning' }} me-3"
+                                    style="border-radius: 3px;width: 12px;height: 12px"></div>
+                                <div class="fs-5 fw-bold text-gray-600 me-5">
+                                    {{ $freelancer->user->status == '1' ? 'Active' : 'Not Active' }}
+                                </div>
+
                             </div>
-                        </div>
-                        <div class="fw-bolder text-gray-700 text-start">
-                            Available to Hire: {{ $freelancer->available_hire ? 'Yes' : 'No' }}<br>
-                            {{--                            Available from Admin: {{ $freelancer->admin_available_hire ? 'Yes' : 'No' }}--}}
-                        </div>
 
-                        @if ($freelancer->availabilityDetails())
-                            <div class="fs-5 fw-bold text-gray-600 me-5">
-                                Reasons:
-                                <ul class="mb-0">
 
-                                    @foreach ($freelancer->availabilityDetails() as $reason)
-                                        <li>{{ $reason }}</li>
-                                    @endforeach
-                                </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card card-flush mb-6 mb-xl-9  mx-3  col-3">
+            <div class="card-header pt-5">
+                <h3 class="card-title align-items-start flex-column">
+                    <span class="card-label fw-bold text-gray-900">Review </span>
+                    <span class="text-gray-500 mt-1 fw-semibold fs-6">Freelancer Review</span>
+                </h3>
+            </div>
+
+            <div class="card-body d-flex align-items-end pt-6">
+                <div class="row align-items-center mx-0 w-100">
+                    <div class="col-7 px-0">
+                        <div class="d-flex flex-column content-justify-center">
+                            <div class="d-flex fs-6 fw-semibold align-items-center">
+                                <div
+                                    class="bullet
+            @if($freelancer->review == '1') bg-success
+            @elseif($freelancer->review == '2') bg-danger
+            @else bg-warning
+            @endif me-3"
+                                    style="border-radius: 3px;width: 12px;height: 12px">
+                                </div>
+                                <div class="fs-5 fw-bold text-gray-600 me-5">
+                                    @if($freelancer->review == '1')
+                                        Approved
+                                    @elseif($freelancer->review == '2')
+                                        Rejected
+                                    @else
+                                        Pending
+                                    @endif
+                                </div>
                             </div>
-                        @endif
+
+                            @if ($freelancer->review_reason && $freelancer->review=='2')
+                                <div class="fs-5 fw-bold text-gray-600 me-5 mt-5">
+                                    Reason:
+                                    <ul class="mb-0">
+
+                                        <li>{{ $freelancer->review_reason }}</li>
+                                    </ul>
+                                </div>
+                            @endif
+
+                        </div>
+
 
                     </div>
                 </div>
@@ -48,40 +128,42 @@
         </div>
     </div>
 
-    <!-- Profile Status Card -->
-    <div class="card card-flush mb-6 mb-xl-9">
-        <div class="card-header border-0">
-            <div class="card-title">
-                <h2>Profile Status</h2>
+
+</div>
+<!-- Profile Status Card -->
+<div class="card card-flush mb-6 mb-xl-9">
+    <div class="card-header border-0">
+        <div class="card-title">
+            <h2>Profile Status</h2>
+        </div>
+    </div>
+
+    <div class="card-body py-0">
+        <div class="fs-5 fw-semibold text-gray-500 mb-4">Profile complete status progress</div>
+
+        <div class="d-flex flex-column">
+            <div class="d-flex justify-content-between w-100 fs-4 fw-bold mb-3">
+                <span>Percentage</span>
+                <span>{{ $profileCompletion['percentage'] }}%</span>
+            </div>
+
+            <div class="h-8px bg-light rounded mb-3">
+                <div class="bg-success rounded h-8px"
+                     style="width: {{ $profileCompletion['percentage'] }}%;"
+                     role="progressbar"
+                     aria-valuenow="{{ $profileCompletion['percentage'] }}" aria-valuemin="0" aria-valuemax="100">
+                </div>
+            </div>
+
+            <div class="fw-semibold text-gray-600">
+                {{ $profileCompletion['total_items'] - $profileCompletion['completed_items'] }} Items are remaining
             </div>
         </div>
 
-        <div class="card-body py-0">
-            <div class="fs-5 fw-semibold text-gray-500 mb-4">Profile complete status progress</div>
-
-            <div class="d-flex flex-column">
-                <div class="d-flex justify-content-between w-100 fs-4 fw-bold mb-3">
-                    <span>Percentage</span>
-                    <span>{{ $profileCompletion['percentage'] }}%</span>
-                </div>
-
-                <div class="h-8px bg-light rounded mb-3">
-                    <div class="bg-success rounded h-8px"
-                         style="width: {{ $profileCompletion['percentage'] }}%;"
-                         role="progressbar"
-                         aria-valuenow="{{ $profileCompletion['percentage'] }}" aria-valuemin="0" aria-valuemax="100">
-                    </div>
-                </div>
-
-                <div class="fw-semibold text-gray-600">
-                    {{ $profileCompletion['total_items'] - $profileCompletion['completed_items'] }} Items are remaining
-                </div>
-            </div>
-
-            <div class="d-flex flex-wrap flex-stack mb-5">
-                <div class="d-flex flex-wrap">
-                    @foreach($profileCompletion['status'] as $item)
-                        <div class="border border-dashed border-gray-300 w-250px rounded my-3 p-4 me-6">
+        <div class="d-flex flex-wrap flex-stack mb-5">
+            <div class="d-flex flex-wrap">
+                @foreach($profileCompletion['status'] as $item)
+                    <div class="border border-dashed border-gray-300 w-250px rounded my-3 p-4 me-6">
                             <span class="fs-1 fw-bold text-gray-800 lh-1">
                                 <span class="counted fs-4">{{ $item['name'] }}</span>
                                 @if($item['is_completed'])
@@ -90,13 +172,13 @@
                                     <i class="ki-outline ki-cross fs-1 text-danger"></i>
                                 @endif
                             </span>
-                            <span
-                                class="fs-6 fw-semibold text-muted d-block lh-1 pt-2">{{ $item['description'] }}</span>
-                        </div>
-                    @endforeach
-                </div>
+                        <span
+                            class="fs-6 fw-semibold text-muted d-block lh-1 pt-2">{{ $item['description'] }}</span>
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>
+</div>
 
 </div>
