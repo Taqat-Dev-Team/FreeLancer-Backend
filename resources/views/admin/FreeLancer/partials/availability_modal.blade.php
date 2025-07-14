@@ -22,15 +22,6 @@
                     @endforeach
                 </ul>
 
-
-                @if(!$row->admin_available_hire)
-                    <a href="#"
-                       class="btn btn-primary w-100 toggle-admin-availability-active"
-                       data-id="{{ $row->id }}">
-                        <i class="ki-solid ki-check fs-1 me-2"></i>
-                        Admin Activate Availability
-                    </a>
-                @endif
             </div>
 
         </div>

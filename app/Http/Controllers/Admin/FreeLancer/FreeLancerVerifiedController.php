@@ -17,7 +17,7 @@ class FreeLancerVerifiedController extends Controller
 
     public function data(Request $request)
     {
-        $freelancers = Freelancer::with(['user.country', 'identityVerification'])->where('review','1')
+        $freelancers = Freelancer::with(['user.country', 'identityVerification'])
             ->whereHas('identityVerification', function ($query) {
                 $query->where('status', '1');
             });
@@ -81,26 +81,6 @@ class FreeLancerVerifiedController extends Controller
                 <div class="menu-item px-3">
                     <a href="#" class="menu-link px-3 delete-freelancer btn btn-active-light-danger" data-id="' . $row->id . '">Delete</a>
                 </div>';
-
-                // ✅ إظهار زر تفعيل من قبل الأدمن فقط إذا غير مفعل
-                if (!$row->admin_available_hire) {
-                    $actions .= '
-            <div class="menu-item px-3">
-                <a href="#" class="menu-link px-3 toggle-admin-availability-active btn btn-active-light-primary"
-                   data-id="' . $row->id . '" data-status="' . $row->admin_available_hire . '">
-                   Activate by Admin
-                </a>
-            </div>';
-                } else {
-                    $actions .= '
-
-           <div class="menu-item px-3">
-                <a href="#" class="menu-link px-3 toggle-admin-availability-deactivate btn btn-active-light-primary"
-                   data-id="' . $row->id . '" data-status="' . $row->admin_available_hire . '">
-                  Deactivate by Admin
-                </a>
-            </div>';
-                }
 
                 // ✅ زر تغيير حالة المستخدم
                 $actions .= '

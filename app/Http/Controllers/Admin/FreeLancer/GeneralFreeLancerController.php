@@ -37,37 +37,6 @@ class GeneralFreeLancerController extends Controller
         return response()->json(['message' => 'Freelancer status updated successfully.']);
     }
 
-    public function ActiveByAdmin($id)
-    {
-        $freelancer = Freelancer::find($id);
-        if (!$freelancer) {
-            return response()->json(['message' => 'Freelancer not found.'], 404);
-        }
-
-        $freelancer->admin_available_hire = 1;
-        Mail::to($freelancer->user->email)->send(new AdminMessageToFreelancer(trans('messages.freelancer_admin_active', [], $freelancer->user->lang ?? 'ar'), $freelancer->user));
-
-        $freelancer->save();
-
-        return response()->json(['message' => 'Freelancer admin availability updated successfully.']);
-
-    }
-
-    public function deactivateByAdmin($id)
-    {
-        $freelancer = Freelancer::find($id);
-        if (!$freelancer) {
-            return response()->json(['message' => 'Freelancer not found.'], 404);
-        }
-
-        $freelancer->admin_available_hire = 0;
-        Mail::to($freelancer->user->email)->send(new AdminMessageToFreelancer(trans('messages.freelancer_admin_deactivate', [], $freelancer->user->lang ?? 'ar'), $freelancer->user));
-
-        $freelancer->save();
-
-        return response()->json(['message' => 'Freelancer admin availability updated successfully.']);
-
-    }
 
     public function destroy($id)
     {

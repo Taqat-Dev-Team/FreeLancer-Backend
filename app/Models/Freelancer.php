@@ -39,7 +39,6 @@ class Freelancer extends Model implements HasMedia
         if (!$this->available_hire
             || $this->idVerified()->status !== '1'
             || !$this->user->status
-            || !$this->admin_available_hire
             || $this->getProfileCompletionStatusAttribute()['percentage'] < setting('freelancers_availability_percentage')
         ) {
             return false;
@@ -67,11 +66,7 @@ class Freelancer extends Model implements HasMedia
 
         $status = $this->getProfileCompletionStatusAttribute();
         if ($status['percentage'] < setting('freelancers_availability_percentage')) {
-            $reasons[] = 'Profile completion is below '.setting('freelancers_availability_percentage').'%.';
-        }
-
-        if (!$this->admin_available_hire) {
-            $reasons[] = 'Admin disabled hiring for this freelancer.';
+            $reasons[] = 'Profile completion is below ' . setting('freelancers_availability_percentage') . '%.';
         }
 
         return $reasons;
@@ -140,8 +135,6 @@ class Freelancer extends Model implements HasMedia
     {
         return $this->hasMany(FreeLancerLanguage::class, 'freelancer_id');
     }
-
-
 
 
     public function badges()

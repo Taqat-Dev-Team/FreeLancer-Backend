@@ -11,17 +11,6 @@
                 <span class="card-label fw-bold text-gray-900">Availability </span>
                 <span class="text-gray-500 mt-1 fw-semibold fs-6">Availability To Hire</span>
             </h3>
-            <div class="card-toolbar">
-                @if($freelancer->admin_available_hire)
-                    <a href="#" class="btn btn-light-warning w-100 toggle-admin-availability-deactivate" data-id="{{$freelancer->id}}">
-                        <i class="ki-solid ki-cross fs-1 me-2"></i> Deactivate Availability
-                    </a>
-                @else
-                    <a href="#" class="btn btn-light-primary w-100 toggle-admin-availability-active" data-id="{{$freelancer->id}}">
-                        <i class="ki-solid ki-check fs-1 me-2"></i> Activate Availability
-                    </a>
-                @endif
-            </div>
         </div>
 
         <div class="card-body d-flex align-items-end pt-6">
@@ -38,7 +27,7 @@
                         </div>
                         <div class="fw-bolder text-gray-700 text-start">
                             Available to Hire: {{ $freelancer->available_hire ? 'Yes' : 'No' }}<br>
-                            Available from Admin: {{ $freelancer->admin_available_hire ? 'Yes' : 'No' }}
+                            {{--                            Available from Admin: {{ $freelancer->admin_available_hire ? 'Yes' : 'No' }}--}}
                         </div>
 
                         @if ($freelancer->availabilityDetails())
