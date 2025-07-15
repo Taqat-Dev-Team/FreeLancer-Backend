@@ -1,9 +1,9 @@
-@extends('admin.layouts.master', ['title' => 'Users'])
+@extends('admin.layouts.master', ['title' => 'Clients'])
 
 
-@section('toolbarTitle', 'Users not select type ')
-@section('toolbarSubTitle', 'Users ')
-@section('toolbarPage', 'Users not select type')
+@section('toolbarTitle', 'Clients ')
+@section('toolbarSubTitle', 'Clients List')
+@section('toolbarPage', 'All Clients')
 
 @section('content')
     <div id="kt_app_content_container" class="app-container container-fluid mt-5">
@@ -19,7 +19,7 @@
                         <i class="ki-outline ki-magnifier fs-3 position-absolute ms-5"></i>
                         <input type="text"
                                id="FreelancerSearchInput" class="form-control form-control-solid w-250px ps-13"
-                               placeholder="Search User">
+                               placeholder="Search Client">
                     </div>
                     <!--end::Search-->
                 </div>
@@ -38,7 +38,9 @@
 
                                 <th class="">#</th>
                                 <th class="min-w-125px">photo</th>
+                                <th class="min-w-125px">Name</th>
                                 <th class="min-w-125px">email</th>
+                                <th class="min-w-125px">Mobile</th>
                                 <th class="">Joined Date</th>
                                 <th class="">status</th>
                                 <th class="min-w-125px">Options</th>
@@ -75,7 +77,7 @@
                     order: [[0, 'desc']],
 
                     ajax: {
-                        url: '{{ route('admin.users.data') }}',
+                        url: '{{ route('admin.clients.data') }}',
                         data: function (d) {
                             d.search = $('#FreelancerSearchInput').val();
                         }
@@ -86,9 +88,11 @@
 
                         {data: 'DT_RowIndex', name: 'id'},
                         {data: 'photo', name: 'photo', orderable: false, searchable: false},
-                        {data: 'email', name: 'email', orderable: true, searchable: true},
-                        {data: 'date', name: 'created_at', orderable: true, searchable: false},
-                        {data: 'status', name: 'status', orderable: true, searchable: false},
+                        {data: 'name', name: 'user.name', orderable: true, searchable: true},
+                        {data: 'email', name: 'user.email', orderable: true, searchable: true},
+                        {data: 'mobile', name: 'user.mobile', orderable: true, searchable: true},
+                        {data: 'date', name: 'user.created_at', orderable: true, searchable: false},
+                        {data: 'status', name: 'user.status', orderable: true, searchable: false},
                         {data: 'actions', name: 'actions', orderable: false, searchable: false},
                     ],
                     drawCallback: function () {
@@ -125,7 +129,7 @@
                                         _token: '{{ csrf_token() }}'
                                     },
                                     success: function (response) {
-                                        toastr.success('User deleted successfully');
+                                        toastr.success('Client deleted successfully');
                                         $('#freelancers_table').DataTable().ajax.reload();
                                     },
                                     error: function (xhr) {
@@ -147,7 +151,7 @@
                             // Show reason input when deactivating
                             Swal.fire({
                                 title: 'Are you sure?',
-                                text: "This User's account will be deactivated. Please provide a reason.",
+                                text: "This Client's account will be deactivated. Please provide a reason.",
                                 input: 'textarea',
                                 inputLabel: 'Reason for deactivation',
                                 inputPlaceholder: 'Enter reason here...',
@@ -172,7 +176,7 @@
                                     });
 
                                     $.ajax({
-                                        url: '/admin/users/status/' + id,
+                                        url: '/admin/clients/status/' + id,
                                         type: 'POST',
                                         data: {
                                             _token: '{{ csrf_token() }}',
@@ -196,7 +200,7 @@
                             // Just confirm activation
                             Swal.fire({
                                 title: 'Are you sure?',
-                                text: "This will activate the User's account.",
+                                text: "This will activate the Client's account.",
                                 icon: 'question',
                                 showCancelButton: true,
                                 confirmButtonText: 'Yes, activate'
@@ -215,7 +219,7 @@
                                     });
 
                                     $.ajax({
-                                        url: '/admin/users/status/' + id,
+                                        url: '/admin/clients/status/' + id,
                                         type: 'POST',
                                         data: {
                                             _token: '{{ csrf_token() }}',
@@ -223,12 +227,12 @@
                                         },
                                         success: function (response) {
                                             Swal.close();
-                                            toastr.success('User activated successfully');
+                                            toastr.success('Client activated successfully');
                                             $('#freelancers_table').DataTable().ajax.reload();
                                         },
                                         error: function (xhr) {
                                             Swal.close();
-                                            toastr.error('Error activating User', xhr.responseJSON.message || 'Unknown error');
+                                            toastr.error('Error activating Client', xhr.responseJSON.message || 'Unknown error');
                                         }
                                     });
                                 }
@@ -251,7 +255,7 @@
                 const freelancerId = $(this).data('id');
 
                 Swal.fire({
-                    title: 'Send Message to User',
+                    title: 'Send Message to Client',
                     input: 'textarea',
                     inputLabel: 'Your Message',
                     inputPlaceholder: 'Type your message here...',
@@ -283,7 +287,7 @@
                         });
 
                         $.ajax({
-                            url: '/admin/users/send-message',
+                            url: '/admin/clients/send-message',
                             method: 'POST',
                             data: {
                                 _token: '{{ csrf_token() }}',

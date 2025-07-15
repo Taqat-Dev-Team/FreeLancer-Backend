@@ -83,7 +83,7 @@
                                 <span class="menu-title ">Pending Verification</span>
                                 @if($identityRequestsCount > 0)
                                     <span class="menu-badge justify-content-end">
-                                    <span class="badge badge-light-primary ms-2">
+                                    <span class="badge badge-light-info ms-2">
                                         {{ $identityRequestsCount }}
                                     </span>
                                 </span>
@@ -129,7 +129,7 @@
                      class="menu-item {{ request()->routeIs('admin.users*') ? 'here show' : '' }} menu-accordion">
                 <span class="menu-link">
                     <span class="menu-icon">
-                        <i class="ki-outline ki-profile-user fs-2"></i>
+                        <i class="ki-outline ki-people fs-2"></i>
                     </span>
                     <span class="menu-title">Users</span>
                     <span class="menu-arrow"></span>
@@ -145,6 +145,38 @@
                                     <span class="menu-badge justify-content-end">
                                     <span class="badge badge-light-primary ms-2">
                                         {{ $usersNotTypedCount }}
+                                    </span>
+                                </span>
+                                @endif
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                @php $ClientsCount=ClientsCount() @endphp
+
+                <div data-kt-menu-trigger="click"
+                     class="menu-item {{ request()->routeIs('admin.clients*') ? 'here show' : '' }} menu-accordion">
+                <span class="menu-link">
+                    <span class="menu-icon">
+                        <i class="ki-outline ki-user fs-2"></i>
+                    </span>
+                    <span class="menu-title">Clients</span>
+                    <span class="menu-arrow"></span>
+                </span>
+
+                    <div class="menu-sub menu-sub-accordion">
+                        <div class="menu-item">
+                            <a class="menu-link {{ request()->routeIs('admin.clients.index') ? 'active' : '' }}"
+                               href="{{ route('admin.clients.index') }}">
+                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                                <span class="menu-title ">Clients List</span>
+                                @if($ClientsCount > 0)
+                                    <span class="menu-badge justify-content-end">
+                                    <span class="badge badge-light-primary ms-2">
+                                        {{ $ClientsCount }}
                                     </span>
                                 </span>
                                 @endif

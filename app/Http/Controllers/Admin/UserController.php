@@ -106,11 +106,11 @@ class UserController extends Controller
 
         if ($user->status) {
             // تم التفعيل
-            Mail::to($user->email)->send(new \App\Mail\FreelancerActivated($user));
+            Mail::to($user->email)->send(new \App\Mail\UserActivated($user));
         } else {
             // تم التعطيل مع سبب
             $reason = $request->input('reason');
-            Mail::to($user->email)->send(new \App\Mail\FreelancerDeactivated($user, $reason));
+            Mail::to($user->email)->send(new \App\Mail\UserDeactivated($user, $reason));
         }
 
         return response()->json(['message' => 'User status updated successfully.']);

@@ -147,7 +147,7 @@
                     ajax: {
                         url: '{{ route('admin.management.serviceFileFormat.data') }}',
                         data: function (d) {
-                            d.search = $('#FreelancerSearchInput').val();
+                            d.search = $('#FormatSearchInput').val();
                             d.category_id = $('#category_id').val();
 
                         }
@@ -190,7 +190,7 @@
                 });
 
 
-                $('#FreelancerSearchInput').on('keyup', function () {
+                $('#FormatSearchInput').on('keyup', function () {
                     table.search(this.value).draw();
                 });
 

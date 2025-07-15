@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin\FreeLancer;
 
 use App\Http\Controllers\Controller;
 use App\Mail\AdminMessageToUser;
-use App\Mail\FreelancerActivated;
+use App\Mail\UserActivated;
 use App\Mail\FreelancerApprove;
-use App\Mail\FreelancerDeactivated;
+use App\Mail\UserDeactivated;
 use App\Mail\FreelancerReject;
 use App\Models\Badge;
 use App\Models\Freelancer;
@@ -31,11 +31,11 @@ class GeneralFreeLancerController extends Controller
         // إرسال الإيميل حسب الحالة الجديدة
         if ($user->status) {
             // تم التفعيل
-            Mail::to($user->email)->send(new \App\Mail\FreelancerActivated($user));
+            Mail::to($user->email)->send(new UserActivated($user));
         } else {
             // تم التعطيل مع سبب
             $reason = $request->input('reason');
-            Mail::to($user->email)->send(new \App\Mail\FreelancerDeactivated($user, $reason));
+            Mail::to($user->email)->send(new UserDeactivated($user, $reason));
         }
 
         return response()->json(['message' => 'Freelancer status updated successfully.']);

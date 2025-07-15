@@ -47,6 +47,11 @@ function usersNotTypedCount()
         ->whereDoesntHave('client')->count();
 }
 
+function ClientsCount()
+{
+    return \App\Models\Client::count();
+}
+
 function work_type()
 {
     return collect([

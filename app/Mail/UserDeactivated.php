@@ -7,7 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class FreelancerDeactivated extends Mailable
+class UserDeactivated extends Mailable
 {
     use Queueable, SerializesModels;
 

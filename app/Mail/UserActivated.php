@@ -10,7 +10,7 @@ use Illuminate\Queue\SerializesModels;
 
 use App\Models\User;
 
-class FreelancerActivated extends Mailable
+class UserActivated extends Mailable
 {
     use Queueable, SerializesModels;
 

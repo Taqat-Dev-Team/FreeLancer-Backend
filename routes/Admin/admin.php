@@ -70,3 +70,4 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 require __DIR__ . '/management.php';
 require __DIR__ . '/freelancers.php';
+require __DIR__ . '/clients.php';
