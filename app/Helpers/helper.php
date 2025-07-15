@@ -6,7 +6,7 @@ use App\Models\User;
 
 function otp(): int
 {
-    $env = env('APP_ENV');
+    $env = config('app.env');
 
     if ($env === 'production' || $env === 'staging') {
         // في بيئة الإنتاج أو الستيجنق، نستخدم رمز OTP حقيقي
@@ -19,7 +19,7 @@ function otp(): int
 
 function Mobileotp(): int
 {
-    $env = env('APP_ENV');
+    $env = config('app.env');
 
     if ($env === 'production' || $env === 'staging') {
         // في بيئة الإنتاج أو الستيجنق، نستخدم رمز OTP حقيقي
@@ -39,6 +39,19 @@ function languages_levels()
         ['id' => 3, 'label' => __('messages.advanced')],
         ['id' => 4, 'label' => __('messages.native')],
     ]);
+}
+
+function formatPagination($paginator)
+{
+    return [
+        'current_page' => $paginator->currentPage(),
+        'per_page' => $paginator->perPage(),
+        'total' => $paginator->total(),
+        'last_page' => $paginator->lastPage(),
+        'from' => $paginator->firstItem(),
+        'to' => $paginator->lastItem(),
+        'links' => $paginator->linkCollection()->toArray(),
+    ];
 }
 
 function usersNotTypedCount()

@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
 
 class AdminAuthController extends Controller
 {
@@ -16,19 +18,20 @@ class AdminAuthController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function showLoginForm()
+    public function showLoginForm(): View|RedirectResponse
     {
         if (Auth::guard('admin')->check()) {
             return redirect()->route('admin.dashboard');
         }
 
-        return view('admin.auth.login'); // Ensure the path is correct for your Blade file
+        return view('admin.auth.login');
     }
+
 
     /**
      * Handle an incoming authentication request.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\Requests\Auth\LoginRequest $request
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function login(LoginRequest $request)

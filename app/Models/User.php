@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -66,40 +69,43 @@ class User extends Authenticatable implements HasMedia
         ];
     }
 
-    public function getImageUrl()
+    public function getImageUrl():string
     {
         return $this->getFirstMediaUrl('photo','thumb') ?: url('logos/favicon.png');
     }
 
 
-    public function country()
+    public function country():BelongsTo
     {
         return $this->belongsTo(Country::class);
     }
 
-    public function client()
+
+
+    public function client(): HasOne
     {
         return $this->hasOne(Client::class);
     }
 
-    public function freelancer()
+
+    public function freelancer():HasOne
     {
         return $this->hasOne(Freelancer::class);
     }
 
 
-    public function otpCodes()
+    public function otpCodes():HasMany
     {
         return $this->hasMany(OtpCode::class);
     }
 
-    public function notifications()
+    public function notifications():HasMany
     {
         return $this->hasMany(Notification::class);
     }
 
 
-    public function skills()
+    public function skills():BelongsToMany
     {
         return $this->belongsToMany(Skills::class, 'freelancers_skills', 'freelancer_id', 'skill_id')
             ->withTimestamps();

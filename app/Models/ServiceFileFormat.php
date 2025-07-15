@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Spatie\Translatable\HasTranslations;
 
 class ServiceFileFormat extends Model
@@ -16,13 +18,13 @@ class ServiceFileFormat extends Model
     public $translatable = ['name'];
 
 
-    public function category()
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
 
-    public function services()
+    public function services(): BelongsToMany
     {
         return $this->belongsToMany(Service::class, 'service_formats', 'format_id', 'service_id')
             ->withTimestamps();

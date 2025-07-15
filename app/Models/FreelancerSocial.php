@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class FreelancerSocial extends Model
 {
@@ -12,7 +13,7 @@ class FreelancerSocial extends Model
 
     protected $fillable = ['freelancer_id', 'social_media_id', 'link', 'title'];
 
-    public function social()
+    public function social():BelongsTo
     {
         return $this->belongsTo(SocialMedia::class, 'social_media_id');
     }

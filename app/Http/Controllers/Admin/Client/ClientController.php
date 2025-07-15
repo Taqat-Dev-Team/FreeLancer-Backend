@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Mail\AdminMessageToUser;
 use App\Mail\UserActivated;
 use App\Mail\UserDeactivated;
-use App\Models\Badge;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;

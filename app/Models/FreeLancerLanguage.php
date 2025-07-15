@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class FreeLancerLanguage extends Model
 {
@@ -13,7 +14,7 @@ class FreeLancerLanguage extends Model
     protected $fillable = ['freelancer_id', 'level','language_id'];
 
 
-    public function lang()
+    public function lang():BelongsTo
     {
         return $this->belongsTo(Language::class, 'language_id');
     }

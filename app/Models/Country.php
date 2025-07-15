@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
 
 class Country extends Model
@@ -17,13 +18,13 @@ class Country extends Model
 
     public $translatable = ['name'];
 
-    public function users()
+    public function users():HasMany
     {
         return $this->hasMany(User::class);
     }
 
 
-    public function getFlagAttribute()
+    public function getFlagAttribute():string
     {
         $countryCode = strtolower($this->code);
         return "https://flagcdn.com/w40/{$countryCode}.png";

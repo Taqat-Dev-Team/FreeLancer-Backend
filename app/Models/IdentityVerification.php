@@ -3,32 +3,33 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 class IdentityVerification extends Model implements HasMedia
 {
-     use InteractsWithMedia;
+    use InteractsWithMedia;
 
-     protected $table = 'identity_verifications';
-     protected $fillable = [
+    protected $table = 'identity_verifications';
+    protected $fillable = [
         'freelancer_id', 'first_name', 'father_name', 'grandfather_name', 'family_name', 'id_number',
         'full_address', 'verification_date', 'phone', 'status', 'rejection_reason'
     ];
 
-    public function getImageUrl()
+    public function getImageUrl(): string
     {
-        return $this->getFirstMediaUrl('image','thumb') ?: url('logos/favicon.png');
+        return $this->getFirstMediaUrl('image', 'thumb') ?: url('logos/favicon.png');
     }
 
 
     // في IdVerification.php
-    public function getFullNameAttribute()
+    public function getFullNameAttribute(): string
     {
         return "{$this->first_name} {$this->father_name} {$this->grandfather_name} {$this->family_name}";
     }
 
-    public function getStatusTextAttribute()
+    public function getStatusTextAttribute(): string
     {
         return match ($this->status) {
             '0' => 'Pending',
@@ -38,10 +39,10 @@ class IdentityVerification extends Model implements HasMedia
         };
     }
 
-public function freelancer()
-{
-    return $this->belongsTo(Freelancer::class,'freelancer_id');
-}
+    public function freelancer(): BelongsTo
+    {
+        return $this->belongsTo(Freelancer::class, 'freelancer_id');
+    }
 }
 
 
