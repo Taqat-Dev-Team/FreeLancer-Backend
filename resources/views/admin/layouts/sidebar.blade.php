@@ -231,6 +231,14 @@
                                 <span class="menu-title">Languages</span>
                             </a>
                         </div>
+
+                        <div class="menu-item">
+                            <a class="menu-link {{ request()->routeIs('admin.management.serviceFileFormat.*')? 'active' : '' }}"
+                               href="{{ route('admin.management.serviceFileFormat.index') }}">
+                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                                <span class="menu-title">Services File Format</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <div class="menu-item {{ request()->routeIs('admin.contacts.*') ? 'here show' : '' }}">

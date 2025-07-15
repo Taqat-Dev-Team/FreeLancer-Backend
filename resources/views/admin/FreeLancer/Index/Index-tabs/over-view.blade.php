@@ -129,7 +129,6 @@
     </div>
 
 
-</div>
 <!-- Profile Status Card -->
 <div class="card card-flush mb-6 mb-xl-9">
     <div class="card-header border-0">

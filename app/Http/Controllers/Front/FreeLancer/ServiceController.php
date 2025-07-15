@@ -42,23 +42,19 @@ class ServiceController extends Controller
             try {
                 $data = $request->validated();
 
-                // تجهيز البيانات للموديل
                 $serviceData = [
                     'title' => $data['title'],
                     'category_id' => $data['category_id'] ?? null,
                     'sub_category_id' => $data['sub_category_id'] ?? null,
                     'file_format' => $data['file_format'] ?? [],
-                    'tags' => implode(',', $data['tags'] ?? []), // تحويل المصفوفة إلى string إذا كان الحقل ليس casted as array
+                    'tags' => implode(',', $data['tags'] ?? []),
                     'days' => $data['days'],
                     'revisions' => $data['revisions'],
                     'price' => $data['price'],
                     'add_ons' => $data['add_ons'] ?? [],
                     'freelancer_id' => $data['freelancer_id'],
-                    // البيانات من قسم "Description"
-                    'description' => $data['description_summary'], // هذا هو "Project summary"
-                    // البيانات من قسم "Process" (Requirements)
-                    'requirements' => $data['requirements'] ?? [], // هذا هو "Info you'll need from the client"
-                    // البيانات من "Frequently asked questions" (تقابل 'questions' في الموديل)
+                    'description' => $data['description_summary'],
+                    'requirements' => $data['requirements'] ?? [],
                     'questions' => $data['faqs'] ?? [],
                 ];
 
@@ -68,11 +64,9 @@ class ServiceController extends Controller
                 if ($request->hasFile('images')) {
                     $coverImageIndex = $data['cover_image_index'];
                     $mediaCollection = [];
-
                     foreach ($request->file('images') as $index => $imageFile) {
-                        $media = $service->addMedia($imageFile)->toMediaCollection('images'); // 'images' هو اسم المجموعة
+                        $media = $service->addMedia($imageFile)->toMediaCollection('images');
                         $mediaCollection[] = $media;
-                        // تعيين خاصية مخصصة لتمييز صورة الغلاف
                         if ($index == $coverImageIndex) {
                             $media->setCustomProperty('is_cover', true)->save();
                         }
@@ -96,73 +90,6 @@ class ServiceController extends Controller
         }
     }
 
-
-    public
-    function show($id)
-    {
-        try {
-            $education = Auth::user()->freelancer->educations()->find($id);
-
-            if (!$education) {
-                return $this->apiResponse([], __('messages.not_found'), false, 404);
-            }
-
-            return $this->apiResponse(
-                new EducationResource($education),
-                __('messages.success'),
-                true,
-                200
-            );
-        } catch (\Throwable $e) {
-            Log::error('Error fetching work education: ' . $e->getMessage());
-            return $this->apiResponse([], __('messages.error'), false, 500);
-        }
-    }
-
-    public
-    function update(EducationRequest $request, $id)
-    {
-        try {
-            $education = Auth::user()->freelancer->educations()->find($id);
-
-            if (!$education) {
-                return $this->apiResponse([], __('messages.not_found'), false, 404);
-            }
-
-            $data = $this->formatDates($request->validated());
-            $education->update($data);
-
-            return $this->apiResponse(
-                new EducationResource($education),
-                __('messages.success'),
-                true,
-                200
-            );
-        } catch (\Throwable $e) {
-            Log::error('Error updating  educations : ' . $e->getMessage());
-            return $this->apiResponse([], __('messages.error'), false, 500);
-        }
-    }
-
-
-    public
-    function destroy($id)
-    {
-        try {
-            $education = Auth::user()->freelancer->educations()->find($id);
-
-            if (!$education) {
-                return $this->apiResponse([], __('messages.not_found'), false, 404);
-            }
-
-            $education->delete();
-
-            return $this->apiResponse([], __('messages.success'), true, 200);
-        } catch (\Throwable $e) {
-            Log::error('Error deleting work experience: ' . $e->getMessage());
-            return $this->apiResponse([], __('messages.error'), false, 500);
-        }
-    }
 
 
 }

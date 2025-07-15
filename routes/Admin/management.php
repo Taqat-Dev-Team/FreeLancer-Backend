@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\Management\languageController;
 use App\Http\Controllers\Admin\Management\SkillsController;
 use App\Http\Controllers\Admin\Management\SocialMediaController;
 use App\Http\Controllers\Admin\Management\SubCategoryController;
+use App\Http\Controllers\Admin\Management\ServiceFileFormatController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -18,7 +19,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 
         Route::name('management.')->group(function () {
-
             Route::controller(CategoryController::class)->group(function () {
                 Route::get('categories', 'index')->name('categories.index');
                 Route::get('categories/data', 'getData')->name('categories.data');
@@ -96,9 +96,18 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::delete('languages/{id}', 'destroy')->name('languages.destroy');
             });
 
+            Route::controller(ServiceFileFormatController::class)->group(function () {
+                Route::get('service-file-format', 'index')->name('serviceFileFormat.index');
+                Route::get('service-file-format/data', 'getData')->name('serviceFileFormat.data');
+                Route::post('service-file-format', 'store')->name('serviceFileFormat.store');
+                Route::get('service-file-format/{id}/show', 'show')->name('serviceFileFormat.show');
+                Route::put('service-file-format/{id}', 'update')->name('serviceFileFormat.update');
+                Route::delete('service-file-format/{id}', 'destroy')->name('serviceFileFormat.destroy');
+            });
+
 
         });
     });
 
 
-    });
+});
