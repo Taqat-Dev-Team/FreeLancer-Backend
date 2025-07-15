@@ -66,7 +66,7 @@
                             <a class="menu-link {{ request()->routeIs('admin.freelancers.other.index') ? 'active' : '' }}"
                                href="{{ route('admin.freelancers.other.index') }}">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                                <span class="menu-title ">All freelancers </span>
+                                <span class="menu-title ">All Freelancers </span>
                                 @if($OthersFreeLancersCount > 0)
                                     <span class="menu-badge justify-content-end">
                                     <span class="badge badge-light-warning ms-2">
@@ -80,7 +80,7 @@
                             <a class="menu-link {{ request()->routeIs('admin.freelancers.request.index') ? 'active' : '' }}"
                                href="{{ route('admin.freelancers.request.index') }}">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                                <span class="menu-title ">Verification request</span>
+                                <span class="menu-title ">Pending Verification</span>
                                 @if($identityRequestsCount > 0)
                                     <span class="menu-badge justify-content-end">
                                     <span class="badge badge-light-primary ms-2">
@@ -95,7 +95,7 @@
                             <a class="menu-link {{ request()->routeIs('admin.freelancers.review.index') ? 'active' : '' }}"
                                href="{{ route('admin.freelancers.review.index') }}">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                                <span class="menu-title ">Profile review</span>
+                                <span class="menu-title ">In-Review Profiles</span>
                                 @if($reviewFreeLancersCount > 0)
                                     <span class="menu-badge justify-content-end">
                                     <span class="badge badge-light-primary ms-2">
@@ -109,7 +109,7 @@
                             <a class="menu-link {{ request()->routeIs('admin.freelancers.verified.index') ? 'active' : '' }}"
                                href="{{ route('admin.freelancers.verified.index') }}">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                                <span class="menu-title ">Verified </span>
+                                <span class="menu-title ">Approved Freelancers </span>
                                 @if($verifiedFreeLancersCount > 0)
                                     <span class="menu-badge justify-content-end">
                                     <span class="badge badge-light-success ms-2">
