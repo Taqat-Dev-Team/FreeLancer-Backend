@@ -3,16 +3,21 @@
 namespace App\Http\Controllers\Admin\Client;
 
 use App\Http\Controllers\Controller;
-use App\Mail\AdminMessageToUser;
-use App\Mail\UserActivated;
-use App\Mail\UserDeactivated;
 use App\Models\Client;
+use App\Services\AdminMessageStatusService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\DataTables;
 
 class ClientController extends Controller
 {
+
+    protected $adminService;
+
+    public function __construct(AdminMessageStatusService $adminService)
+    {
+        $this->adminService = $adminService;
+    }
+
 
     public function index()
     {
@@ -69,9 +74,14 @@ class ClientController extends Controller
                data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
                 Actions <i class="ki-outline ki-down fs-5 ms-1"></i>
             </a>
+
+
             <div class="menu menu-sub menu-sub-dropdown menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px py-3"
                  data-kt-menu="true">
 
+ <div class="menu-item px-3">
+                    <a href="' . route('admin.clients.show', $row->id) . '" class="menu-link px-3 edit-badge" data-id="' . $row->id . '">View</a>
+                </div>
 
 
                 <div class="menu-item px-3">
@@ -106,29 +116,10 @@ class ClientController extends Controller
             ->make(true);
     }
 
-    public function status(Request $request, $id)
+    public function show($id)
     {
-        $client = Client::find($id);
-
-        if (!$client) {
-            return response()->json(['message' => 'Client not found.'], 404);
-        }
-
-        $user = $client->user;
-        $user->status = !$user->status;
-        $user->save();
-
-        // إرسال الإيميل حسب الحالة الجديدة
-        if ($user->status) {
-            // تم التفعيل
-            Mail::to($user->email)->send(new UserActivated($user));
-        } else {
-            // تم التعطيل مع سبب
-            $reason = $request->input('reason');
-            Mail::to($user->email)->send(new UserDeactivated($user, $reason));
-        }
-
-        return response()->json(['message' => 'Client status updated successfully.']);
+        $client = Client::findOrFail($id);
+        return view('admin.Clients.show', ['client' => $client]);
     }
 
 
@@ -143,24 +134,22 @@ class ClientController extends Controller
     }
 
 
+    public function status(Request $request, $id)
+    {
+        $client = Client::findOrFail($id);
+        $user = $client->user;
+        return $this->adminService->toggleStatus($user, $request->reason);
+    }
+
+
     public function sendMessage(Request $request)
     {
-
         $request->validate([
-            'id' => 'required|exists:clients,id',
+            'id' => 'required|integer',
             'message' => 'required|string|max:2000',
         ]);
 
-        $client = Client::with('user')->find($request->id);
-
-        if (!$client || !$client->user || !$client->user->email) {
-            return response()->json(['message' => 'Client email not found.'], 404);
-        }
-
-        // إرسال البريد
-        Mail::to($client->user->email)->send(new AdminMessageToUser($request->message, $client->user));
-
-        return response()->json(['message' => 'Message sent successfully!']);
+        $client = Client::with('user')->findOrFail($request->id);
+        return $this->adminService->sendMessage($client->user, $request->message);
     }
-
 }

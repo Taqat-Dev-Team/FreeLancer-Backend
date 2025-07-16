@@ -3,15 +3,19 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-
-use App\Mail\AdminMessageToUser;
 use App\Models\User;
+use App\Services\AdminMessageStatusService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\DataTables;
 
 class UserController extends Controller
 {
+    protected $adminService;
+
+    public function __construct(AdminMessageStatusService $adminService)
+    {
+        $this->adminService = $adminService;
+    }
 
     public function index()
     {
@@ -92,31 +96,6 @@ class UserController extends Controller
     }
 
 
-    public function status(Request $request, $id)
-    {
-        $user = User::find($id);
-
-        if (!$user) {
-            return response()->json(['message' => 'User not found.'], 404);
-        }
-
-
-        $user->status = !$user->status;
-        $user->save();
-
-        if ($user->status) {
-            // تم التفعيل
-            Mail::to($user->email)->send(new \App\Mail\UserActivated($user));
-        } else {
-            // تم التعطيل مع سبب
-            $reason = $request->input('reason');
-            Mail::to($user->email)->send(new \App\Mail\UserDeactivated($user, $reason));
-        }
-
-        return response()->json(['message' => 'User status updated successfully.']);
-    }
-
-
     public function destroy($id)
     {
         $badge = User::findOrFail($id);
@@ -124,24 +103,23 @@ class UserController extends Controller
         return response()->json(['message' => 'User deleted successfully.']);
     }
 
+
+    public function status(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        return $this->adminService->toggleStatus($user, $request->reason);
+    }
+
+
     public function sendMessage(Request $request)
     {
         $request->validate([
-            'id' => 'required|exists:users,id',
+            'id' => 'required|integer',
             'message' => 'required|string|max:2000',
         ]);
 
-        $user = User::find($request->id);
-
-        if (!$user || !$user->email) {
-            return response()->json(['message' => 'User email not found.'], 404);
-        }
-
-        // إرسال البريد
-        Mail::to($user->email)->send(new AdminMessageToUser($request->message, $user));
-
-        return response()->json(['message' => 'Message sent successfully!']);
+        $user = User::findOrFail($request->id);
+        return $this->adminService->sendMessage($user, $request->message);
     }
-
 
 }

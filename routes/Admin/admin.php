@@ -14,12 +14,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('login', 'login')->name('login.submit');
     });
 
+
     Route::middleware('admin')->group(function () {
 
 
         Route::get('/dashboard', function () {
             return view('admin.dashboard');
         })->name('dashboard');
+
 
         Route::controller(AdminAuthController::class)->group(function () {
             Route::post('logout', 'logout')->name('logout');

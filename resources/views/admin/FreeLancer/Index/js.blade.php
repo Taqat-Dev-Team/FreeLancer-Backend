@@ -12,7 +12,6 @@
                 showCancelButton: true,
                 confirmButtonText: 'Yes, delete it!',
                 cancelButtonText: 'Cancel',
-                reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch(`/admin/freelancer/badges/delete/${freelancerId}/${badgeId}`, {
@@ -92,7 +91,6 @@
                 showCancelButton: true,
                 confirmButtonText: 'Yes, delete it!',
                 cancelButtonText: 'Cancel',
-                reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch(`/admin/freelancer/${Id}`, {
@@ -159,7 +157,6 @@
                     showCancelButton: true,
                     confirmButtonText: 'Yes, approve',
                     cancelButtonText: 'Cancel',
-                    reverseButtons: true
                 }).then((result) => {
                     if (result.isConfirmed) {
                         submitReview(Id, action, null);
