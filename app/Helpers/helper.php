@@ -149,11 +149,13 @@ if (!function_exists('setting')) {
         static $settings = null;
 
         if ($settings === null) {
-            $settings = \App\Models\Setting::pluck('value', 'key')->toArray();
+            $settings = \Illuminate\Support\Facades\Cache::rememberForever('settings_cache', function () {
+                return \App\Models\Setting::pluck('value', 'key')->toArray();
+            });
         }
 
         if ($key === null) {
-            return $settings; // يرجع كل الإعدادات
+            return $settings;
         }
 
         return $settings[$key] ?? $default;

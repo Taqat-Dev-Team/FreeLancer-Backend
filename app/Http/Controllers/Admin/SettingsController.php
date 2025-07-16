@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 class SettingsController extends Controller
@@ -58,6 +59,7 @@ class SettingsController extends Controller
             }
         }
 
+        Cache::forget('settings_cache');
 
         return response()->json([
             'success' => true,

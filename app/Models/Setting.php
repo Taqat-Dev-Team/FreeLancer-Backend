@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -14,13 +15,20 @@ class Setting extends Model implements HasMedia
 
     public $timestamps = false;
 
+
+
     public static function getValue($key, $default = null)
     {
-        return static::where('key', $key)->value('value') ?? $default;
+        return setting($key, $default); // استخدم الهيلبر مباشرةً
     }
 
     public static function setValue($key, $value)
     {
-        return static::updateOrCreate(['key' => $key], ['value' => $value]);
+        $setting = static::updateOrCreate(['key' => $key], ['value' => $value]);
+
+        // تحديث الكاش بعد التغيير
+        Cache::forget('settings_cache');
+        return $setting;
     }
+
 }

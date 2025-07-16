@@ -11,13 +11,14 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Admin extends Authenticatable implements HasMedia
 {
-    use Notifiable,InteractsWithMedia;
+    use Notifiable, InteractsWithMedia;
 
     use HasRolesAndPermissions;
+
     protected $guard = 'admin';
 
     protected $fillable = [
-        'name', 'email', 'password','photo',
+        'name', 'email', 'password', 'photo',
     ];
 
     protected $hidden = [
@@ -26,7 +27,7 @@ class Admin extends Authenticatable implements HasMedia
 
     public function getImageUrl()
     {
-        return $this->getFirstMediaUrl('photo','thumb') ?: url('logos/favicon.png');
+        return $this->getFirstMediaUrl('avatar', 'thumb') ?: url('logos/favicon.png');
     }
 
 }

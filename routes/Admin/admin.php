@@ -27,6 +27,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::post('logout', 'logout')->name('logout');
             Route::view('profile', 'admin.profile')->name('profile');
             Route::post('profile', 'updateProfile')->name('profile.update');
+            Route::post('update-password', 'updatePassword')->name('profile.updatePassword');
         });
 
 

@@ -120,7 +120,7 @@
                                 toastr[data.success ? 'success' : 'error'](data.message);
                             })
                             .catch(err => {
-                                toastr.error('حدث خطأ أثناء حفظ الإعدادات');
+                                toastr.error('Error Saving Data');
                             })
                             .finally(() => {
                                 submitButton.attr('disabled', false);

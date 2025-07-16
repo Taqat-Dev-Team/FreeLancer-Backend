@@ -8,6 +8,9 @@ use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
@@ -90,5 +93,69 @@ class AdminAuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+
+    public function updateProfile(Request $request)
+    {
+
+        try {
+
+            $admin = Auth::guard('admin')->user();
+
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email',
+                'avatar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            ]);
+
+            $admin->name = $request->name;
+            $admin->email = $request->email;
+
+            if ($request->hasFile('avatar')) {
+                $admin->clearMediaCollection('avatar');
+
+                $admin
+                    ->addMediaFromRequest('avatar')
+                    ->usingFileName(Str::random(20) . '.' . $request->file('avatar')->getClientOriginalExtension())
+                    ->storingConversionsOnDisk('admins')
+                    ->toMediaCollection('avatar', 'admins');
+            }
+
+            $admin->save();
+
+            return response()->json(['success' => true, 'message' => 'Profile Updated Successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Profile update failed.', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+
+    public function updatePassword(Request $request)
+    {
+        $admin = Auth::guard('admin')->user();
+
+        $validator = Validator::make($request->all(), [
+            'old_password' => 'required',
+            'password' => 'required|confirmed|min:6',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors(),
+                'message' => 'Data validation failed'
+            ]);
+        }
+
+
+        if (!Hash::check($request->old_password, $admin->password)) {
+            return response()->json(['success' => false, 'message' => 'Old Password Incorrect']);
+        }
+
+        $admin->password = bcrypt($request->password);
+        $admin->save();
+
+        return response()->json(['success' => true, 'message' => 'Password Updated Successfully']);
     }
 }
