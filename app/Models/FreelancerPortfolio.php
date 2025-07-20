@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -23,11 +24,12 @@ class FreelancerPortfolio extends Model implements HasMedia
         'content' => 'array',
     ];
 
-    public function freelancer()
+    public function freelancer(): BelongsTo
     {
         return $this->belongsTo(Freelancer::class);
     }
-    public function getImageUrlAttribute()
+
+    public function getImageUrlAttribute(): string|null
     {
         return $this->image_path ? asset('storage/' . $this->image_path) : null;
     }

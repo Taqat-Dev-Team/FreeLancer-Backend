@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
 
 class EducationLevel extends Model
@@ -17,7 +18,7 @@ class EducationLevel extends Model
 
     public $timestamps = false;
 
-    public function users()
+    public function users():HasMany
     {
         return $this->hasMany(User::class);
     }

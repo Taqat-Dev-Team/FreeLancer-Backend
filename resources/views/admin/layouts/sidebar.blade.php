@@ -66,7 +66,7 @@
                             <a class="menu-link {{ request()->routeIs('admin.freelancers.other.index') ? 'active' : '' }}"
                                href="{{ route('admin.freelancers.other.index') }}">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                                <span class="menu-title ">All freelancers </span>
+                                <span class="menu-title ">All Freelancers </span>
                                 @if($OthersFreeLancersCount > 0)
                                     <span class="menu-badge justify-content-end">
                                     <span class="badge badge-light-warning ms-2">
@@ -80,10 +80,10 @@
                             <a class="menu-link {{ request()->routeIs('admin.freelancers.request.index') ? 'active' : '' }}"
                                href="{{ route('admin.freelancers.request.index') }}">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                                <span class="menu-title ">verification request</span>
+                                <span class="menu-title ">Pending Verification</span>
                                 @if($identityRequestsCount > 0)
                                     <span class="menu-badge justify-content-end">
-                                    <span class="badge badge-light-primary ms-2">
+                                    <span class="badge badge-light-info ms-2">
                                         {{ $identityRequestsCount }}
                                     </span>
                                 </span>
@@ -95,7 +95,7 @@
                             <a class="menu-link {{ request()->routeIs('admin.freelancers.review.index') ? 'active' : '' }}"
                                href="{{ route('admin.freelancers.review.index') }}">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                                <span class="menu-title ">profile review</span>
+                                <span class="menu-title ">In-Review Profiles</span>
                                 @if($reviewFreeLancersCount > 0)
                                     <span class="menu-badge justify-content-end">
                                     <span class="badge badge-light-primary ms-2">
@@ -109,7 +109,7 @@
                             <a class="menu-link {{ request()->routeIs('admin.freelancers.verified.index') ? 'active' : '' }}"
                                href="{{ route('admin.freelancers.verified.index') }}">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                                <span class="menu-title ">Verified </span>
+                                <span class="menu-title ">Approved Freelancers </span>
                                 @if($verifiedFreeLancersCount > 0)
                                     <span class="menu-badge justify-content-end">
                                     <span class="badge badge-light-success ms-2">
@@ -129,7 +129,7 @@
                      class="menu-item {{ request()->routeIs('admin.users*') ? 'here show' : '' }} menu-accordion">
                 <span class="menu-link">
                     <span class="menu-icon">
-                        <i class="ki-outline ki-profile-user fs-2"></i>
+                        <i class="ki-outline ki-people fs-2"></i>
                     </span>
                     <span class="menu-title">Users</span>
                     <span class="menu-arrow"></span>
@@ -145,6 +145,38 @@
                                     <span class="menu-badge justify-content-end">
                                     <span class="badge badge-light-primary ms-2">
                                         {{ $usersNotTypedCount }}
+                                    </span>
+                                </span>
+                                @endif
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                @php $ClientsCount=ClientsCount() @endphp
+
+                <div data-kt-menu-trigger="click"
+                     class="menu-item {{ request()->routeIs('admin.clients*') ? 'here show' : '' }} menu-accordion">
+                <span class="menu-link">
+                    <span class="menu-icon">
+                        <i class="ki-outline ki-user fs-2"></i>
+                    </span>
+                    <span class="menu-title">Clients</span>
+                    <span class="menu-arrow"></span>
+                </span>
+
+                    <div class="menu-sub menu-sub-accordion">
+                        <div class="menu-item">
+                            <a class="menu-link {{ request()->routeIs('admin.clients.index') ? 'active' : '' }}"
+                               href="{{ route('admin.clients.index') }}">
+                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                                <span class="menu-title ">Clients List</span>
+                                @if($ClientsCount > 0)
+                                    <span class="menu-badge justify-content-end">
+                                    <span class="badge badge-light-primary ms-2">
+                                        {{ $ClientsCount }}
                                     </span>
                                 </span>
                                 @endif
@@ -229,6 +261,14 @@
                                href="{{ route('admin.management.languages.index') }}">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
                                 <span class="menu-title">Languages</span>
+                            </a>
+                        </div>
+
+                        <div class="menu-item">
+                            <a class="menu-link {{ request()->routeIs('admin.management.serviceFileFormat.*')? 'active' : '' }}"
+                               href="{{ route('admin.management.serviceFileFormat.index') }}">
+                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                                <span class="menu-title">Services File Format</span>
                             </a>
                         </div>
                     </div>

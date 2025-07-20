@@ -3,39 +3,24 @@
 namespace App\Http\Controllers\Admin\FreeLancer;
 
 use App\Http\Controllers\Controller;
-use App\Mail\AdminMessageToUser;
+use App\Mail\FreelancerApprove;
+use App\Mail\FreelancerReject;
 use App\Models\Badge;
 use App\Models\Freelancer;
+use App\Services\AdminMessageStatusService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class GeneralFreeLancerController extends Controller
 {
 
-    public function status(Request $request, $id)
+    protected $adminService;
+
+    public function __construct(AdminMessageStatusService $adminService)
     {
-        $freelancer = Freelancer::find($id);
-
-        if (!$freelancer) {
-            return response()->json(['message' => 'Freelancer not found.'], 404);
-        }
-
-        $user = $freelancer->user;
-        $user->status = !$user->status;
-        $user->save();
-
-        // إرسال الإيميل حسب الحالة الجديدة
-        if ($user->status) {
-            // تم التفعيل
-            Mail::to($user->email)->send(new \App\Mail\FreelancerActivated($user));
-        } else {
-            // تم التعطيل مع سبب
-            $reason = $request->input('reason');
-            Mail::to($user->email)->send(new \App\Mail\FreelancerDeactivated($user, $reason));
-        }
-
-        return response()->json(['message' => 'Freelancer status updated successfully.']);
+        $this->adminService = $adminService;
     }
+
 
 
     public function destroy($id)
@@ -61,23 +46,25 @@ class GeneralFreeLancerController extends Controller
 
     }
 
+
+
+    public function status(Request $request, $id)
+    {
+        $freelancer = Freelancer::findOrFail($id);
+        $user = $freelancer->user;
+        return $this->adminService->toggleStatus($user, $request->reason);
+    }
+
+
     public function sendMessage(Request $request)
     {
         $request->validate([
-            'id' => 'required|exists:freelancers,id',
+            'id' => 'required|integer',
             'message' => 'required|string|max:2000',
         ]);
 
-        $freelancer = Freelancer::with('user')->find($request->id);
-
-        if (!$freelancer || !$freelancer->user || !$freelancer->user->email) {
-            return response()->json(['message' => 'Freelancer email not found.'], 404);
-        }
-
-        // إرسال البريد
-        Mail::to($freelancer->user->email)->send(new AdminMessageToUser($request->message, $freelancer->user));
-
-        return response()->json(['message' => 'Message sent successfully!']);
+        $freelancer = Freelancer::with('user')->findOrFail($request->id);
+        return $this->adminService->sendMessage($freelancer->user, $request->message);
     }
 
     public function deleteBadge($freelancerId, $badgeId)
@@ -123,6 +110,30 @@ class GeneralFreeLancerController extends Controller
             'success' => true,
             'message' => 'Badge assigned successfully.'
         ]);
+    }
+
+    public function reviewFreelancer(Request $request, $id)
+    {
+        $freelancer = Freelancer::findOrFail($id);
+
+        $request->validate([
+            'action' => 'required|in:0,1,2', // validate as string
+            'reason' => 'nullable|string|max:1000',
+        ]);
+
+        $freelancer->review = (string)$request->action;
+        $freelancer->review_reason = $request->action === '2' ? $request->reason : null;
+        $freelancer->save();
+
+        $message = $request->action === '1' ? 'Freelancer approved successfully.' : 'Freelancer rejected with reason.';
+
+        if ($request->action === '1') {
+            Mail::to($freelancer->user->email)->send(new FreelancerApprove($freelancer->user));
+        } else {
+            Mail::to($freelancer->user->email)->send(new FreelancerReject($freelancer->user, $request->reason));
+        }
+
+        return response()->json(['message' => $message]);
     }
 
 

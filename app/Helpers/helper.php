@@ -6,7 +6,7 @@ use App\Models\User;
 
 function otp(): int
 {
-    $env = env('APP_ENV');
+    $env = config('app.env');
 
     if ($env === 'production' || $env === 'staging') {
         // في بيئة الإنتاج أو الستيجنق، نستخدم رمز OTP حقيقي
@@ -19,7 +19,7 @@ function otp(): int
 
 function Mobileotp(): int
 {
-    $env = env('APP_ENV');
+    $env = config('app.env');
 
     if ($env === 'production' || $env === 'staging') {
         // في بيئة الإنتاج أو الستيجنق، نستخدم رمز OTP حقيقي
@@ -41,10 +41,28 @@ function languages_levels()
     ]);
 }
 
+function formatPagination($paginator)
+{
+    return [
+        'current_page' => $paginator->currentPage(),
+        'per_page' => $paginator->perPage(),
+        'total' => $paginator->total(),
+        'last_page' => $paginator->lastPage(),
+        'from' => $paginator->firstItem(),
+        'to' => $paginator->lastItem(),
+        'links' => $paginator->linkCollection()->toArray(),
+    ];
+}
+
 function usersNotTypedCount()
 {
     return User::whereDoesntHave('freelancer')
         ->whereDoesntHave('client')->count();
+}
+
+function ClientsCount()
+{
+    return \App\Models\Client::count();
 }
 
 function work_type()
@@ -131,11 +149,13 @@ if (!function_exists('setting')) {
         static $settings = null;
 
         if ($settings === null) {
-            $settings = \App\Models\Setting::pluck('value', 'key')->toArray();
+            $settings = \Illuminate\Support\Facades\Cache::rememberForever('settings_cache', function () {
+                return \App\Models\Setting::pluck('value', 'key')->toArray();
+            });
         }
 
         if ($key === null) {
-            return $settings; // يرجع كل الإعدادات
+            return $settings;
         }
 
         return $settings[$key] ?? $default;

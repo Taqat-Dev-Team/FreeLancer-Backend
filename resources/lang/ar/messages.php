@@ -121,7 +121,7 @@ return [
     'internal_server_error' => 'خطأ في الخادم الداخلي.',
 
 
-    'admin_message_subject' => 'رسالة من إدارة طاقات',
+    'admin_message_subject' => setting('name_ar') .' رسالة من إدارة ',
 
     'otp_subject' => 'رمز التحقق الخاص بك في طاقات',
 

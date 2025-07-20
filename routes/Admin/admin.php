@@ -14,6 +14,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('login', 'login')->name('login.submit');
     });
 
+
     Route::middleware('admin')->group(function () {
 
 
@@ -21,10 +22,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
             return view('admin.dashboard');
         })->name('dashboard');
 
+
         Route::controller(AdminAuthController::class)->group(function () {
             Route::post('logout', 'logout')->name('logout');
             Route::view('profile', 'admin.profile')->name('profile');
             Route::post('profile', 'updateProfile')->name('profile.update');
+            Route::post('update-password', 'updatePassword')->name('profile.updatePassword');
         });
 
 
@@ -70,3 +73,4 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 require __DIR__ . '/management.php';
 require __DIR__ . '/freelancers.php';
+require __DIR__ . '/clients.php';

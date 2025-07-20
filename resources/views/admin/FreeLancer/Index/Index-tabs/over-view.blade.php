@@ -4,49 +4,140 @@
 
 <div class="tab-pane fade show active" id="kt_user_view_overview_tab" role="tabpanel">
 
-    <!-- Availability Card -->
-    <div class="card card-flush mb-6 mb-xl-9">
-        <div class="card-header pt-5">
-            <h3 class="card-title align-items-start flex-column">
-                <span class="card-label fw-bold text-gray-900">Availability </span>
-                <span class="text-gray-500 mt-1 fw-semibold fs-6">Availability To Hire</span>
-            </h3>
+    <div class="row">
+        <!-- Availability Card -->
+
+        <div class="card card-flush mb-6 mb-xl-9  col-5">
+            <div class="card-header pt-5">
+                <h3 class="card-title align-items-start flex-column">
+                    <span class="card-label fw-bold text-gray-900">Status </span>
+                    <span class="text-gray-500 mt-2 fw-semibold fs-6">Freelancer Status</span>
+                </h3>
+            </div>
+
+            <div class="card-body d-flex align-items-end pt-6">
+                <div class="row align-items-center mx-0 w-100">
+                    <div class="col-7 px-0">
+                        <div class="d-flex flex-column content-justify-center">
+                            <div class="d-flex fs-6 fw-semibold align-items-center">
+                                <div
+                                    class="bullet {{ $freelancer->user->status == '1' ? 'bg-success' : 'bg-danger' }} me-3"
+                                    style="border-radius: 3px;width: 12px;height: 12px"></div>
+                                <div class="fs-5 fw-bold text-gray-600 me-5">
+                                    {{ $freelancer->user->status == '1' ? 'Active' : 'Not Active' }}
+                                </div>
+
+                            </div>
+
+                            @if ($freelancer->user->status_reason && $freelancer->user=='0')
+                                <div class="fs-5 fw-bold text-gray-600 me-5 mt-5">
+                                    Reason: <br>
+                                    {{$freelancer->user->status_reason}}
+                                </div>
+                            @endif
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        <div class="card card-flush mb-6 mb-xl-9  mx-10  col-5">
+            <div class="card-header pt-5">
+                <h3 class="card-title align-items-start flex-column">
+                    <span class="card-label fw-bold text-gray-900">Review </span>
+                    <span class="text-gray-500 mt-2 fw-semibold fs-6">Freelancer Review</span>
+                </h3>
+            </div>
 
-        <div class="card-body d-flex align-items-end pt-6">
-            <div class="row align-items-center mx-0 w-100">
-                <div class="col-7 px-0">
-                    <div class="d-flex flex-column content-justify-center">
-                        <div class="d-flex fs-6 fw-semibold align-items-center">
-                            <div
-                                class="bullet {{ $freelancer->availability() == 1 ? 'bg-success' : 'bg-warning' }} me-3"
-                                style="border-radius: 3px;width: 12px;height: 12px"></div>
-                            <div class="fs-5 fw-bold text-gray-600 me-5">
-                                {{ $freelancer->availability() == 1 ? 'Available' : 'Not Available' }}
+            <div class="card-body d-flex align-items-end pt-6">
+                <div class="row align-items-center mx-0 w-100">
+                    <div class="col-7 px-0">
+                        <div class="d-flex flex-column content-justify-center">
+                            <div class="d-flex fs-6 fw-semibold align-items-center">
+                                <div
+                                    class="bullet
+            @if($freelancer->review == '1') bg-success
+            @elseif($freelancer->review == '2') bg-danger
+            @else bg-warning
+            @endif me-3"
+                                    style="border-radius: 3px;width: 12px;height: 12px">
+                                </div>
+                                <div class="fs-5 fw-bold text-gray-600 me-5">
+                                    @if($freelancer->review == '1')
+                                        Approved
+                                    @elseif($freelancer->review == '2')
+                                        Rejected
+                                    @else
+                                        Pending
+                                    @endif
+                                </div>
                             </div>
-                        </div>
-                        <div class="fw-bolder text-gray-700 text-start">
-                            Available to Hire: {{ $freelancer->available_hire ? 'Yes' : 'No' }}<br>
-                            {{--                            Available from Admin: {{ $freelancer->admin_available_hire ? 'Yes' : 'No' }}--}}
+
+                            @if ($freelancer->review_reason && $freelancer->review=='2')
+                                <div class="fs-5 fw-bold text-gray-600 me-5 mt-5">
+                                    Reason:
+                                    <ul class="mb-0">
+
+                                        <li>{{ $freelancer->review_reason }}</li>
+                                    </ul>
+                                </div>
+                            @endif
+
                         </div>
 
-                        @if ($freelancer->availabilityDetails())
-                            <div class="fs-5 fw-bold text-gray-600 me-5">
-                                Reasons:
-                                <ul class="mb-0">
-
-                                    @foreach ($freelancer->availabilityDetails() as $reason)
-                                        <li>{{ $reason }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
 
                     </div>
                 </div>
             </div>
         </div>
+        <div class="card card-flush mb-6 mb-xl-9 mx-2 col-12">
+            <div class="card-header pt-5">
+                <h3 class="card-title align-items-start flex-column">
+                    <span class="card-label fw-bold text-gray-900">Availability </span>
+                    <span class="text-gray-500 mt-1 fw-semibold fs-6">Availability To Hire</span>
+                </h3>
+            </div>
+
+            <div class="card-body d-flex align-items-end pt-6">
+                <div class="row align-items-center mx-0 w-100">
+                    <div class="col-7 px-0">
+                        <div class="d-flex flex-column content-justify-center">
+                            <div class="d-flex fs-6 fw-semibold align-items-center ">
+
+
+                                <div
+                                    class="bullet {{ $freelancer->availability() == 1 ? 'bg-success' : 'bg-warning' }} me-3"
+                                    style="border-radius: 3px;width: 12px;height: 12px"></div>
+                                <div class="fs-5 fw-bold text-gray-600 me-5">
+                                    {{ $freelancer->availability() == 1 ? 'Available' : 'Not Available' }}
+                                </div>
+                            </div>
+                            <div class="fw-bolder text-gray-700 text-start mt-5">
+                                Available to Hire: {{ $freelancer->available_hire ? 'Yes' : 'No' }}<br>
+                            </div>
+
+                            @if ($freelancer->availabilityDetails())
+                                <div class="fs-5 fw-bold text-gray-600 me-5 mt-5">
+                                    Reasons: <br>
+                                    <ul class="mb-0">
+
+                                        @foreach ($freelancer->availabilityDetails() as $reason)
+                                            <li>{{ $reason }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+
 
     <!-- Profile Status Card -->
     <div class="card card-flush mb-6 mb-xl-9">

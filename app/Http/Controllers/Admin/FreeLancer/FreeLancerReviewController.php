@@ -60,18 +60,9 @@ class FreeLancerReviewController extends Controller
             })
             ->addColumn('name', fn($row) => optional($row->user)->name ?? '-')
             ->addColumn('email', fn($row) => optional($row->user)->email ?? '-')
-            ->addColumn('availability', function ($row) {
-                if ($row->availability()) {
-                    return '<span class="badge badge-light-primary">Available To Hire</span>';
-                }
 
-                $modalId = 'availabilityModal_' . $row->id;
-
-                return '<span class="badge badge-light-warning cursor-pointer" data-bs-toggle="modal" data-bs-target="#' . $modalId . '">Not Available To Hire</span>'
-                    . view('admin.FreeLancer.partials.availability_modal', ['row' => $row, 'modalId' => $modalId])->render();
-            })
             ->addColumn('actions', function ($row) {
-                $actions = '
+                return '
         <div class="dropdown">
             <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm"
                data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
@@ -86,39 +77,9 @@ class FreeLancerReviewController extends Controller
 
                 <div class="menu-item px-3">
                     <a href="#" class="menu-link px-3 delete-freelancer btn btn-active-light-danger" data-id="' . $row->id . '">Delete</a>
-                </div>';
+                </div>
 
-                // ✅ إظهار زر تفعيل من قبل الأدمن فقط إذا غير مفعل
-                if (!$row->admin_available_hire) {
-                    $actions .= '
-            <div class="menu-item px-3">
-                <a href="#" class="menu-link px-3 toggle-admin-availability-active btn btn-active-light-primary"
-                   data-id="' . $row->id . '" data-status="' . $row->admin_available_hire . '">
-                   Activate by Admin
-                </a>
-            </div>';
-                } else {
-                    $actions .= '
 
-           <div class="menu-item px-3">
-                <a href="#" class="menu-link px-3 toggle-admin-availability-deactivate btn btn-active-light-primary"
-                   data-id="' . $row->id . '" data-status="' . $row->admin_available_hire . '">
-                  Deactivate by Admin
-                </a>
-            </div>';
-                }
-
-                // ✅ زر تغيير حالة المستخدم
-                $actions .= '
-        <div class="menu-item px-3">
-            <a href="#" class="menu-link px-3 status-freelancer btn btn-active-light-warning"
-               data-id="' . $row->id . '" data-status="' . $row->user->status . '">
-               Change Status
-            </a>
-        </div>';
-
-                // ✅ زر إرسال رسالة
-                $actions .= '
         <div class="menu-item px-3">
             <a href="#" class="menu-link px-3 message-freelancer btn btn-active-light-info"
                data-id="' . $row->id . '">
@@ -128,7 +89,6 @@ class FreeLancerReviewController extends Controller
     </div>
 </div>';
 
-                return $actions;
             })
             ->editColumn('status', function ($row) {
                 return $row->user->status == 1
@@ -136,7 +96,7 @@ class FreeLancerReviewController extends Controller
                     : '<span class="badge badge-light-danger" >Not Active</span>';
             })
             ->addIndexColumn()
-            ->rawColumns(['actions', 'photo', 'mobile', 'status', 'availability'])
+            ->rawColumns(['actions', 'photo', 'mobile', 'status'])
             ->make(true);
     }
 

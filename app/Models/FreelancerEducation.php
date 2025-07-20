@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class FreelancerEducation extends Model
 {
@@ -15,12 +16,12 @@ class FreelancerEducation extends Model
         'end_date' => 'date',
     ];
 
-    public function freelancer()
+    public function freelancer():BelongsTo
     {
         return $this->belongsTo(Freelancer::class);
     }
 
-    public function educationLevel()
+    public function educationLevel():BelongsTo
     {
         return $this->belongsTo(EducationLevel::class);
     }

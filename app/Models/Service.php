@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -34,7 +35,7 @@ class Service extends Model implements HasMedia
         'tags' => 'array',
     ];
 
-    public function getCoverImageUrl()
+    public function getCoverImageUrl(): array|null
     {
         $coverMedia = $this->getMedia('images')->first(function ($media) {
             return $media->getCustomProperty('is_cover') === true;
@@ -48,7 +49,7 @@ class Service extends Model implements HasMedia
     }
 
 
-    public function getNonCoverImagesUrls()
+    public function getNonCoverImagesUrls(): array
     {
         return $this->getMedia('images')->filter(function ($media) {
             return $media->getCustomProperty('is_cover', false) === false;
@@ -62,17 +63,17 @@ class Service extends Model implements HasMedia
     }
 
 
-    public function freelancer()
+    public function freelancer(): BelongsTo
     {
         return $this->belongsTo(Freelancer::class);
     }
 
-    public function category()
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function subCategory()
+    public function subCategory(): BelongsTo
     {
         return $this->belongsTo(SubCategory::class);
     }

@@ -58,7 +58,7 @@
                 <div class="image-input image-input-outline" data-kt-image-input="true"
                      style="background-image: url('{{ $white }}');">
                     <div class="image-input-wrapper w-850px"
-                         style="background-image: url('{{ $white }}'); height: 170px !important;  background-color: #bdb7b74a">
+                         style="background-image: url('{{ $white }}'); height: 170px !important;  background-color: #bdb7b71c">
                 </div>
 
                 <label
@@ -89,7 +89,7 @@
         <div class="image-input image-input-outline" data-kt-image-input="true"
              style="background-image: url('{{ $dark }}');">
             <div class="image-input-wrapper w-850px"
-                 style="background-image: url('{{ $dark }}'); height: 170px !important; background-color: #bdb7b74a"></div>
+                 style="background-image: url('{{ $dark }}'); height: 170px !important; background-color: #bdb7b71c"></div>
 
             <label
                 class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow"

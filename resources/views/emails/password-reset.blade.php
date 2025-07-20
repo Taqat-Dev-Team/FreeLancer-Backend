@@ -1,5 +1,12 @@
 <!DOCTYPE html>
 <html lang="{{ $locale ?? 'ar' }}">
+
+@php
+    $settings = setting();
+
+    $white = setting_media('white_logo');
+      $dark = setting_media('logo');
+@endphp
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -129,7 +136,7 @@
             <table role="presentation" cellspacing="0" cellpadding="0" border="0" class="container">
                 <tr>
                     <td class="header">
-                        <img src="{{ url('logos/white.png') }}" alt="Taqat Logo" class="logo">
+                        <img src="{{$white }}" alt="Logo" class="logo">
 {{--                        <h1>طاقات / Taqat</h1>--}}
                     </td>
                 </tr>
@@ -145,7 +152,7 @@
                             <p>This password reset link will expire in {{ config('auth.passwords.users.expire') }} minutes.</p>
                             <p>If you did not request a password reset, no further action is required.</p>
                             <p>Regards,</p>
-                            <p>The Taqat Team.</p>
+                            <p>The {{$settings['name_en']}} Team.</p>
                         @else
                             <p>مرحبًا،</p>
                             <p>تتلقى هذا البريد الإلكتروني لأننا تلقينا طلبًا لإعادة تعيين كلمة المرور لحسابك.</p>
@@ -156,7 +163,7 @@
                             <p>صلاحية رابط إعادة تعيين كلمة المرور هذا ستنتهي خلال {{ config('auth.passwords.users.expire') }} دقيقة.</p>
                             <p>إذا لم تطلب إعادة تعيين كلمة المرور، فلا داعي لاتخاذ أي إجراء آخر.</p>
                             <p>مع تحياتنا،</p>
-                            <p>فريق طاقات.</p>
+                            <p>فريق  {{$settings['name_ar']}}.</p>
                         @endif
                     </td>
                 </tr>
@@ -164,23 +171,13 @@
                     <td class="footer @if(($locale ?? 'ar') == 'en') ltr @else rtl @endif">
                         <p>
                             @if(($locale ?? 'ar') == 'en')
-                                &copy; {{ date('Y') }} Taqat. All rights reserved.
+                                &copy; {{ date('Y') }}  {{$settings['name_en']}}. All rights reserved.
                             @else
-                                &copy; {{ date('Y') }} طاقات. جميع الحقوق محفوظة.
+                                &copy; {{ date('Y') }}  {{$settings['name_ar']}}. جميع الحقوق محفوظة.
                             @endif
                         </p>
-                        <p>
-{{--                            @if(($locale ?? 'ar') == 'en')--}}
-{{--                                <a href="#" style="color: #1279be; text-decoration: none;">Privacy Policy</a>--}}
-{{--                                &nbsp; | &nbsp;--}}
-{{--                                <a href="#" style="color: #1279be; text-decoration: none;">Terms of Use</a>--}}
-{{--                            @else--}}
-{{--                                <a href="#" style="color: #1279be; text-decoration: none;">سياسة الخصوصية</a>--}}
-{{--                                &nbsp; | &nbsp;--}}
-{{--                                <a href="#" style="color: #1279be; text-decoration: none;">شروط الاستخدام</a>--}}
-{{--                            @endif--}}
-                        </p>
-                        <img src="{{ asset('logos/logo.png') }}" alt="Taqat Logo" class="logo-footer">
+
+                        <img src="{{ $dark}}" alt="Logo" class="logo-footer">
                     </td>
                 </tr>
             </table>

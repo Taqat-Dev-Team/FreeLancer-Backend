@@ -1,9 +1,9 @@
-@extends('admin.layouts.master', ['title' => 'Freelancers '])
+@extends('admin.layouts.master', ['title' => 'Not Verified Freelancers '])
 
 
-@section('toolbarTitle', 'Freelancers ')
+@section('toolbarTitle', 'Not Verified Freelancers')
 @section('toolbarSubTitle', 'Freelancers ')
-@section('toolbarPage', 'Freelancers ')
+@section('toolbarPage', 'Not verified Freelancers')
 
 @section('content')
     <div id="kt_app_content_container" class="app-container container-fluid mt-5">
@@ -43,7 +43,6 @@
                                 <th class="min-w-125px">mobile</th>
                                 <th class="">Joined Date</th>
                                 <th class="">status</th>
-                                <th class="">Availability</th>
                                 <th class="min-w-125px">Options</th>
                             </tr>
                             </thead>

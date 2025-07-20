@@ -4,6 +4,10 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -17,7 +21,8 @@ class Freelancer extends Model implements HasMedia
         'sub_category_id',
         'hourly_rate',
         'available_hire',
-        'admin_available_hire'
+        'review',
+        'review_reason'
     ];
 
     protected $casts = [
@@ -28,7 +33,7 @@ class Freelancer extends Model implements HasMedia
     // Relationships
     // ----------------------------
 
-    public function availability()
+    public function availability() :bool
     {
         // أولًا تحقق من وجود الهوية
         if (!$this->identityVerification) {
@@ -47,7 +52,7 @@ class Freelancer extends Model implements HasMedia
         return true;
     }
 
-    public function availabilityDetails()
+    public function availabilityDetails() :array
     {
         $reasons = [];
 
@@ -73,87 +78,83 @@ class Freelancer extends Model implements HasMedia
     }
 
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function category()
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function subCategory()
+    public function subCategory() :BelongsTo
     {
         return $this->belongsTo(SubCategory::class);
     }
 
-    public function identityVerification()
+    public function identityVerification(): HasOne
     {
         return $this->hasOne(IdentityVerification::class, 'freelancer_id')->latest();
     }
 
-    public function workExperiences()
+    public function workExperiences(): HasMany
     {
         return $this->hasMany(FreelancerWorkExperience::class, 'freelancer_id');
     }
 
-    public function skills()
+    public function skills(): BelongsToMany
     {
         return $this->belongsToMany(Skills::class, 'freelancers_skills', 'freelancer_id', 'skill_id')
             ->withTimestamps();
     }
 
 
-    public function educations()
+    public function educations(): HasMany
     {
         return $this->hasMany(FreelancerEducation::class);
     }
 
-//    public function courses()
-//    {
-//        return $this->hasMany(FreelancerCourse::class);
-//    }
 
-    public function portfolios()
+    public function portfolios(): HasMany
     {
         return $this->hasMany(FreelancerPortfolio::class);
     }
 
-    public function services()
+    public function services(): HasMany
     {
         return $this->hasMany(Service::class);
     }
 
-    public function socialLinks()
+    public function socialLinks(): HasMany
     {
         return $this->hasMany(FreelancerSocial::class, 'freelancer_id')
             ->with('social');
     }
 
-    public function languages()
+    public function languages(): HasMany
     {
         return $this->hasMany(FreeLancerLanguage::class, 'freelancer_id');
     }
 
 
-    public function badges()
+    public function badges(): BelongsToMany
     {
         return $this->belongsToMany(Badge::class, 'freelancer_badges', 'freelancer_id', 'badge_id');
     }
 
-    public function proposals()
+    public function proposals(): HasMany
     {
         return $this->hasMany(Proposal::class);
     }
 
 
-    public function projects()
+    public function projects(): HasMany
     {
         return $this->hasMany(Project::class);
     }
 
-    public function jobs()
+    public function jobs(): int
     {
         return 0;
     }
@@ -162,7 +163,7 @@ class Freelancer extends Model implements HasMedia
     // Helpers
     // ----------------------------
 
-    public function getImagesUrls()
+    public function getImagesUrls(): array
     {
         return $this->getMedia('images')->map(function ($media) {
             return [
@@ -175,7 +176,7 @@ class Freelancer extends Model implements HasMedia
         })->toArray();
     }
 
-    public function idVerified()
+    public function idVerified(): object
     {
         return (object)[
             'status' => $this->identityVerification->status ?? null,
@@ -192,7 +193,7 @@ class Freelancer extends Model implements HasMedia
     // Profile Completion Logic
     // ----------------------------
 
-    public function getProfileCompletionStatusAttribute()
+    public function getProfileCompletionStatusAttribute(): array
     {
         $weights = [
             'summary' => 20,
@@ -260,32 +261,32 @@ class Freelancer extends Model implements HasMedia
         ];
     }
 
-    public function hasSkills()
+    public function hasSkills(): bool
     {
         return $this->skills()->exists();
     }
 
-    public function hasWorkExperiences()
+    public function hasWorkExperiences(): bool
     {
         return $this->workExperiences()->exists();
     }
 
-    public function hasLanguages()
+    public function hasLanguages(): bool
     {
         return $this->languages()->exists();
     }
 
-    public function hasPortfolio()
+    public function hasPortfolio(): bool
     {
         return $this->portfolios()->exists();
     }
 
-    public function hasSocial()
+    public function hasSocial(): bool
     {
         return $this->socialLinks()->exists();
     }
 
-    public function getExperienceAttribute()
+    public function getExperienceAttribute(): float
     {
         $totalMonths = 0;
 

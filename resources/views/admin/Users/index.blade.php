@@ -19,7 +19,7 @@
                         <i class="ki-outline ki-magnifier fs-3 position-absolute ms-5"></i>
                         <input type="text"
                                id="FreelancerSearchInput" class="form-control form-control-solid w-250px ps-13"
-                               placeholder="Search Freelancer">
+                               placeholder="Search User">
                     </div>
                     <!--end::Search-->
                 </div>

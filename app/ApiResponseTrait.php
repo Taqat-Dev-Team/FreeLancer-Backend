@@ -5,7 +5,7 @@ trait ApiResponseTrait{
 
 
 
-    public function apiResponse($data=null,$message=null,$status,$code){
+    public function apiResponse($data=null,$message=null,$status=null,$code=null){
 
 
         $array=[
@@ -20,7 +20,7 @@ trait ApiResponseTrait{
     }
 
 
-    public function ApiResponsePaginationTrait($paginator=null, $message=null, $status, $code)
+    public function ApiResponsePaginationTrait($paginator=null, $message=null, $status=null, $code=null)
     {
         $response = [
             'status' => $status,

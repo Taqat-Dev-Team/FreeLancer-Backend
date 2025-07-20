@@ -304,7 +304,8 @@ return [
 
     'reply_subject' => 'Your reply to the contact message',
 
-    'admin_message_subject' => 'Message from Taqat Admin',
+    'admin_message_subject' => 'Message from ' . setting('name_en') . 'Admin',
+
     'freelancer_admin_active' => 'Your freelancer account has been activated by the admin. You can now start receiving job offers and working on projects. Welcome aboard!',
     'freelancer_admin_deactivate' => 'Your freelancer account has been deactivated by the admin. Please contact support for more information.',
 
@@ -367,7 +368,7 @@ return [
 
     'freelancer_id_required' => 'The freelancer ID is required.',
     'freelancer_id_exists' => 'The selected freelancer does not exist.',
-    'mobile_already_exists'=>'Mobile already exists'
+    'mobile_already_exists' => 'Mobile already exists'
 
 
 ];

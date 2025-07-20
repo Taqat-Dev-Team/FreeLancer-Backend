@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
 
 class SubCategory extends Model
@@ -13,12 +15,12 @@ class SubCategory extends Model
     public $translatable = ['name','slug'];
     protected $fillable = ['category_id', 'name','slug'];
 
-    public function category()
+    public function category():BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function freelancers()
+    public function freelancers():HasMany
     {
         return $this->hasMany(Freelancer::class);
     }

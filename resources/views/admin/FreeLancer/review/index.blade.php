@@ -1,9 +1,9 @@
-@extends('admin.layouts.master', ['title' => 'Freelancer Review'])
+@extends('admin.layouts.master', ['title' => 'Freelancer Pending Review'])
 
 
-@section('toolbarTitle', 'Freelancer Review ')
-@section('toolbarSubTitle', 'Freelancers ')
-@section('toolbarPage', 'Freelancer Review ')
+@section('toolbarTitle', 'Freelancer Pending Review ')
+@section('toolbarSubTitle', 'Freelancers  ')
+@section('toolbarPage', 'Pending Freelancer Review ')
 
 @section('content')
     <div id="kt_app_content_container" class="app-container container-fluid mt-5">
@@ -43,7 +43,6 @@
                                 <th class="min-w-125px">mobile</th>
                                 <th class="">Joined Date</th>
                                 <th class="">status</th>
-                                <th class="">Availability</th>
                                 <th class="min-w-125px">Options</th>
                             </tr>
                             </thead>
