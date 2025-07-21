@@ -16,7 +16,7 @@ use Exception;
 class SocialAuthController extends Controller
 {
 
-    
+
     // توجيه المستخدم لصفحة مصادقة جوجل
     public function redirectToProvider($provider)
     {
