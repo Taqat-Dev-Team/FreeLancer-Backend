@@ -1,20 +1,14 @@
 name: 🚀 Laravel cPanel Deployment
 
 on:
-  push:
+  pull_request:
+    types: [closed]
     branches:
       - development
-  pull_request:
-    branches:
       - staging
       - master
-    paths-ignore:
-      - 'README.md'
-      - '.gitignore'
-      - '.env.example'
 
 jobs:
-  # Development Deployment (on push to development)
   development-deploy:
     if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'development'
     name: ⚙️ Development Deployment
@@ -24,24 +18,18 @@ jobs:
     steps:
       - name: 🛠️ Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: 🐘 Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
           extensions: mbstring, ctype, fileinfo, openssl, pdo, tokenizer, xml
-          ini-values: memory_limit=512M, max_execution_time=300
-          coverage: none
 
       - name: 📦 Cache Composer dependencies
         uses: actions/cache@v3
         with:
           path: vendor
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-composer-
 
       - name: 📦 Install Composer dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
@@ -61,10 +49,8 @@ jobs:
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
 
-      - name: 🏗️ Build Assets for Development
+      - name: 🏗️ Build Assets (npm run dev)
         if: steps.check_frontend.outputs.has_frontend == 'true'
         run: |
           npm ci --silent
@@ -82,7 +68,6 @@ jobs:
           local-dir: ./
           server-dir: ./
           log-level: verbose
-          dangerous-clean-slate: false
           exclude: |
             **/.git*
             **/.github/**
@@ -102,7 +87,7 @@ jobs:
             Thumbs.db
 
       - name: 📢 Notify Slack (Dev Success)
-        if: success() && contains(github.event.head_commit.message, 'slack')
+        if: success() && contains(github.event.pull_request.title, 'slack')
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -112,13 +97,13 @@ jobs:
           SLACK_TITLE: '✅ Dev Deployment Done'
           SLACK_MESSAGE: |
             🧪 *Development Deployment Completed*
-            • Branch: ${{ github.ref_name }}
-            • Commit: <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>
-            • Message: ${{ github.event.head_commit.message }}
-            • By: ${{ github.actor }}
+            • Branch: development
+            • PR: <${{ github.event.pull_request.html_url }}|#${{ github.event.pull_request.number }}>
+            • Title: ${{ github.event.pull_request.title }}
+            • By: ${{ github.event.pull_request.user.login }}
 
       - name: 📢 Notify Slack (Dev Failure)
-        if: failure() && contains(github.event.head_commit.message, 'slack')
+        if: failure() && contains(github.event.pull_request.title, 'slack')
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -128,17 +113,11 @@ jobs:
           SLACK_TITLE: '❌ Dev Deployment Failed'
           SLACK_MESSAGE: |
             🚨 *Development Deployment Failed*
-            • Branch: ${{ github.ref_name }}
-            • Commit: <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>
-            • Message: ${{ github.event.head_commit.message }}
-            • By: ${{ github.actor }}
+            • Branch: development
+            • PR: <${{ github.event.pull_request.html_url }}|#${{ github.event.pull_request.number }}>
+            • Title: ${{ github.event.pull_request.title }}
+            • By: ${{ github.event.pull_request.user.login }}
 
-      - name: ✅ Done
-        run: |
-          echo "✅ Dev Deployment complete at $(date)"
-          echo "Triggered by: ${{ github.sha }}"
-
-  # Staging Deployment (on merged PR to staging)
   staging-deploy:
     if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'staging'
     name: 🚦 Staging Deployment
@@ -148,24 +127,18 @@ jobs:
     steps:
       - name: 🛠️ Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: 🐘 Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
           extensions: mbstring, ctype, fileinfo, openssl, pdo, tokenizer, xml
-          ini-values: memory_limit=512M, max_execution_time=300
-          coverage: none
 
       - name: 📦 Cache Composer dependencies
         uses: actions/cache@v3
         with:
           path: vendor
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-composer-
 
       - name: 📦 Install Composer dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
@@ -185,10 +158,8 @@ jobs:
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
 
-      - name: 🏗️ Build Assets for Staging
+      - name: 🏗️ Build Assets (npm run build)
         if: steps.check_frontend.outputs.has_frontend == 'true'
         run: |
           npm ci --silent
@@ -206,7 +177,6 @@ jobs:
           local-dir: ./
           server-dir: ./
           log-level: verbose
-          dangerous-clean-slate: false
           exclude: |
             **/.git*
             **/.github/**
@@ -236,7 +206,7 @@ jobs:
           SLACK_TITLE: '✅ Staging Deployment Done'
           SLACK_MESSAGE: |
             🚦 *Staging Deployment Completed*
-            • Branch: ${{ github.event.pull_request.base.ref }}
+            • Branch: staging
             • PR: <${{ github.event.pull_request.html_url }}|#${{ github.event.pull_request.number }}>
             • Title: ${{ github.event.pull_request.title }}
             • By: ${{ github.event.pull_request.user.login }}
@@ -249,48 +219,35 @@ jobs:
           SLACK_USERNAME: 'Laravel Staging Bot ❌'
           SLACK_ICON_EMOJI: ':x:'
           SLACK_COLOR: '#ff0000'
-          SLASH_TITLE: '❌ Staging Deployment Failed'
+          SLACK_TITLE: '❌ Staging Deployment Failed'
           SLACK_MESSAGE: |
             🚨 *Staging Deployment Failed*
-            • Branch: ${{ github.event.pull_request.base.ref }}
+            • Branch: staging
             • PR: <${{ github.event.pull_request.html_url }}|#${{ github.event.pull_request.number }}>
             • Title: ${{ github.event.pull_request.title }}
             • By: ${{ github.event.pull_request.user.login }}
 
-      - name: ✅ Done
-        run: |
-          echo "✅ Staging Deployment complete at $(date)"
-          echo "Triggered by PR: ${{ github.event.pull_request.number }}"
-
-  # Production Deployment (on merged PR to master)
   production-deploy:
     if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'master'
     name: 🛡️ Production Deployment
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    environment: production
 
     steps:
       - name: 🛠️ Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: 🐘 Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
           extensions: mbstring, ctype, fileinfo, openssl, pdo, tokenizer, xml
-          ini-values: memory_limit=512M, max_execution_time=300
-          coverage: none
 
       - name: 📦 Cache Composer dependencies
         uses: actions/cache@v3
         with:
           path: vendor
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-composer-
 
       - name: 📦 Install Composer dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
@@ -310,10 +267,8 @@ jobs:
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
 
-      - name: 🏗️ Build Assets for Production
+      - name: 🏗️ Build Assets (npm run build)
         if: steps.check_frontend.outputs.has_frontend == 'true'
         run: |
           npm ci --silent
@@ -331,7 +286,6 @@ jobs:
           local-dir: ./
           server-dir: ./
           log-level: verbose
-          dangerous-clean-slate: false
           exclude: |
             **/.git*
             **/.github/**
@@ -361,8 +315,7 @@ jobs:
           SLACK_TITLE: '✅ Production Deployed'
           SLACK_MESSAGE: |
             🎉 *Production Deployment Completed*
-            • Repo: ${{ github.repository }}
-            • Branch: ${{ github.event.pull_request.base.ref }}
+            • Branch: master
             • PR: <${{ github.event.pull_request.html_url }}|#${{ github.event.pull_request.number }}>
             • Title: ${{ github.event.pull_request.title }}
             • By: ${{ github.event.pull_request.user.login }}
@@ -378,13 +331,7 @@ jobs:
           SLACK_TITLE: '❌ Production Deployment Failed'
           SLACK_MESSAGE: |
             🚨 *Production Deployment Failed*
-            • Repo: ${{ github.repository }}
-            • Branch: ${{ github.event.pull_request.base.ref }}
+            • Branch: master
             • PR: <${{ github.event.pull_request.html_url }}|#${{ github.event.pull_request.number }}>
             • Title: ${{ github.event.pull_request.title }}
             • By: ${{ github.event.pull_request.user.login }}
-
-      - name: ✅ Done
-        run: |
-          echo "🎉 Production Deployment complete at $(date)"
-          echo "Triggered by PR: ${{ github.event.pull_request.number }}"
