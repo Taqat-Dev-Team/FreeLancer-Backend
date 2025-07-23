@@ -368,7 +368,9 @@ return [
 
     'freelancer_id_required' => 'The freelancer ID is required.',
     'freelancer_id_exists' => 'The selected freelancer does not exist.',
-    'mobile_already_exists' => 'Mobile already exists'
+    'mobile_already_exists' => 'Mobile already exists',
+    'new_identity_request' => 'New Identity Request',
+    'identity_request_message' => 'A new identity request has been submitted',
 
 
 ];

@@ -356,7 +356,10 @@ return [
 
     'freelancer_id_required' => 'معرّف المستقل مطلوب.',
     'freelancer_id_exists' => 'المستقل المحدد غير موجود.',
-    'mobile_already_exists'=>'رقم الهاتف مسجل مسبقا'
+    'mobile_already_exists'=>'رقم الهاتف مسجل مسبقا',
+    'new_identity_request'=>'طلب هوية جديد من قبل المستقلين',
+    'messages.identity_request_message'=>'رسالة طلب هوية جديدة من قبل :name',
+
 
 ];
 

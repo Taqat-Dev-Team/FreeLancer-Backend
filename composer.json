@@ -15,6 +15,7 @@
         "laravel/socialite": "^5.21",
         "laravel/tinker": "^2.10.1",
         "mcamara/laravel-localization": "^2.3",
+        "pusher/pusher-php-server": "^7.2",
         "rappasoft/laravel-authentication-log": "^5.0",
         "santigarcor/laratrust": "^8.4",
         "spatie/laravel-activitylog": "^4.10",

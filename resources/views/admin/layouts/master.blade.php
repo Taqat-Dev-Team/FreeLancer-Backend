@@ -27,6 +27,9 @@ License: For each use you must have a valid license purchased only from above li
 
     <title>{{$settings['name_en']}} - {{@$title}}</title>
 
+    @vite(['resources/js/app.js'])
+
+
     @include('admin.layouts.css')
 
     <!--end::Global Stylesheets Bundle-->
@@ -129,6 +132,7 @@ License: For each use you must have a valid license purchased only from above li
 <script src="{{url('admin/js/scripts.bundle.js')}}"></script>
 
 @stack('js')
+
 
 </body>
 <!--end::Body-->

@@ -1,14 +1,12 @@
 name: 🚀 Laravel cPanel Deployment
 
 on:
-  push:
-    branches:
-      - development
   pull_request:
     branches:
+      - development
       - staging
       - master # master is now production
-    types: [closed]
+
     paths-ignore:
       - 'README.md'
       - '.gitignore'
@@ -17,7 +15,7 @@ on:
 jobs:
   # Development Deployment (development branch)
   development-deploy:
-    if: github.ref == 'refs/heads/development' && contains(github.event.head_commit.message, 'deploy')
+    if: github.ref == 'refs/heads/development'
     name: ⚙️ Development Deployment
     runs-on: ubuntu-latest
     timeout-minutes: 30
