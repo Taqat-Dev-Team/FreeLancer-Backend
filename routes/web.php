@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Notification;
+
 use Illuminate\Support\Facades\Route;
 
 
@@ -18,10 +20,8 @@ Route::get('/link', function () {
 
 
 Route::get('/', function () {
-return redirect()->route('admin.dashboard');
+    return redirect()->route('admin.dashboard');
 })->name('home');
-
-
 
 
 require __DIR__ . '/Admin/admin.php';

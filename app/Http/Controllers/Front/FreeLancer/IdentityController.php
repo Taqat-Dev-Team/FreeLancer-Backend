@@ -7,12 +7,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Front\Freelancer\IdentityRequest;
 use App\Http\Resources\UserResource;
 use App\Models\IdentityVerification;
+use App\Notifications\Admin\NewIDRequestNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 
@@ -139,6 +141,7 @@ class IdentityController extends Controller
             ], 500);
         }
     }
+
     public function verifyOtp(Request $request)
     {
         $request->validate([
@@ -193,6 +196,8 @@ class IdentityController extends Controller
         }
 
         try {
+            DB::beginTransaction();
+
             $identity = IdentityVerification::create([
                 'freelancer_id' => auth()->user()->freelancer->id,
                 'first_name' => $request->first_name,
@@ -202,10 +207,10 @@ class IdentityController extends Controller
                 'id_number' => $request->id_number,
                 'full_address' => $request->full_address,
                 'phone' => $user->mobile
-
             ]);
 
             if (!$identity) {
+                DB::rollBack();
                 return $this->apiResponse([], __('messages.identity_update_failed'), false, 500);
             }
 
@@ -215,9 +220,22 @@ class IdentityController extends Controller
                     ->toMediaCollection('image', 'freelancersIds');
             }
 
+            $data = [
+                'title' => __('messages.new_identity_request'),
+                'message' => __('messages.identity_request_message'),
+                'freelancer_id' => auth()->id(),
+                'url' => '/admin/freelancer/verification-request',
+            ];
+
+            $admins = \App\Models\Admin::all();
+            Notification::send($admins, new NewIDRequestNotification($data));
+
+            DB::commit();
+
             return $this->apiResponse(new UserResource($user), __('messages.identity_update_success'), true, 200);
 
         } catch (\Exception $e) {
+            DB::rollBack();
             Log::error('Identity update error', [
                 'freelancer_id' => auth()->id(),
                 'error' => $e->getMessage(),
