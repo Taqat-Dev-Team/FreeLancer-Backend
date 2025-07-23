@@ -1,0 +1,141 @@
+name: Deploy Laravel App to EC2 (Dev - Stop Toggle)
+
+on:
+  push:
+    branches:
+      - development
+  workflow_dispatch:
+    inputs:
+      stop_instance:
+        description: 'Stop EC2 instance after deployment?'
+        required: false
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+
+env:
+  AWS_REGION: us-east-1
+  EC2_USER: ubuntu
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v3
+
+    - name: 🔐 Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+
+    - name: 🚀 Start EC2 instance if stopped
+      id: ec2
+      run: |
+        INSTANCE_ID=${{ secrets.EC2_INSTANCE_ID }}
+        echo "🔍 Checking instance state..."
+        STATE=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID \
+          --query "Reservations[].Instances[].State.Name" --output text)
+        if [ "$STATE" = "stopped" ]; then
+          echo "▶️ Starting EC2 instance..."
+          aws ec2 start-instances --instance-ids $INSTANCE_ID
+          echo "⏳ Waiting for EC2 to be in 'running' state..."
+          aws ec2 wait instance-running --instance-ids $INSTANCE_ID
+        else
+          echo "✅ Instance is already running."
+        fi
+        PUBLIC_IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID \
+          --query "Reservations[].Instances[].PublicIpAddress" --output text)
+        echo "🔗 EC2 Public IP: $PUBLIC_IP"
+        echo "EC2_PUBLIC_IP=$PUBLIC_IP" >> "$GITHUB_ENV"
+    - name: 🔐 Setup SSH Key
+      run: |
+       mkdir -p ~/.ssh
+       echo "${{ secrets.EC2_KEY }}" > ~/.ssh/id_rsa
+       chmod 600 ~/.ssh/id_rsa
+       echo "⏳ Waiting for EC2 to accept SSH..."
+       for i in {1..10}; do
+         ssh-keyscan -H "$EC2_PUBLIC_IP" >> ~/.ssh/known_hosts && break
+         echo "Retrying in 10s..."
+         sleep 10
+       done
+      env:
+        EC2_PUBLIC_IP: ${{ env.EC2_PUBLIC_IP }}
+
+    - name: 🧱 Install packages if needed
+      run: |
+        ssh $EC2_USER@$EC2_PUBLIC_IP << 'EOF'
+        if ! command -v php > /dev/null; then
+          echo "📦 Installing system packages..."
+          sudo apt update && sudo apt upgrade -y
+          sudo apt install -y php php-cli php-mbstring php-xml php-bcmath php-curl php-mysql unzip curl git nginx composer php8.3-gd mysql-server
+          sudo systemctl enable mysql
+          sudo systemctl start mysql
+        else
+          echo "✅ Packages already installed."
+        fi
+        EOF
+      env:
+        EC2_PUBLIC_IP: ${{ env.EC2_PUBLIC_IP }}
+        EC2_USER: ${{ env.EC2_USER }}
+
+    - name: 📦 Clone or update Laravel project
+      run: |
+        ssh $EC2_USER@$EC2_PUBLIC_IP << 'EOF'
+        if [ ! -d /var/www/FreeLancer-Backend ]; then
+          sudo git clone -b development https://github.com/Taqat-Dev-Team/FreeLancer-Backend /var/www/FreeLancer-Backend
+        else
+          cd /var/www/FreeLancer-Backend && sudo git pull origin master
+        fi
+        EOF
+      env:
+        EC2_PUBLIC_IP: ${{ env.EC2_PUBLIC_IP }}
+        EC2_USER: ${{ env.EC2_USER }}
+
+    - name: ⚙️ Prepare Laravel environment
+      run: |
+        ssh $EC2_USER@$EC2_PUBLIC_IP << 'EOF'
+        cd /var/www/FreeLancer-Backend
+        sudo chown -R $USER:$USER .
+        if [ ! -f .env ]; then
+          echo "⛔ .env not found. Please upload it manually."
+          exit 1
+        fi
+        composer install --no-interaction --prefer-dist
+        php artisan key:generate || true
+        EOF
+      env:
+        EC2_PUBLIC_IP: ${{ env.EC2_PUBLIC_IP }}
+        EC2_USER: ${{ env.EC2_USER }}
+
+    - name: 🚀 Serve Laravel app (Dev Mode)
+      run: |
+        ssh $EC2_USER@$EC2_PUBLIC_IP << 'EOF'
+        pkill -f "php artisan serve" || true
+        cd /var/www/FreeLancer-Backend
+        nohup php artisan serve --host=0.0.0.0 --port=8000 > laravel.log 2>&1 &
+        EOF
+      env:
+        EC2_PUBLIC_IP: ${{ env.EC2_PUBLIC_IP }}
+        EC2_USER: ${{ env.EC2_USER }}
+
+    - name: 🌍 Show App URL
+      run: echo "🔗 App is running at  http://$EC2_PUBLIC_IP:8000"
+
+
+      env:
+        EC2_PUBLIC_IP: ${{ env.EC2_PUBLIC_IP }}
+
+    - name: 🛑 Conditionally Stop EC2 Instance
+      if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.stop_instance == 'true' }}
+      run: |
+        echo "🛑 Stopping EC2 instance as requested..."
+        aws ec2 stop-instances --instance-ids ${{ secrets.EC2_INSTANCE_ID }}
+    - name: 🧹 Cleanup SSH Key
+      if: always()
+      run: shred -u ~/.ssh/id_rsa
