@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - development
-      - feature/add-workflow 
+      - add-workflow 
   workflow_dispatch:
     inputs:
       stop_instance:
