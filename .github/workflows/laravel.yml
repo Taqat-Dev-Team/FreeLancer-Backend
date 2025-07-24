@@ -1,11 +1,10 @@
 name: 🚀 Laravel cPanel Deployment
 
 on:
-  push:
-    branches:
-      - development
+
   pull_request:
     branches:
+      - development
       - staging
       - master # master is now production
     paths-ignore:
