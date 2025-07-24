@@ -13,6 +13,23 @@ Route::get('/clear', function () {
     return redirect()->route('home');
 });
 
+Route::get('/test', function () {
+    $data = [
+        'title' => 'طلب تأكيد هوية جديد',
+        'message' => 'تم تقديم طلب جديد لتأكيد الهوية من قبل أحد المستقلين.',
+        'url' => '/admin/freelancer/verification-request',
+        'freelancer_id' => 1];
+
+    $admins = \App\Models\Admin::all();
+    Notification::send($admins, new \App\Notifications\Admin\NewIDRequestNotification($data));
+    return 'Notifications sent successfully!';
+});
+
+
+
+
+
+
 
 Route::get('/link', function () {
     Artisan::call('storage:link');
@@ -25,4 +42,5 @@ Route::get('/', function () {
 
 
 require __DIR__ . '/Admin/admin.php';
+
 

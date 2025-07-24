@@ -37,10 +37,12 @@ class NewIDRequestNotification extends Notification implements ShouldQueue
     public function toBroadcast($notifiable)
     {
         return new BroadcastMessage([
+            'id' => $this->id, // نمرر الـ ID
             'title' => $this->data['title'],
             'message' => $this->data['message'],
             'freelancer_id' => $this->data['freelancer_id'],
             'url' => $this->data['url'],
+            'created_at' => now()->toDateTimeString(),
         ]);
     }
 

@@ -27,7 +27,7 @@
                  id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
 
                 <div data-kt-menu-trigger="click"
-                     class="menu-item {{ request()->routeIs('admin.dashboard') ? 'here show' : '' }} menu-accordion">
+                     class="menu-item {{ request()->routeIs('admin.dashboard') || request()->routeIs('admin.notifications*')   ? 'here show' : '' }} menu-accordion">
                 <span class="menu-link">
                     <span class="menu-icon">
                         <i class="ki-outline ki-category fs-2"></i>
@@ -41,6 +41,14 @@
                                href="{{ route('admin.dashboard') }}">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
                                 <span class="menu-title">Home</span>
+                            </a>
+                        </div>
+
+                        <div class="menu-item">
+                            <a class="menu-link {{ request()->routeIs('admin.notifications.index') ? 'active':'' }}"
+                               href="{{ route('admin.notifications.index') }}">
+                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                                <span class="menu-title">Notifications</span>
                             </a>
                         </div>
                     </div>

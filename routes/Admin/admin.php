@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\NotificationController;
 
 
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -64,6 +65,18 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
             });
         });
+
+
+        Route::prefix('notifications')->name('notifications.')->group(function () {
+            Route::controller(NotificationController::class)->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('/data', 'data')->name('data');
+                Route::get('/read/{id}', 'read')->name('read');
+                Route::delete('notifications/delete-read',  'deleteRead')->name('deleteRead');
+
+            });
+        });
+
 
     });
 

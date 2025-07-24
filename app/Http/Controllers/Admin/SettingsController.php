@@ -49,7 +49,8 @@ class SettingsController extends Controller
                     ->usingFileName(Str::random(20) . '.' . $request->file($field)->getClientOriginalExtension())
                     ->toMediaCollection($field, 'settings');
 
-                $setting->value = $media->getFullUrl();
+                // تخزين اسم المجلد/اسم الصورة
+                $setting->value = $field . '/' . $media->file_name;
                 $setting->save();
 
             } elseif ($request->input($field . '_remove') == '1') {
@@ -58,6 +59,7 @@ class SettingsController extends Controller
                 $setting->save();
             }
         }
+
 
         Cache::forget('settings_cache');
 
