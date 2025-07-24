@@ -13,7 +13,7 @@ jobs:
     if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'development'
     name: ⚙️ Development Deployment
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
 
     steps:
       - name: 🛠️ Checkout repository
@@ -31,8 +31,8 @@ jobs:
           path: vendor
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
 
-      - name: 📦 Install Composer dependencies
-        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+      - name: 📦 Install Composer dependencies (verbose)
+        run: composer install --verbose --no-interaction --prefer-dist --optimize-autoloader
 
       - name: 🛠️ Check for Frontend
         id: check_frontend
@@ -42,7 +42,6 @@ jobs:
           else
             echo "has_frontend=false" >> $GITHUB_OUTPUT
           fi
-
 
       - name: 🚀 Deploy to Dev Server
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
@@ -61,14 +60,16 @@ jobs:
             **/.github/**
             **/.idea/**
             **/node_modules/**
+            **/storage/**
             **/tests/**
             **/bootstrap/cache/**
             .env*
             docker-compose*
-            vite.config.js
+            vite.config.*
             webpack.mix.js
             package*.json
             composer.*
+            *.lock
             phpunit.xml
             README.md
             .DS_Store
@@ -110,7 +111,7 @@ jobs:
     if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'staging'
     name: 🚦 Staging Deployment
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
 
     steps:
       - name: 🛠️ Checkout repository
@@ -128,8 +129,8 @@ jobs:
           path: vendor
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
 
-      - name: 📦 Install Composer dependencies
-        run: composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
+      - name: 📦 Install Composer dependencies (verbose)
+        run: composer install --verbose --no-interaction --prefer-dist --optimize-autoloader --no-dev
 
       - name: 🛠️ Check for Frontend
         id: check_frontend
@@ -140,12 +141,11 @@ jobs:
             echo "has_frontend=false" >> $GITHUB_OUTPUT
           fi
 
-
       - name: 🏗️ Build Assets (npm run build)
         if: steps.check_frontend.outputs.has_frontend == 'true'
         run: |
-          npm ci --silent
-          npm run build --silent
+          npm ci
+          npm run build
 
       - name: 🚀 Deploy to Staging Server
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
@@ -164,14 +164,16 @@ jobs:
             **/.github/**
             **/.idea/**
             **/node_modules/**
+            **/storage/**
             **/tests/**
             **/bootstrap/cache/**
             .env*
             docker-compose*
-            vite.config.js
+            vite.config.*
             webpack.mix.js
             package*.json
             composer.*
+            *.lock
             phpunit.xml
             README.md
             .DS_Store
@@ -213,7 +215,7 @@ jobs:
     if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'master'
     name: 🛡️ Production Deployment
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
 
     steps:
       - name: 🛠️ Checkout repository
@@ -231,8 +233,8 @@ jobs:
           path: vendor
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
 
-      - name: 📦 Install Composer dependencies
-        run: composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
+      - name: 📦 Install Composer dependencies (verbose)
+        run: composer install --verbose --no-interaction --prefer-dist --optimize-autoloader --no-dev
 
       - name: 🛠️ Check for Frontend
         id: check_frontend
@@ -243,12 +245,11 @@ jobs:
             echo "has_frontend=false" >> $GITHUB_OUTPUT
           fi
 
-
       - name: 🏗️ Build Assets (npm run build)
         if: steps.check_frontend.outputs.has_frontend == 'true'
         run: |
-          npm ci --silent
-          npm run build --silent
+          npm ci
+          npm run build
 
       - name: 🚀 Deploy to Production Server
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
@@ -267,14 +268,16 @@ jobs:
             **/.github/**
             **/.idea/**
             **/node_modules/**
+            **/storage/**
             **/tests/**
             **/bootstrap/cache/**
             .env*
             docker-compose*
-            vite.config.js
+            vite.config.*
             webpack.mix.js
             package*.json
             composer.*
+            *.lock
             phpunit.xml
             README.md
             .DS_Store
